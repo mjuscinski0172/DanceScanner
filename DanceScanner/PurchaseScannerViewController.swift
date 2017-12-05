@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import AVFoundation
 
-class PurchaseScannerViewController: UIViewController {
+class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
