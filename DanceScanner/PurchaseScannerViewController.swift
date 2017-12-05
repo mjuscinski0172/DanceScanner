@@ -10,6 +10,8 @@ import UIKit
 import AVFoundation
 
 class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+    var session: AVCaptureSession!
+    var previewLayer: AVCaptureVideoPreviewLayer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
