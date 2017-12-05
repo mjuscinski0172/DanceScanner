@@ -15,8 +15,24 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        session = AVCaptureSession()
+        
+        let videoCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video)
+        let videoInput: AVCaptureDeviceInput?
+        
+        do {
+            videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice!)
+        }
+        catch {
+            return
+        }
+        
+        if (session.canAddInput(videoInput!)) {
+            session.addInput(videoInput!)
+        } else {
+            // scanningNotPossible()
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
