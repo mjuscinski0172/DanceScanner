@@ -18,16 +18,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fdy-6Y-LY8">
-                                <rect key="frame" x="387" y="244" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fdy-6Y-LY8">
+                                <rect key="frame" x="234" y="254" width="300" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="CnX-ny-CS5"/>
+                                    <constraint firstAttribute="height" constant="150" id="RtT-DE-PqR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Purchase Tickets"/>
                                 <connections>
                                     <segue destination="TYT-sY-W9G" kind="show" id="J6t-uk-wuW"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Fdy-6Y-LY8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="190" id="gff-7e-Ltl"/>
+                            <constraint firstItem="Fdy-6Y-LY8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uet-19-srV"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="7Vx-MR-Sgm"/>
