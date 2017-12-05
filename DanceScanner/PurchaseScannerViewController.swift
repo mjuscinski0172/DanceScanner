@@ -32,5 +32,12 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func scanningNotPossible() {
+        let alert = UIAlertController(title: "This device can't scan.", message: "How did you mess this up? It was only supposed to be sent to camera-equipped iPads!", preferredStyle: .alert)
+        let closeButton = UIAlertAction(title: "Yeah, I really screwed this up", style: .destructive, handler: nil)
+        alert.addAction(closeButton)
+        present(alert, animated: true, completion: nil)
+    }
 
 }
