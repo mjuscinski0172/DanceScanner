@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  DanceScanner
 //
-//  Created by Michal Juscinski on 12/4/17.
+//  Created by Michal Juscinski, Akhil Nair, Jimmy Rodriguez, and John Isaac Wilson on 12/4/17.
 //  Copyright © 2017 Michal Juscinski. All rights reserved.
 //
 
