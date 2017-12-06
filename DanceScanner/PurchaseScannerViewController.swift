@@ -15,6 +15,8 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 1ST BLOCK
         session = AVCaptureSession()
         
         let videoCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video)
@@ -33,22 +35,24 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             scanningNotPossible()
         }
         
-        // Create output object.
+        // 2ND BLOCK
         let metadataOutput = AVCaptureMetadataOutput()
         
-        // Add output to the session.
         if (session.canAddOutput(metadataOutput)) {
             session.addOutput(metadataOutput)
-            
-            // Send captured data to the delegate object via a serial queue.
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            
-            // Set barcode type for which to scan: EAN-13.
             metadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.ean13]
-            
         } else {
             scanningNotPossible()
         }
+        
+        // 3RD BLOCK
+        previewLayer = AVCaptureVideoPreviewLayer(session: session)
+        previewLayer.frame = view.layer.bounds
+        previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        view.layer.addSublayer(previewLayer)
+        
+        session.startRunning()
         
     }
     
