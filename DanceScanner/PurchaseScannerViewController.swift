@@ -33,6 +33,23 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             scanningNotPossible()
         }
         
+        // Create output object.
+        let metadataOutput = AVCaptureMetadataOutput()
+        
+        // Add output to the session.
+        if (session.canAddOutput(metadataOutput)) {
+            session.addOutput(metadataOutput)
+            
+            // Send captured data to the delegate object via a serial queue.
+            metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            
+            // Set barcode type for which to scan: EAN-13.
+            metadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.ean13]
+            
+        } else {
+            scanningNotPossible()
+        }
+        
     }
     
     func scanningNotPossible() {
