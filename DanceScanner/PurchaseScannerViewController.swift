@@ -41,5 +41,18 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         alert.addAction(closeButton)
         present(alert, animated: true, completion: nil)
     }
-
+    
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        if let barcodeData = metadataObjects.first {
+            let barcodeReadable = barcodeData as? AVMetadataMachineReadableCodeObject
+            if let readableCode = barcodeReadable{
+                print("x")
+//                delete above /\ and uncomment below \/
+//                barcodeDetected(readableCode.stringValue)
+            }
+            //make something other than vibrating
+            
+        }
+    }
+    
 }
