@@ -15,6 +15,8 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 1ST BLOCK
         session = AVCaptureSession()
         
         let videoCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video)
@@ -33,23 +35,56 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             scanningNotPossible()
         }
         
-        // Create output object.
+        // 2ND BLOCK
         let metadataOutput = AVCaptureMetadataOutput()
         
-        // Add output to the session.
         if (session.canAddOutput(metadataOutput)) {
             session.addOutput(metadataOutput)
-            
-            // Send captured data to the delegate object via a serial queue.
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            
-            // Set barcode type for which to scan: EAN-13.
-            metadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.ean13]
-            
+            metadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.code39]
         } else {
             scanningNotPossible()
         }
         
+        // 3RD BLOCK
+        previewLayer = AVCaptureVideoPreviewLayer(session: session)
+        previewLayer.frame = view.layer.bounds
+        previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        view.layer.addSublayer(previewLayer)
+        
+        session.startRunning()
+        
+    }
+    func barcodeDetected(code: String){
+        // Let the user know we've found something.
+        print(code)
+        let alert = UIAlertController(title: "Found a Barcode!", message: code, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Search", style: UIAlertActionStyle.destructive, handler: { action in
+            
+            // Remove the spaces.
+            let trimmedCode = code.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
+            
+            // EAN or UPC?
+            // Check for added "0" at beginning of code.
+            
+            let trimmedCodeString = "\(trimmedCode)"
+            var trimmedCodeNoZero: String
+            
+            if trimmedCodeString.hasPrefix("0") && trimmedCodeString.characters.count > 1 {
+                trimmedCodeNoZero = String(trimmedCodeString.characters.dropFirst())
+                
+                // Send the doctored UPC to DataService.searchAPI()
+//                DataService.searchAPI(trimmedCodeNoZero)
+            } else {
+//
+//                 Send the doctored EAN to DataService.searchAPI()
+//                DataService.searchAPI(trimmedCodeString)
+            }
+            
+                self.navigationController?.popViewController(animated: true)
+        }))
+        
+            self.present(alert, animated: true, completion: nil)
     }
     
     func scanningNotPossible() {
@@ -58,5 +93,20 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         alert.addAction(closeButton)
         present(alert, animated: true, completion: nil)
     }
-
+    
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        print("Hello")
+        if let barcodeData = metadataObjects.first {
+            let barcodeReadable = barcodeData as? AVMetadataMachineReadableCodeObject
+           
+            if let readableCode = barcodeReadable{
+            //    print("x")
+//                delete above /\ and uncomment below \/
+                barcodeDetected(code: readableCode.stringValue!)
+            }
+            //make something other than vibrating
+            
+        }
+    }
+    
 }
