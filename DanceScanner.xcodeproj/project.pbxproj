@@ -13,9 +13,11 @@
 		80A957A41FD596E600A88F78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80A957A31FD596E600A88F78 /* Assets.xcassets */; };
 		80A957A71FD596E600A88F78 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80A957A51FD596E600A88F78 /* LaunchScreen.storyboard */; };
 		80F387401FD6E2BA00F067B1 /* PurchaseScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F3873F1FD6E2BA00F067B1 /* PurchaseScannerViewController.swift */; };
+		C1C464597CDBEC79E998F394 /* Pods_DanceScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 973D45436D5863D15762CAED /* Pods_DanceScanner.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0896CEDE7320A3E43C68E2B5 /* Pods-DanceScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DanceScanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DanceScanner/Pods-DanceScanner.debug.xcconfig"; sourceTree = "<group>"; };
 		80A957991FD596E600A88F78 /* DanceScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DanceScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80A9579C1FD596E600A88F78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80A9579E1FD596E600A88F78 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +26,8 @@
 		80A957A61FD596E600A88F78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		80A957A81FD596E600A88F78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80F3873F1FD6E2BA00F067B1 /* PurchaseScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseScannerViewController.swift; sourceTree = "<group>"; };
+		973D45436D5863D15762CAED /* Pods_DanceScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DanceScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6A3A5D2C34150BF0EA52E57 /* Pods-DanceScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DanceScanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-DanceScanner/Pods-DanceScanner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1C464597CDBEC79E998F394 /* Pods_DanceScanner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +47,8 @@
 			children = (
 				80A9579B1FD596E600A88F78 /* DanceScanner */,
 				80A9579A1FD596E600A88F78 /* Products */,
+				98227B176BE386D8B7CF6184 /* Pods */,
+				C2AE41E3171004A29EE43610 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +74,23 @@
 			path = DanceScanner;
 			sourceTree = "<group>";
 		};
+		98227B176BE386D8B7CF6184 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0896CEDE7320A3E43C68E2B5 /* Pods-DanceScanner.debug.xcconfig */,
+				F6A3A5D2C34150BF0EA52E57 /* Pods-DanceScanner.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		C2AE41E3171004A29EE43610 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				973D45436D5863D15762CAED /* Pods_DanceScanner.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +98,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 80A957AB1FD596E600A88F78 /* Build configuration list for PBXNativeTarget "DanceScanner" */;
 			buildPhases = (
+				4275AA81DE4B565B2280AB63 /* [CP] Check Pods Manifest.lock */,
 				80A957951FD596E600A88F78 /* Sources */,
 				80A957961FD596E600A88F78 /* Frameworks */,
 				80A957971FD596E600A88F78 /* Resources */,
+				4428E7DFDE6EC36F2E15DE2B /* [CP] Embed Pods Frameworks */,
+				92FF3D2C36EDA86059D0A971 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -133,6 +160,62 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4275AA81DE4B565B2280AB63 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DanceScanner-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4428E7DFDE6EC36F2E15DE2B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-DanceScanner/Pods-DanceScanner-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DanceScanner/Pods-DanceScanner-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		92FF3D2C36EDA86059D0A971 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DanceScanner/Pods-DanceScanner-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		80A957951FD596E600A88F78 /* Sources */ = {
@@ -276,13 +359,14 @@
 		};
 		80A957AC1FD596E600A88F78 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0896CEDE7320A3E43C68E2B5 /* Pods-DanceScanner.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6VF44UYS3Q;
+				DEVELOPMENT_TEAM = AVQMH63479;
 				INFOPLIST_FILE = DanceScanner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = jhhs.teamUmiZoomi.618152.DanceScanner;
+				PRODUCT_BUNDLE_IDENTIFIER = jhhs.teamUmiZoomi.618064.DanceScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -291,13 +375,14 @@
 		};
 		80A957AD1FD596E600A88F78 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F6A3A5D2C34150BF0EA52E57 /* Pods-DanceScanner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6VF44UYS3Q;
+				DEVELOPMENT_TEAM = AVQMH63479;
 				INFOPLIST_FILE = DanceScanner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = jhhs.teamUmiZoomi.618152.DanceScanner;
+				PRODUCT_BUNDLE_IDENTIFIER = jhhs.teamUmiZoomi.618064.DanceScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

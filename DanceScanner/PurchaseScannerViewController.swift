@@ -41,7 +41,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         if (session.canAddOutput(metadataOutput)) {
             session.addOutput(metadataOutput)
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            metadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.ean13]
+            metadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.code39]
         } else {
             scanningNotPossible()
         }
