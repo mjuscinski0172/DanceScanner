@@ -1,0 +1,6 @@
+framework module Pods_DanceScanner {
+  umbrella header "Pods-DanceScanner-umbrella.h"
+
+  export *
+  module * { export * }
+}

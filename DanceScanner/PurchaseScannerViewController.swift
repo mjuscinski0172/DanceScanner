@@ -56,24 +56,16 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         
     }
     func barcodeDetected(code: String){
-        // Let the user know we've found something.
-        print(code)
         let alert = UIAlertController(title: "Found a Barcode!", message: code, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Search", style: UIAlertActionStyle.destructive, handler: { action in
             
-            // Remove the spaces.
             let trimmedCode = code.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
-            
-            // EAN or UPC?
-            // Check for added "0" at beginning of code.
-            
             let trimmedCodeString = "\(trimmedCode)"
             var trimmedCodeNoZero: String
             
             if trimmedCodeString.hasPrefix("0") && trimmedCodeString.characters.count > 1 {
                 trimmedCodeNoZero = String(trimmedCodeString.characters.dropFirst())
                 
-                // Send the doctored UPC to DataService.searchAPI()
 //                DataService.searchAPI(trimmedCodeNoZero)
             } else {
 //
@@ -100,11 +92,8 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             let barcodeReadable = barcodeData as? AVMetadataMachineReadableCodeObject
            
             if let readableCode = barcodeReadable{
-            //    print("x")
-//                delete above /\ and uncomment below \/
                 barcodeDetected(code: readableCode.stringValue!)
             }
-            //make something other than vibrating
             
         }
     }
