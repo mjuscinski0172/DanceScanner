@@ -53,8 +53,22 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         view.layer.addSublayer(previewLayer)
         
         session.startRunning()
-        
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if (session?.isRunning == false) {
+            session.startRunning()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if (session?.isRunning == true) {
+            session.stopRunning()
+        }
+    }
+    
     func barcodeDetected(code: String){
         let alert = UIAlertController(title: "Found a Barcode!", message: code, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Search", style: UIAlertActionStyle.destructive, handler: { action in
