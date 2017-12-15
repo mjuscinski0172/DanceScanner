@@ -65,23 +65,9 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         }
     }
     
-    func barcodeDetected(code: String){
-        let alert = UIAlertController(title: "Found a Barcode!", message: code, preferredStyle: UIAlertControllerStyle.alert)
+    func getJSON(altID: String){
+        let alert = UIAlertController(title: "Found a Barcode!", message: altID, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Search", style: UIAlertActionStyle.destructive, handler: { action in
-            
-            let trimmedCode = code.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
-            let trimmedCodeString = "\(trimmedCode)"
-            var trimmedCodeNoZero: String
-            
-            if trimmedCodeString.hasPrefix("0") && trimmedCodeString.characters.count > 1 {
-                trimmedCodeNoZero = String(trimmedCodeString.characters.dropFirst())
-                
-//                DataService.searchAPI(trimmedCodeNoZero)
-            } else {
-//
-//                 Send the doctored EAN to DataService.searchAPI()
-//                DataService.searchAPI(trimmedCodeString)
-            }
             
                 self.navigationController?.popViewController(animated: true)
         }))
@@ -102,7 +88,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             let barcodeReadable = barcodeData as? AVMetadataMachineReadableCodeObject
            
             if let readableCode = barcodeReadable{
-                barcodeDetected(code: readableCode.stringValue!)
+                getJSON(altID: readableCode.stringValue!)
             }
             
         }
