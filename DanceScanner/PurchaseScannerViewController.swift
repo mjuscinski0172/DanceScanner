@@ -15,8 +15,6 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 1ST BLOCK
         session = AVCaptureSession()
         
         let videoCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video)
@@ -35,7 +33,6 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             scanningNotPossible()
         }
         
-        // 2ND BLOCK
         let metadataOutput = AVCaptureMetadataOutput()
         
         if (session.canAddOutput(metadataOutput)) {
@@ -46,7 +43,6 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             scanningNotPossible()
         }
         
-        // 3RD BLOCK
         previewLayer = AVCaptureVideoPreviewLayer(session: session)
         previewLayer.frame = view.layer.bounds
         previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
