@@ -68,13 +68,19 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     // another random comment
     
     func getJSON(altID: String){
-        let alert = UIAlertController(title: "Found a Barcode!", message: altID, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Search", style: UIAlertActionStyle.destructive, handler: { action in
+        let urlString = "https://idscanner-8f179.firebaseio.com/"
+        let url = URL(string: urlString)!
+        URLSession.shared.dataTask(with: url, completionHandler: { (myData, response, error) in
             
-                self.navigationController?.popViewController(animated: true)
-        }))
-        
-            self.present(alert, animated: true, completion: nil)
+//
+//        let alert = UIAlertController(title: "Found a Barcode!", message: altID, preferredStyle: UIAlertControllerStyle.alert)
+//        alert.addAction(UIAlertAction(title: "Search", style: UIAlertActionStyle.destructive, handler: { action in
+//
+//                self.navigationController?.popViewController(animated: true)
+//        }))
+//
+//            self.present(alert, animated: true, completion: nil)
+    })
     }
     
     func scanningNotPossible() {
