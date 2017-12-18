@@ -64,6 +64,8 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             session.stopRunning()
         }
     }
+    // random comment
+    // another random comment
     
     func getJSON(altID: String){
         let alert = UIAlertController(title: "Found a Barcode!", message: altID, preferredStyle: UIAlertControllerStyle.alert)
