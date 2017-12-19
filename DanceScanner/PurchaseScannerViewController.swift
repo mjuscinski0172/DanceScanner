@@ -12,7 +12,8 @@ import AVFoundation
 class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
-
+    var firstTimeCalled = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         session = AVCaptureSession()
@@ -66,19 +67,17 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     }
     
     func getJSON(altID: String){
-        let urlString = "https://idscanner-8f179.firebaseio.com/"
-        let url = URL(string: urlString)!
-        URLSession.shared.dataTask(with: url, completionHandler: { (myData, response, error) in
-            
-//
-//        let alert = UIAlertController(title: "Found a Barcode!", message: altID, preferredStyle: UIAlertControllerStyle.alert)
-//        alert.addAction(UIAlertAction(title: "Search", style: UIAlertActionStyle.destructive, handler: { action in
-//
-//                self.navigationController?.popViewController(animated: true)
-//        }))
-//
-//            self.present(alert, animated: true, completion: nil)
-    })
+            let urlString = "https://api.myjson.com/bins/16ljdv"
+            let url = URL(string: urlString)!
+            URLSession.shared.dataTask(with: url, completionHandler: { (myData, response, error) in
+                if let JSONObject = try? JSONSerialization.jsonObject(with: myData!, options: .allowFragments) as! NSDictionary {
+                    let studentArray = JSONObject.object(forKey: altID) as! NSArray
+                    let studentDictionary = studentArray.firstObject as! NSDictionary
+                    let firstName = studentDictionary.object(forKey: "First") as! NSString
+                    let lastName = studentDictionary.object(forKey: "Last") as! NSString
+                    let ID = studentDictionary.object(forKey: "ID") as! NSInteger
+                }
+            }).resume()
     }
     
     func scanningNotPossible() {
@@ -89,14 +88,16 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        print("Hello")
-        if let barcodeData = metadataObjects.first {
-            let barcodeReadable = barcodeData as? AVMetadataMachineReadableCodeObject
-           
-            if let readableCode = barcodeReadable{
-                getJSON(altID: readableCode.stringValue!)
+        if firstTimeCalled {
+            if let barcodeData = metadataObjects.first {
+                let barcodeReadable = barcodeData as? AVMetadataMachineReadableCodeObject
+                
+                if let readableCode = barcodeReadable{
+                    getJSON(altID: readableCode.stringValue!)
+                }
+                
             }
-            
+            firstTimeCalled = false
         }
     }
     
