@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		619829921FE416AD00675635 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 619829911FE416AD00675635 /* GoogleService-Info.plist */; };
+		8006ADA21FE9622E00B870BB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8006ADA11FE9622E00B870BB /* GoogleService-Info.plist */; };
+		8006ADA41FE9626E00B870BB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8006ADA31FE9626E00B870BB /* CloudKit.framework */; };
 		80A9579D1FD596E600A88F78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A9579C1FD596E600A88F78 /* AppDelegate.swift */; };
 		80A9579F1FD596E600A88F78 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A9579E1FD596E600A88F78 /* ViewController.swift */; };
 		80A957A21FD596E600A88F78 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80A957A01FD596E600A88F78 /* Main.storyboard */; };
@@ -19,7 +20,9 @@
 
 /* Begin PBXFileReference section */
 		0896CEDE7320A3E43C68E2B5 /* Pods-DanceScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DanceScanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DanceScanner/Pods-DanceScanner.debug.xcconfig"; sourceTree = "<group>"; };
-		619829911FE416AD00675635 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8006AD8E1FE95EDF00B870BB /* DanceScanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DanceScanner.entitlements; sourceTree = "<group>"; };
+		8006ADA11FE9622E00B870BB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8006ADA31FE9626E00B870BB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		80A957991FD596E600A88F78 /* DanceScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DanceScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80A9579C1FD596E600A88F78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80A9579E1FD596E600A88F78 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -38,6 +41,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1C464597CDBEC79E998F394 /* Pods_DanceScanner.framework in Frameworks */,
+				8006ADA41FE9626E00B870BB /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +69,7 @@
 		80A9579B1FD596E600A88F78 /* DanceScanner */ = {
 			isa = PBXGroup;
 			children = (
+				8006AD8E1FE95EDF00B870BB /* DanceScanner.entitlements */,
 				80A9579C1FD596E600A88F78 /* AppDelegate.swift */,
 				80A9579E1FD596E600A88F78 /* ViewController.swift */,
 				80A957A01FD596E600A88F78 /* Main.storyboard */,
@@ -72,7 +77,7 @@
 				80A957A31FD596E600A88F78 /* Assets.xcassets */,
 				80A957A51FD596E600A88F78 /* LaunchScreen.storyboard */,
 				80A957A81FD596E600A88F78 /* Info.plist */,
-				619829911FE416AD00675635 /* GoogleService-Info.plist */,
+				8006ADA11FE9622E00B870BB /* GoogleService-Info.plist */,
 			);
 			path = DanceScanner;
 			sourceTree = "<group>";
@@ -89,6 +94,7 @@
 		C2AE41E3171004A29EE43610 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8006ADA31FE9626E00B870BB /* CloudKit.framework */,
 				973D45436D5863D15762CAED /* Pods_DanceScanner.framework */,
 			);
 			name = Frameworks;
@@ -130,6 +136,11 @@
 					80A957981FD596E600A88F78 = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -157,7 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80A957A71FD596E600A88F78 /* LaunchScreen.storyboard in Resources */,
-				619829921FE416AD00675635 /* GoogleService-Info.plist in Resources */,
+				8006ADA21FE9622E00B870BB /* GoogleService-Info.plist in Resources */,
 				80A957A41FD596E600A88F78 /* Assets.xcassets in Resources */,
 				80A957A21FD596E600A88F78 /* Main.storyboard in Resources */,
 			);
@@ -366,12 +377,15 @@
 			baseConfigurationReference = 0896CEDE7320A3E43C68E2B5 /* Pods-DanceScanner.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DanceScanner/DanceScanner.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = AVQMH63479;
+				DEVELOPMENT_TEAM = BWYT76Q3DS;
 				INFOPLIST_FILE = DanceScanner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = jhhs.teamUmiZoomi.618064.DanceScanner;
+				PRODUCT_BUNDLE_IDENTIFIER = jhhs.teamUmiZoomi.DanceScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -382,12 +396,15 @@
 			baseConfigurationReference = F6A3A5D2C34150BF0EA52E57 /* Pods-DanceScanner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DanceScanner/DanceScanner.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = AVQMH63479;
+				DEVELOPMENT_TEAM = BWYT76Q3DS;
 				INFOPLIST_FILE = DanceScanner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = jhhs.teamUmiZoomi.618064.DanceScanner;
+				PRODUCT_BUNDLE_IDENTIFIER = jhhs.teamUmiZoomi.DanceScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
