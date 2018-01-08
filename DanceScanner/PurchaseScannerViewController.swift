@@ -76,8 +76,15 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                     let firstName = studentDictionary.object(forKey: "First") as! NSString
                     let lastName = studentDictionary.object(forKey: "Last") as! NSString
                     let ID = studentDictionary.object(forKey: "ID") as! NSInteger
-                    print(firstName, lastName)
-                    print(ID)
+                    
+                    let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
+                    let purchaseTicketButton = UIAlertAction(title: "Purchase Tickets", style: .default, handler: { (action) in
+                        print("I haven't figured out what I'm supposed to do here yet")
+                    })
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+                    purchaseTicketsAlert.addAction(purchaseTicketButton)
+                    purchaseTicketsAlert.addAction(cancelAction)
+                    self.present(purchaseTicketsAlert, animated: true, completion: nil)
                 }
             }).resume()
     }
