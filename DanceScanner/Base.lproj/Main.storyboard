@@ -62,7 +62,7 @@
         <!--checkViewController-->
         <scene sceneID="GVJ-Ce-0GJ">
             <objects>
-                <viewController title="checkViewController" id="3v1-v6-gsQ" sceneMemberID="viewController">
+                <viewController title="checkViewController" id="3v1-v6-gsQ" customClass="checkViewController" customModule="DanceScanner" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7cL-fn-naM">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
