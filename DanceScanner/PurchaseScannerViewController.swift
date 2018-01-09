@@ -8,11 +8,13 @@
 
 import UIKit
 import AVFoundation
+import CloudKit
 
 class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
     var firstTimeCalled = true
+    var database =  CKContainer.default().publicCloudDatabase
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +80,20 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                     let ID = studentDictionary.object(forKey: "ID") as! NSInteger
                     let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
                     let purchaseTicketButton = UIAlertAction(title: "Purchase Tickets", style: .default, handler: { (action) in
-                        print("I haven't figured out what I'm supposed to do here yet")
+                        let place = CKRecord(recordType: "Students")
+                        place.setObject(firstName as CKRecordValue, forKey: "firstName")
+                        place.setObject(lastName as CKRecordValue, forKey: "lastName")
+                        place.setObject(String(ID) as CKRecordValue, forKey: "idNumber")
+                        place.setObject(String(altID) as CKRecordValue, forKey: "altIDNumber")
+                        place.setObject("Purchased" as CKRecordValue, forKey: "checkedInOrOut")
+                        self.database.save(place) { (record, error) in
+                            if error != nil {
+                                let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                alert.addAction(okAction)
+                                self.present(alert, animated: true, completion: nil)
+                            }
+                        }
                     })
                     let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
                     purchaseTicketsAlert.addAction(purchaseTicketButton)
