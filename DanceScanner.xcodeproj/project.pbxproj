@@ -15,6 +15,7 @@
 		80A957A41FD596E600A88F78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80A957A31FD596E600A88F78 /* Assets.xcassets */; };
 		80A957A71FD596E600A88F78 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80A957A51FD596E600A88F78 /* LaunchScreen.storyboard */; };
 		80F387401FD6E2BA00F067B1 /* PurchaseScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F3873F1FD6E2BA00F067B1 /* PurchaseScannerViewController.swift */; };
+		84E1406F20050B1000B20D0E /* checkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1406E20050B1000B20D0E /* checkViewController.swift */; };
 		C1C464597CDBEC79E998F394 /* Pods_DanceScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 973D45436D5863D15762CAED /* Pods_DanceScanner.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		80A957A61FD596E600A88F78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		80A957A81FD596E600A88F78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80F3873F1FD6E2BA00F067B1 /* PurchaseScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseScannerViewController.swift; sourceTree = "<group>"; };
+		84E1406E20050B1000B20D0E /* checkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = checkViewController.swift; sourceTree = "<group>"; };
 		973D45436D5863D15762CAED /* Pods_DanceScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DanceScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6A3A5D2C34150BF0EA52E57 /* Pods-DanceScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DanceScanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-DanceScanner/Pods-DanceScanner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,8 +74,9 @@
 				8006AD8E1FE95EDF00B870BB /* DanceScanner.entitlements */,
 				80A9579C1FD596E600A88F78 /* AppDelegate.swift */,
 				80A9579E1FD596E600A88F78 /* ViewController.swift */,
-				80A957A01FD596E600A88F78 /* Main.storyboard */,
 				80F3873F1FD6E2BA00F067B1 /* PurchaseScannerViewController.swift */,
+				84E1406E20050B1000B20D0E /* checkViewController.swift */,
+				80A957A01FD596E600A88F78 /* Main.storyboard */,
 				80A957A31FD596E600A88F78 /* Assets.xcassets */,
 				80A957A51FD596E600A88F78 /* LaunchScreen.storyboard */,
 				80A957A81FD596E600A88F78 /* Info.plist */,
@@ -238,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80A9579F1FD596E600A88F78 /* ViewController.swift in Sources */,
+				84E1406F20050B1000B20D0E /* checkViewController.swift in Sources */,
 				80F387401FD6E2BA00F067B1 /* PurchaseScannerViewController.swift in Sources */,
 				80A9579D1FD596E600A88F78 /* AppDelegate.swift in Sources */,
 			);

@@ -78,6 +78,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                     let firstName = studentDictionary.object(forKey: "First") as! NSString
                     let lastName = studentDictionary.object(forKey: "Last") as! NSString
                     let ID = studentDictionary.object(forKey: "ID") as! NSInteger
+                    
                     let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
                     let purchaseTicketButton = UIAlertAction(title: "Purchase Tickets", style: .default, handler: { (action) in
                         let place = CKRecord(recordType: "Students")
