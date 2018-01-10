@@ -56,16 +56,12 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if (session?.isRunning == false) {
-            session.startRunning()
-        }
+        runSession()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if (session?.isRunning == true) {
-            session.stopRunning()
-        }
+        stopSession()
     }
     
     func getJSON(altID: String){
@@ -94,9 +90,12 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                                 alert.addAction(okAction)
                                 self.present(alert, animated: true, completion: nil)
                             }
+                            self.runSession()
                         }
                     })
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
+                        self.runSession()
+                    })
                     purchaseTicketsAlert.addAction(purchaseTicketButton)
                     purchaseTicketsAlert.addAction(cancelAction)
                     self.present(purchaseTicketsAlert, animated: true, completion: nil)
@@ -114,7 +113,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        if firstTimeCalled {
+        stopSession()
             if let barcodeData = metadataObjects.first {
                 let barcodeReadable = barcodeData as? AVMetadataMachineReadableCodeObject
                 
@@ -123,8 +122,17 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                 }
                 
             }
-            firstTimeCalled = false
+    }
+    
+    func runSession() {
+        if (session?.isRunning == false) {
+            session.startRunning()
         }
     }
     
+    func stopSession() {
+        if (session?.isRunning == true) {
+            session.stopRunning()
+        }
+    }
 }
