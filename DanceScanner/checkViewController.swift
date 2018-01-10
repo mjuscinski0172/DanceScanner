@@ -12,7 +12,6 @@ import AVKit
 class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
-    var firstTimeCalled = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,20 +53,17 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if (session?.isRunning == false) {
-            session.startRunning()
-        }
+        runSession()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if (session?.isRunning == true) {
-            session.stopRunning()
-        }
+        stopSession()
     }
 
     func checkOnCloudKit(altID: String){
         print(altID)
+        runSession()
     }
     
     func scanningNotPossible() {
@@ -78,16 +74,25 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        if firstTimeCalled {
+        stopSession()
             if let barcodeData = metadataObjects.first {
                 let barcodeReadable = barcodeData as? AVMetadataMachineReadableCodeObject
                 
                 if let readableCode = barcodeReadable{
                     checkOnCloudKit(altID: readableCode.stringValue!)
                 }
-                
-            }
-            firstTimeCalled = false
+        }
+    }
+    
+    func runSession() {
+        if (session?.isRunning == false) {
+            session.startRunning()
+        }
+    }
+    
+    func stopSession() {
+        if (session?.isRunning == true) {
+            session.stopRunning()
         }
     }
 }

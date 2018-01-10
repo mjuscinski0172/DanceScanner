@@ -31,21 +31,12 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="as4-EN-2ex">
-                                <rect key="frame" x="319" y="412" width="130" height="30"/>
+                                <rect key="frame" x="285" y="456" width="198" height="113"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Check In"/>
+                                <state key="normal" title="Check In/Out"/>
                                 <connections>
                                     <segue destination="3v1-v6-gsQ" kind="show" id="gg0-Qp-0tL"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X5e-7n-zlr">
-                                <rect key="frame" x="314" y="510" width="140" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Check Out"/>
-                                <connections>
-                                    <segue destination="3v1-v6-gsQ" kind="show" id="0xK-dM-10g"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -111,7 +102,4 @@
             <point key="canvasLocation" x="-463" y="40"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="gg0-Qp-0tL"/>
-    </inferredMetricsTieBreakers>
 </document>
