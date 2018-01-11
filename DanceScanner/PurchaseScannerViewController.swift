@@ -13,7 +13,6 @@ import CloudKit
 class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
-    var firstTimeCalled = true
     var database =  CKContainer.default().publicCloudDatabase
     
     override func viewDidLoad() {
