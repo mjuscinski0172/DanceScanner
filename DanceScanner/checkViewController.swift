@@ -8,11 +8,13 @@
 
 import UIKit
 import AVKit
+import CloudKit
 
 class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
     var firstTimeCalled = true
+    var database = CKContainer.default().publicCloudDatabase
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +69,58 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     }
 
     func checkOnCloudKit(altID: String){
-        print(altID)
+        let predicate =  NSPredicate(format: "altIDNumber = '\(altID)'")
+        let query = CKQuery(recordType: "Students", predicate: predicate)
+        database.perform(query, inZoneWith: nil) { (records, error) in
+            if let myRecords = records {
+                let student = myRecords.first!
+                if student.object(forKey: "checkedInOrOut") as! String == "Purchased" {
+                    student.setObject("In" as CKRecordValue, forKey: "checkedInOrOut")
+                    self.database.save(student) { (record, error) in
+                        if error != nil {
+                            let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(okAction)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        else {
+                            let alert = UIAlertController(title: "Checked In", message: nil, preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(okAction)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                }
+                else if student.object(forKey: "checkedInOrOut") as! String == "In" {
+                    student.setObject("Out" as CKRecordValue, forKey: "checkedInOrOut")
+                    print("b")
+                    self.database.save(student) { (record, error) in
+                        if error != nil {
+                            let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(okAction)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        else{
+                            let alert = UIAlertController(title: "Checked Out", message: nil, preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(okAction)
+                            self.present(alert, animated: true, completion: nil)                        }
+                    }
+                }
+                else if student.object(forKey: "checkedInOrOut") as! String == "Out" {
+                    student.setObject("Out" as CKRecordValue, forKey: "checkedInOrOut")
+                    print("c")
+                    self.database.save(student, completionHandler: { (record, error) in
+                        let alert = UIAlertController(title: "Error", message: "This student has already been checked out", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        alert.addAction(okAction)
+                        self.present(alert, animated: true, completion: nil)
+                    })
+
+                }
+            }
+        }
     }
     
     func scanningNotPossible() {
