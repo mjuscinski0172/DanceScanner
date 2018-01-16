@@ -1,4 +1,4 @@
-//
+ 
 //  checkViewController.swift
 //  DanceScanner
 //
@@ -65,13 +65,28 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     }
 
     func checkOnCloudKit(altID: String){
+        let place = CKRecord(recordType: "Students")
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date)
+        let minutes = calendar.component(.minute, from: date)
+        let seconds = calendar.component(.second, from: date)
+        let timeOf = "\(hour):\(minutes)"
+        print("hours = \(hour):\(minutes)")
+        place.setObject(timeOf as CKRecordValue, forKey: "checkInTime")
+       // place.setObject(timeOf as CKRecordValue, forKey: "checkedOutTime")
+
         let predicate =  NSPredicate(format: "altIDNumber = '\(altID)'")
         let query = CKQuery(recordType: "Students", predicate: predicate)
         database.perform(query, inZoneWith: nil) { (records, error) in
             if let myRecords = records {
                 let student = myRecords.first!
+                student.setObject(timeOf as CKRecordValue, forKey: "checkedInTime")
                 if student.object(forKey: "checkedInOrOut") as! String == "Purchased" {
                     student.setObject("In" as CKRecordValue, forKey: "checkedInOrOut")
+                  
+                    place.setObject(timeOf as CKRecordValue, forKey: "checkInTime")
+
                     self.database.save(student) { (record, error) in
                         if error != nil {
                             let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
@@ -89,6 +104,8 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 }
                 else if student.object(forKey: "checkedInOrOut") as! String == "In" {
                     student.setObject("Out" as CKRecordValue, forKey: "checkedInOrOut")
+                   
+                    student.setObject(timeOf as CKRecordValue, forKey: "checkOutTime")
                     print("b")
                     self.database.save(student) { (record, error) in
                         if error != nil {
@@ -106,6 +123,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 }
                 else if student.object(forKey: "checkedInOrOut") as! String == "Out" {
                     student.setObject("Out" as CKRecordValue, forKey: "checkedInOrOut")
+                   // place.setObject(timeOf as CKRecordValue, forKey: "checkedOutTime")
                     print("c")
                     self.database.save(student, completionHandler: { (record, error) in
                         let alert = UIAlertController(title: "Error", message: "This student has already been checked out", preferredStyle: .alert)
@@ -113,7 +131,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                         alert.addAction(okAction)
                         self.present(alert, animated: true, completion: nil)
                     })
-
+                    
                 }
             }
         }
