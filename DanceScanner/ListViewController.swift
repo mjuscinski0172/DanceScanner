@@ -11,6 +11,7 @@ import CloudKit
 
 class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    var studentArray = [Student]()
     let database = CKContainer.default().publicCloudDatabase
     
     override func viewDidLoad() {
@@ -29,14 +30,24 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func createStudentArray() {
-        var studentArray:[CKRecord] = []
+        studentArray.removeAll()
+        
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: "Students", predicate: predicate)
         database.perform(query, inZoneWith: nil) { (records, error) in
             for student in records! {
-                studentArray.append(student)
+                let firstName = student.object(forKey: "firstName") as! String
+                let lastName = student.object(forKey: "lastName") as! String
+                let altIDNumber = student.object(forKey: "altIDNumber") as! String
+                let idNumber = student.object(forKey: "idNumber") as! String
+                let checkedInOrOut = student.object(forKey: "checkedInOrOut") as! String
+                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut)
+                self.studentArray.append(newStudent)
+
+            }
+            DispatchQueue.main.async {
+                
             }
         }
-    print(studentArray)
     }
 }
