@@ -87,11 +87,18 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="hc1-Rp-DCr" id="dMm-lR-JvE"/>
+                                    <outlet property="delegate" destination="hc1-Rp-DCr" id="ss9-MS-rm9"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="syT-Lf-rTI"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="ZjO-a3-ESm" id="huH-SA-tpW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OY1-a8-WnT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
