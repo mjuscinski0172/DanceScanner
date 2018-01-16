@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import CloudKit
 
 class detailsViewController: UIViewController {
 
+    var selectedStudent: Student!
+    var database: CKDatabase!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

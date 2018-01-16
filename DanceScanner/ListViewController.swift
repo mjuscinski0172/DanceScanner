@@ -50,4 +50,11 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nvc = segue.destination as! detailsViewController
+        let indexPath = tableView.indexPathForSelectedRow!
+        nvc.selectedStudent = studentArray[indexPath.row]
+        nvc.database = database
+    }
 }
