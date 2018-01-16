@@ -82,6 +82,7 @@
 				80F3873F1FD6E2BA00F067B1 /* PurchaseScannerViewController.swift */,
 				84E1406E20050B1000B20D0E /* checkViewController.swift */,
 				614584B22006622C002991D6 /* ListViewController.swift */,
+				61416A1D2009010700F0997C /* Student.swift */,
 				80A957A01FD596E600A88F78 /* Main.storyboard */,
 				80A957A31FD596E600A88F78 /* Assets.xcassets */,
 				80A957A51FD596E600A88F78 /* LaunchScreen.storyboard */,
