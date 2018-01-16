@@ -20,11 +20,13 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        
+        let student = studentArray[indexPath]
+        cell.textLabel?.text = "\(student.object(forKey: "firstName")) \(student.object(forKey: "lastName"))"
+        cell.detailTextLabel?.text = student.object(forKey: "checkedInOrOut")
         return cell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return studentArray.count
     }
 }

@@ -115,6 +115,12 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                     })
 
                 }
+                else {
+                    let alert = UIAlertController(title: "Error", message: "This student has not purchased tickets", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(okAction)
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
         }
     }
