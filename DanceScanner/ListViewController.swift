@@ -10,9 +10,12 @@ import UIKit
 import CloudKit
 
 class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    @IBOutlet weak var tableView: UITableView!
+    
     var studentArray = [Student]()
     let database = CKContainer.default().publicCloudDatabase
+    
+    var myIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,9 +24,12 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        let student = studentArray[indexPath]
-        cell.textLabel?.text = "\(student.object(forKey: "firstName")) \(student.object(forKey: "lastName"))"
-        cell.detailTextLabel?.text = student.object(forKey: "checkedInOrOut")
+        let student = studentArray[myIndex]
+        print(student)
+        print("-----------------Chicken-----------------")
+        cell.textLabel?.text = "\(student.firstName) \(student.lastName)"
+        cell.detailTextLabel?.text = student.checkedInOrOut
+        myIndex += 1
         return cell
     }
 
@@ -48,7 +54,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
             }
             DispatchQueue.main.async {
-                
+                self.tableView.reloadData()
             }
         }
     }

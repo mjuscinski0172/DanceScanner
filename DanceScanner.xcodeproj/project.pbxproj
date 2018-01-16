@@ -11,6 +11,7 @@
 		614584B32006622C002991D6 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614584B22006622C002991D6 /* ListViewController.swift */; };
 		8006ADA21FE9622E00B870BB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8006ADA11FE9622E00B870BB /* GoogleService-Info.plist */; };
 		8006ADA41FE9626E00B870BB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8006ADA31FE9626E00B870BB /* CloudKit.framework */; };
+		801E5573200E48C500B9168A /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801E5572200E48C500B9168A /* Student.swift */; };
 		80A9579D1FD596E600A88F78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A9579C1FD596E600A88F78 /* AppDelegate.swift */; };
 		80A9579F1FD596E600A88F78 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A9579E1FD596E600A88F78 /* ViewController.swift */; };
 		80A957A21FD596E600A88F78 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80A957A01FD596E600A88F78 /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 		8006AD8E1FE95EDF00B870BB /* DanceScanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DanceScanner.entitlements; sourceTree = "<group>"; };
 		8006ADA11FE9622E00B870BB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8006ADA31FE9626E00B870BB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		801E5572200E48C500B9168A /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		80A957991FD596E600A88F78 /* DanceScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DanceScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80A9579C1FD596E600A88F78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80A9579E1FD596E600A88F78 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -82,8 +84,8 @@
 				80F3873F1FD6E2BA00F067B1 /* PurchaseScannerViewController.swift */,
 				84E1406E20050B1000B20D0E /* checkViewController.swift */,
 				614584B22006622C002991D6 /* ListViewController.swift */,
-				61416A1D2009010700F0997C /* Student.swift */,
 				80A957A01FD596E600A88F78 /* Main.storyboard */,
+				801E5572200E48C500B9168A /* Student.swift */,
 				80A957A31FD596E600A88F78 /* Assets.xcassets */,
 				80A957A51FD596E600A88F78 /* LaunchScreen.storyboard */,
 				80A957A81FD596E600A88F78 /* Info.plist */,
@@ -252,6 +254,7 @@
 				84E1406F20050B1000B20D0E /* checkViewController.swift in Sources */,
 				80F387401FD6E2BA00F067B1 /* PurchaseScannerViewController.swift in Sources */,
 				614584B32006622C002991D6 /* ListViewController.swift in Sources */,
+				801E5573200E48C500B9168A /* Student.swift in Sources */,
 				80A9579D1FD596E600A88F78 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
