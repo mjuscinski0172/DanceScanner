@@ -25,8 +25,6 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         let student = studentArray[myIndex]
-        print(student)
-        print("-----------------Chicken-----------------")
         cell.textLabel?.text = "\(student.firstName) \(student.lastName)"
         cell.detailTextLabel?.text = student.checkedInOrOut
         myIndex += 1
