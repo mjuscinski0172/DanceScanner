@@ -71,10 +71,10 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         let hour = calendar.component(.hour, from: date)
         let minutes = calendar.component(.minute, from: date)
         let seconds = calendar.component(.second, from: date)
-        let timeOf = "\(hour):\(minutes)"
-        print("hours = \(hour):\(minutes)")
+        let timeOf = "\(hour):\(minutes):\(seconds)"
+        //print("hours = \(hour):\(minutes):\(seconds)")
         place.setObject(timeOf as CKRecordValue, forKey: "checkInTime")
-       // place.setObject(timeOf as CKRecordValue, forKey: "checkedOutTime")
+        place.setObject(timeOf as CKRecordValue, forKey: "checkedOutTime")
 
         let predicate =  NSPredicate(format: "altIDNumber = '\(altID)'")
         let query = CKQuery(recordType: "Students", predicate: predicate)
