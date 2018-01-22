@@ -71,10 +71,10 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         let hour = calendar.component(.hour, from: date)
         let minutes = calendar.component(.minute, from: date)
         let seconds = calendar.component(.second, from: date)
-        let timeOf = "\(hour):\(minutes)"
-        print("hours = \(hour):\(minutes)")
+        let timeOf = "\(hour):\(minutes):\(seconds)"
+        //print("hours = \(hour):\(minutes):\(seconds)")
         place.setObject(timeOf as CKRecordValue, forKey: "checkInTime")
-       // place.setObject(timeOf as CKRecordValue, forKey: "checkedOutTime")
+        place.setObject(timeOf as CKRecordValue, forKey: "checkedOutTime")
 
         let predicate =  NSPredicate(format: "altIDNumber = '\(altID)'")
         let query = CKQuery(recordType: "Students", predicate: predicate)
@@ -90,13 +90,17 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                     self.database.save(student) { (record, error) in
                         if error != nil {
                             let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
-                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                                self.runSession()
+                            })
                             alert.addAction(okAction)
                             self.present(alert, animated: true, completion: nil)
                         }
                         else {
                             let alert = UIAlertController(title: "Checked In", message: nil, preferredStyle: .alert)
-                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                                self.runSession()
+                            })
                             alert.addAction(okAction)
                             self.present(alert, animated: true, completion: nil)
                         }
@@ -110,13 +114,17 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                     self.database.save(student) { (record, error) in
                         if error != nil {
                             let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
-                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                                self.runSession()
+                            })
                             alert.addAction(okAction)
                             self.present(alert, animated: true, completion: nil)
                         }
                         else{
                             let alert = UIAlertController(title: "Checked Out", message: nil, preferredStyle: .alert)
-                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                                self.runSession()
+                            })
                             alert.addAction(okAction)
                             self.present(alert, animated: true, completion: nil)                        }
                     }
@@ -127,7 +135,9 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                     print("c")
                     self.database.save(student, completionHandler: { (record, error) in
                         let alert = UIAlertController(title: "Error", message: "This student has already been checked out", preferredStyle: .alert)
-                        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                            self.runSession()
+                        })
                         alert.addAction(okAction)
                         self.present(alert, animated: true, completion: nil)
                     })
@@ -135,7 +145,9 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 }
                 else {
                     let alert = UIAlertController(title: "Error", message: "This student has not purchased tickets", preferredStyle: .alert)
-                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                        self.runSession()
+                    })
                     alert.addAction(okAction)
                     self.present(alert, animated: true, completion: nil)
                 }
