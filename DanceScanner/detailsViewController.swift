@@ -14,6 +14,14 @@ class detailsViewController: UIViewController {
     var selectedStudent: Student!
     var database: CKDatabase!
     
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var timeInLabel: UILabel!
+    @IBOutlet weak var timeOutLabel: UILabel!
+    @IBOutlet weak var timeInTitleLabel: UILabel!
+    @IBOutlet weak var timeOutTitleLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
