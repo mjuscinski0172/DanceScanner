@@ -83,7 +83,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         print("hours = \(hour):\(correctedMinutes):\(seconds)")
         place.setObject("" as CKRecordValue, forKey: "checkInTime")
         place.setObject("" as CKRecordValue, forKey: "checkedOutTime")
-
+//randomthing
         let predicate =  NSPredicate(format: "altIDNumber = '\(altID)'")
         let query = CKQuery(recordType: "Students", predicate: predicate)
         database.perform(query, inZoneWith: nil) { (records, error) in
