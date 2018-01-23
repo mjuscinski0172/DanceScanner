@@ -27,6 +27,32 @@ class detailsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        nameLabel.text = selectedStudent.firstName + " " + selectedStudent.lastName
+        idLabel.text = selectedStudent.idNumber
+        if selectedStudent.checkedInOrOut == "Purchased"{
+            timeInLabel.alpha = 0
+            timeOutLabel.alpha = 0
+            timeInTitleLabel.alpha = 0
+            timeOutTitleLabel.alpha = 0
+        }
+        else if selectedStudent.checkedInOrOut == "In" {
+            timeInLabel.alpha = 1
+            timeInLabel.text = "Akhil there's no time connected to a student"
+            timeInTitleLabel.alpha = 1
+            timeOutTitleLabel.alpha = 0
+            timeOutLabel.alpha = 0
+        }
+        else {
+            timeInLabel.alpha = 1
+            timeOutTitleLabel.alpha = 1
+            timeOutLabel.alpha = 1
+            timeOutTitleLabel.alpha = 1
+            timeInLabel.text = "Akhil there's no time connected to a student"
+            timeOutLabel.text = "Akhil there's no time connected to a student"
+        }
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
