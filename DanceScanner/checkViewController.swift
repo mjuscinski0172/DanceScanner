@@ -70,9 +70,17 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         let calendar = Calendar.current
         let hour = calendar.component(.hour, from: date)
         let minutes = calendar.component(.minute, from: date)
+        var correctedMinutes = "\(minutes)"
+
+        if minutes < 10 {
+            correctedMinutes = "0\(minutes)"
+        }
+        else if minutes >= 10{
+            correctedMinutes = "\(minutes)"
+        }
         let seconds = calendar.component(.second, from: date)
-        let timeOf = "\(hour):\(minutes):\(seconds)"
-        //print("hours = \(hour):\(minutes):\(seconds)")
+        let timeOf = "\(hour):\(correctedMinutes):\(seconds)"
+        print("hours = \(hour):\(correctedMinutes):\(seconds)")
         place.setObject(timeOf as CKRecordValue, forKey: "checkInTime")
         place.setObject(timeOf as CKRecordValue, forKey: "checkedOutTime")
 
