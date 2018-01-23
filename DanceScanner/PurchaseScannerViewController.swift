@@ -93,9 +93,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                         }
                     })
                     let addGuestButton = UIAlertAction(title: "Ticket with Guest", style: .default, handler: { (action) in
-                        //everything here will have to be deleted when we add the segue
-                        print("Chicken")
-                        self.runSession()
+                        self.performSegue(withIdentifier: "addGuestSegue", sender: self)
                     })
                     let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
                         self.runSession()

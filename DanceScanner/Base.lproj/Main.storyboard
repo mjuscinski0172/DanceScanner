@@ -278,6 +278,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="sO7-Rb-JPV"/>
                     </view>
+                    <connections>
+                        <segue destination="ITN-Ty-eZL" kind="show" identifier="addGuestSegue" id="RV3-aM-IFv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XlW-Ku-enJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
