@@ -102,6 +102,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                     })
                     purchaseTicketsAlert.addAction(purchaseTicketButton)
                     purchaseTicketsAlert.addAction(cancelAction)
+                    purchaseTicketsAlert.addAction(addGuestButton)
                     self.present(purchaseTicketsAlert, animated: true, completion: nil)
                 }
             }).resume()
