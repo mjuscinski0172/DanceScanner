@@ -75,7 +75,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                     let ID = studentDictionary.object(forKey: "ID") as! NSInteger
                     
                     let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
-                    let purchaseTicketButton = UIAlertAction(title: "Purchase Tickets", style: .default, handler: { (action) in
+                    let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
                         let place = CKRecord(recordType: "Students")
                         place.setObject(firstName as CKRecordValue, forKey: "firstName")
                         place.setObject(lastName as CKRecordValue, forKey: "lastName")
@@ -91,6 +91,11 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                             }
                             self.runSession()
                         }
+                    })
+                    let addGuestButton = UIAlertAction(title: "Ticket with Guest", style: .default, handler: { (action) in
+                        //everything here will have to be deleted when we add the segue
+                        print("Chicken")
+                        self.runSession()
                     })
                     let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
                         self.runSession()
