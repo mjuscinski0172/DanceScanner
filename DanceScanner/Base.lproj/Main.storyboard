@@ -266,7 +266,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N1U-mk-chz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="901.5625" y="742.96875"/>
+            <point key="canvasLocation" x="923" y="743"/>
         </scene>
         <!--Purchase Scanner View Controller-->
         <scene sceneID="oZZ-rg-scO">
@@ -282,6 +282,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XlW-Ku-enJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="199" y="-659"/>
+        </scene>
+        <!--Add Guest View Controller-->
+        <scene sceneID="Ktn-X7-z16">
+            <objects>
+                <viewController id="ITN-Ty-eZL" customClass="addGuestViewController" customModule="DanceScanner" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cUz-B7-nHG">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="oOH-zw-gZY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xTT-5I-rIS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="923" y="-659"/>
         </scene>
         <!--checkViewController-->
         <scene sceneID="GVJ-Ce-0GJ">
