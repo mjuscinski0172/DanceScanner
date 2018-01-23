@@ -18,8 +18,10 @@ class detailsViewController: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var timeInLabel: UILabel!
     @IBOutlet weak var timeOutLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var timeInTitleLabel: UILabel!
     @IBOutlet weak var timeOutTitleLabel: UILabel!
+    @IBOutlet weak var statusTitlesLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -35,6 +37,7 @@ class detailsViewController: UIViewController {
             timeOutLabel.alpha = 0
             timeInTitleLabel.alpha = 0
             timeOutTitleLabel.alpha = 0
+            statusLabel.text = "Purchased Tickets"
         }
         else if selectedStudent.checkedInOrOut == "In" {
             timeInLabel.alpha = 1
@@ -42,6 +45,7 @@ class detailsViewController: UIViewController {
             timeInTitleLabel.alpha = 1
             timeOutTitleLabel.alpha = 0
             timeOutLabel.alpha = 0
+            statusLabel.text = "In Dance"
         }
         else {
             timeInLabel.alpha = 1
@@ -50,6 +54,7 @@ class detailsViewController: UIViewController {
             timeOutTitleLabel.alpha = 1
             timeInLabel.text = "Akhil there's no time connected to a student"
             timeOutLabel.text = "Akhil there's no time connected to a student"
+            statusLabel.text = "Checked Out"
         }
     }
 
