@@ -25,7 +25,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         let student = studentArray[myIndex]
-        cell.textLabel?.text = "                    " + "\(student.firstName) \(student.lastName)"
+        cell.textLabel?.text = "                     " + "\(student.firstName) \(student.lastName)"
         myIndex += 1
         
         let label = UILabel(frame: CGRect(x: 5, y: 2, width: 90, height: 40))
@@ -64,7 +64,6 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let checkOutTime = student.object(forKey: "checkOutTime") as! String
                 let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime)
                 self.studentArray.append(newStudent)
-
             }
             DispatchQueue.main.async {
                 self.tableView.reloadData()

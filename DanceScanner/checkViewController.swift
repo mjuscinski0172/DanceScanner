@@ -80,7 +80,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         }
         let seconds = calendar.component(.second, from: date)
         let timeOf = "\(hour):\(correctedMinutes)"
-        print("hours = \(hour):\(correctedMinutes):\(seconds)")
+//        print("hours = \(hour):\(correctedMinutes):\(seconds)")
 
         let predicate =  NSPredicate(format: "altIDNumber = '\(altID)'")
         let query = CKQuery(recordType: "Students", predicate: predicate)
@@ -137,7 +137,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 }
                 else if student.object(forKey: "checkedInOrOut") as! String == "Out" {
                     student.setObject("Out" as CKRecordValue, forKey: "checkedInOrOut")
-                    print("c")
+//                    print("c")
                     self.database.save(student, completionHandler: { (record, error) in
                         let alert = UIAlertController(title: "Error", message: "This student has already been checked out", preferredStyle: .alert)
                         let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
