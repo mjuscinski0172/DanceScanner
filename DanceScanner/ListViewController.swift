@@ -25,16 +25,17 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         let student = studentArray[myIndex]
-        cell.textLabel?.text = "                     " + "\(student.firstName) \(student.lastName)"
+        cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
         myIndex += 1
         
-        let label = UILabel(frame: CGRect(x: 5, y: 2, width: 90, height: 40))
+        let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
         label.textAlignment = .center
-        label.layer.borderColor = UIColor.black.cgColor
-        label.layer.borderWidth = 2.0
-        label.text = "\(student.checkedInOrOut)"
+        label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 1.5)
+//        label.layer.borderColor = UIColor.black.cgColor
+//        label.layer.borderWidth = 1.5
+        label.text = "\(student.checkedInOrOut)".uppercased()
         if student.checkedInOrOut == "In" {
-            label.textColor = .green
+            label.textColor = UIColor.green.darker(by: 30)
         }
         if student.checkedInOrOut == "Out" {
             label.textColor = .red

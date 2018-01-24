@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		35330FF92008FE76004219D6 /* detailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35330FF82008FE76004219D6 /* detailsViewController.swift */; };
 		614584B32006622C002991D6 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614584B22006622C002991D6 /* ListViewController.swift */; };
+		617FF732201910F100C3E994 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FF731201910F100C3E994 /* UIColorExtension.swift */; };
+		617FF735201912EE00C3E994 /* LabelBorderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FF734201912EE00C3E994 /* LabelBorderExtension.swift */; };
 		8006ADA21FE9622E00B870BB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8006ADA11FE9622E00B870BB /* GoogleService-Info.plist */; };
 		8006ADA41FE9626E00B870BB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8006ADA31FE9626E00B870BB /* CloudKit.framework */; };
 		801E5573200E48C500B9168A /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801E5572200E48C500B9168A /* Student.swift */; };
@@ -27,6 +29,8 @@
 		0896CEDE7320A3E43C68E2B5 /* Pods-DanceScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DanceScanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DanceScanner/Pods-DanceScanner.debug.xcconfig"; sourceTree = "<group>"; };
 		35330FF82008FE76004219D6 /* detailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = detailsViewController.swift; sourceTree = "<group>"; };
 		614584B22006622C002991D6 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		617FF731201910F100C3E994 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		617FF734201912EE00C3E994 /* LabelBorderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LabelBorderExtension.swift; path = /Users/jrodriguez8064/Documents/DanceScanner/DanceScanner/Extensions/LabelBorderExtension.swift; sourceTree = "<absolute>"; };
 		8006AD8E1FE95EDF00B870BB /* DanceScanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DanceScanner.entitlements; sourceTree = "<group>"; };
 		8006ADA11FE9622E00B870BB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8006ADA31FE9626E00B870BB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -58,6 +62,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		617FF733201912BA00C3E994 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				617FF731201910F100C3E994 /* UIColorExtension.swift */,
+				617FF734201912EE00C3E994 /* LabelBorderExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		80A957901FD596E600A88F78 = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +102,7 @@
 				80A957A01FD596E600A88F78 /* Main.storyboard */,
 				8060C2B820177FC9006C21F4 /* addGuestViewController.swift */,
 				801E5572200E48C500B9168A /* Student.swift */,
+				617FF733201912BA00C3E994 /* Extensions */,
 				80A957A31FD596E600A88F78 /* Assets.xcassets */,
 				80A957A51FD596E600A88F78 /* LaunchScreen.storyboard */,
 				80A957A81FD596E600A88F78 /* Info.plist */,
@@ -252,11 +266,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				617FF735201912EE00C3E994 /* LabelBorderExtension.swift in Sources */,
 				80A9579F1FD596E600A88F78 /* ViewController.swift in Sources */,
 				35330FF92008FE76004219D6 /* detailsViewController.swift in Sources */,
 				84E1406F20050B1000B20D0E /* checkViewController.swift in Sources */,
 				80F387401FD6E2BA00F067B1 /* PurchaseScannerViewController.swift in Sources */,
 				614584B32006622C002991D6 /* ListViewController.swift in Sources */,
+				617FF732201910F100C3E994 /* UIColorExtension.swift in Sources */,
 				801E5573200E48C500B9168A /* Student.swift in Sources */,
 				80A9579D1FD596E600A88F78 /* AppDelegate.swift in Sources */,
 				8060C2B920177FC9006C21F4 /* addGuestViewController.swift in Sources */,
