@@ -358,6 +358,15 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SYd-wa-LRo">
+                                <rect key="frame" x="241" y="515" width="285" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Confirm &amp; Purchase"/>
+                                <connections>
+                                    <action selector="whenConfirmButtonPressed:" destination="ITN-Ty-eZL" eventType="touchUpInside" id="5f2-bw-RPZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -378,6 +387,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="oOH-zw-gZY"/>
                     </view>
+                    <connections>
+                        <outlet property="guestNameTextField" destination="woz-8N-Bga" id="UR4-NC-Yfb"/>
+                        <outlet property="guestSchoolTextField" destination="5SR-3V-d8B" id="19N-XH-5qh"/>
+                        <outlet property="parentPhoneNumberTextField" destination="4fv-58-fYD" id="cCO-OV-zip"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xTT-5I-rIS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
