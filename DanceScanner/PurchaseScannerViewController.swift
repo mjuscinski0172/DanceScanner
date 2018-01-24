@@ -73,6 +73,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                     let firstName = studentDictionary.object(forKey: "First") as! NSString
                     let lastName = studentDictionary.object(forKey: "Last") as! NSString
                     let ID = studentDictionary.object(forKey: "ID") as! NSInteger
+                
                     
                     let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
                     let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
@@ -82,6 +83,8 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                         place.setObject(String(ID) as CKRecordValue, forKey: "idNumber")
                         place.setObject(String(altID) as CKRecordValue, forKey: "altIDNumber")
                         place.setObject("Purchased" as CKRecordValue, forKey: "checkedInOrOut")
+                        place.setObject("" as CKRecordValue, forKey: "checkInTime")
+                        place.setObject("" as CKRecordValue, forKey: "checkOutTime")
                         self.database.save(place) { (record, error) in
                             if error != nil {
                                 let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
