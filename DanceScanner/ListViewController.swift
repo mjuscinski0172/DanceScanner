@@ -60,7 +60,9 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let altIDNumber = student.object(forKey: "altIDNumber") as! String
                 let idNumber = student.object(forKey: "idNumber") as! String
                 let checkedInOrOut = student.object(forKey: "checkedInOrOut") as! String
-                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut)
+                let checkInTime = student.object(forKey: "checkInTime") as! String
+                let checkOutTime = student.object(forKey: "checkOutTime") as! String
+                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime)
                 self.studentArray.append(newStudent)
 
             }
