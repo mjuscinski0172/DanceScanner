@@ -14,12 +14,16 @@ class Student {
     var altIDNumber: String
     var idNumber: String
     var checkedInOrOut: String
+    var checkInTime: String
+    var checkOutTime: String
     
-    init(firstName f: String, lastName l: String, altIDNumber a: String, idNumber i: String, checkedInOrOut c: String) {
+    init(firstName f: String, lastName l: String, altIDNumber a: String, idNumber i: String, checkedInOrOut c: String, checkInTime t: String, checkOutTime o: String) {
         firstName = f
         lastName = l
         altIDNumber = a
         idNumber = i
         checkedInOrOut = c
+        checkInTime = t
+        checkOutTime = o
     }
 }

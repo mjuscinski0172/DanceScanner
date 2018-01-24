@@ -79,7 +79,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             correctedMinutes = "\(minutes)"
         }
         let seconds = calendar.component(.second, from: date)
-        let timeOf = "\(hour):\(correctedMinutes):\(seconds)"
+        let timeOf = "\(hour):\(correctedMinutes)"
         print("hours = \(hour):\(correctedMinutes):\(seconds)")
 
         let predicate =  NSPredicate(format: "altIDNumber = '\(altID)'")
