@@ -29,6 +29,9 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         myIndex += 1
         
         let label = UILabel(frame: CGRect(x: 5, y: 2, width: 90, height: 40))
+        label.textAlignment = .center
+        label.layer.borderColor = UIColor.black.cgColor
+        label.layer.borderWidth = 2.0
         label.text = "\(student.checkedInOrOut)"
         if student.checkedInOrOut == "In" {
             label.textColor = .green
@@ -37,10 +40,6 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             label.textColor = .red
         }
         cell.addSubview(label)
-        
-//        let borderLabel = UILabel(frame: CGRect(x: 90, y: 0, width: 2, height: 40))
-//        label.backgroundColor = .black
-//        cell.addSubview(borderLabel)
         
         return cell
     }
