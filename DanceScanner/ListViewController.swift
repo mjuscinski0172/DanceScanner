@@ -27,7 +27,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
         cell.detailTextLabel?.text = "                                 " + student.guestName
         
-        let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
+        let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 52))
         label.textAlignment = .center
         label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 1.5)
         label.text = "\(student.checkedInOrOut)".uppercased()
