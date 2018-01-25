@@ -25,6 +25,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         let student = studentArray[indexPath.row]
         cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
+        cell.detailTextLabel?.text = "                                 " + student.guestName
         
         let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
         label.textAlignment = .center
@@ -59,7 +60,10 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let checkedInOrOut = student.object(forKey: "checkedInOrOut") as! String
                 let checkInTime = student.object(forKey: "checkInTime") as! String
                 let checkOutTime = student.object(forKey: "checkOutTime") as! String
-                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime)
+                let guestName = student.object(forKey: "guestName") as! String
+                let guestSchool = student.object(forKey: "guestSchool") as! String
+                let guestNumber = student.object(forKey: "guestParentPhone") as! String
+                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestNumber: guestNumber)
                 self.studentArray.append(newStudent)
             }
             DispatchQueue.main.async {
