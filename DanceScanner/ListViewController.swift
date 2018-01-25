@@ -59,7 +59,10 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let checkedInOrOut = student.object(forKey: "checkedInOrOut") as! String
                 let checkInTime = student.object(forKey: "checkInTime") as! String
                 let checkOutTime = student.object(forKey: "checkOutTime") as! String
-                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime)
+                let guestName = student.object(forKey: "guestName") as! String
+                let guestSchool = student.object(forKey: "guestSchool") as! String
+                let guestNumber = student.object(forKey: "guestNumber") as! String
+                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestNumber: guestNumber)
                 self.studentArray.append(newStudent)
             }
             DispatchQueue.main.async {
