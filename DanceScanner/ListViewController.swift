@@ -25,6 +25,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         let student = studentArray[indexPath.row]
         cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
+        cell.detailTextLabel?.text = "                                 " + student.guestName
         
         let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
         label.textAlignment = .center
