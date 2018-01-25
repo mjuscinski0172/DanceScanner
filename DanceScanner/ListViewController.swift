@@ -15,7 +15,6 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var studentArray = [Student]()
     let database = CKContainer.default().publicCloudDatabase
     
-    var myIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,15 +23,12 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        let student = studentArray[myIndex]
+        let student = studentArray[indexPath.row]
         cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
-        myIndex += 1
         
         let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
         label.textAlignment = .center
         label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 1.5)
-//        label.layer.borderColor = UIColor.black.cgColor
-//        label.layer.borderWidth = 1.5
         label.text = "\(student.checkedInOrOut)".uppercased()
         if student.checkedInOrOut == "In" {
             label.textColor = UIColor.green.darker(by: 30)
