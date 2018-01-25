@@ -16,8 +16,13 @@ class Student {
     var checkedInOrOut: String
     var checkInTime: String
     var checkOutTime: String
+    var guestName: String
+    var guestSchool: String
+    var guestNumber: String
     
-    init(firstName f: String, lastName l: String, altIDNumber a: String, idNumber i: String, checkedInOrOut c: String, checkInTime t: String, checkOutTime o: String) {
+    
+    
+    init(firstName f: String, lastName l: String, altIDNumber a: String, idNumber i: String, checkedInOrOut c: String, checkInTime t: String, checkOutTime o: String, guestName g: String, guestSchool s: String, guestNumber n: String) {
         firstName = f
         lastName = l
         altIDNumber = a
@@ -25,5 +30,8 @@ class Student {
         checkedInOrOut = c
         checkInTime = t
         checkOutTime = o
+        guestName = g
+        guestNumber = n
+        guestSchool = s
     }
 }
