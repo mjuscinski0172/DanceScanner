@@ -85,6 +85,9 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                         place.setObject("Purchased" as CKRecordValue, forKey: "checkedInOrOut")
                         place.setObject("" as CKRecordValue, forKey: "checkInTime")
                         place.setObject("" as CKRecordValue, forKey: "checkOutTime")
+                        place.setObject("" as CKRecordValue, forKey: "guestName")
+                        place.setObject("" as CKRecordValue, forKey: "guestSchool")
+                        place.setObject("" as CKRecordValue, forKey: "guestParentPhone")
                         self.database.save(place) { (record, error) in
                             if error != nil {
                                 let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
