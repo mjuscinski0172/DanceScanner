@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
             let passwordTextField = passwordAlert.textFields![0]
-            if passwordTextField.text == resetAllPassword {
+            if passwordTextField.text == self.resetAllPassword {
                 
             }
             else {
