@@ -281,6 +281,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RPI-t3-nNU">
+                                <rect key="frame" x="572" y="974" width="176" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Add a Guest"/>
+                                <connections>
+                                    <segue destination="ITN-Ty-eZL" kind="show" identifier="detailToGuestSegue" id="n2x-wf-4cB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -508,4 +517,7 @@
             <point key="canvasLocation" x="-463" y="40"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="n2x-wf-4cB"/>
+    </inferredMetricsTieBreakers>
 </document>
