@@ -20,8 +20,7 @@ class addGuestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
+
     }
     
     @IBAction func whenConfirmButtonPressed(_ sender: UIButton) {
@@ -69,7 +68,7 @@ class addGuestViewController: UIViewController {
             
             
         }
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
      
