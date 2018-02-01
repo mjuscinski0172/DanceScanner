@@ -15,10 +15,13 @@ class addGuestViewController: UIViewController {
     @IBOutlet weak var guestSchoolTextField: UITextField!
     @IBOutlet weak var parentPhoneNumberTextField: UITextField!
     var database = CKContainer.default().publicCloudDatabase
+    var selectedStudentArray: NSArray!
+    var altId: String!
+    var selectedStudent: Student!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print(selectedStudent.firstName + selectedStudent.lastName)
     }
     
     @IBAction func whenConfirmButtonPressed(_ sender: UIButton) {
@@ -57,13 +60,7 @@ class addGuestViewController: UIViewController {
                     self.present(alert, animated: true, completion: nil)
                     
                 }
-                print(1)
-                
-                print(3)
             }
-            print(4)
-            
-            
         }
         self.navigationController?.popViewController(animated: true)
     }

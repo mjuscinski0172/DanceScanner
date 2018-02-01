@@ -13,6 +13,7 @@ class detailsViewController: UIViewController {
 
     var selectedStudent: Student!
     var database: CKDatabase!
+//    var detailsStudentArray = [Student]()
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
@@ -35,8 +36,8 @@ class detailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         guestLabelAlphas()
         
@@ -99,7 +100,9 @@ class detailsViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let nvc = segue.destination as! addGuestViewController
         nvc.database = database
-//        nvc.selectedStudent = selectedStudent
+        nvc.selectedStudent = selectedStudent
+//        detailsStudentArray.append(selectedStudent)
+//        nvc.selectedStudentArray = detailsStudentArray as NSArray
     }
     
     
