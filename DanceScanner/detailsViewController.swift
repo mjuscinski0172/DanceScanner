@@ -34,7 +34,8 @@ class detailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         guestLabelAlphas()
@@ -93,9 +94,13 @@ class detailsViewController: UIViewController {
             guestSchoolLabel.text = selectedStudent.guestSchool
             guestParentPhoneLabel.text = selectedStudent.guestParentPhone
         }
-        print(guestInfoTitleLabel.text)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nvc = segue.destination as! addGuestViewController
+        nvc.database = database
+//        nvc.selectedStudent = selectedStudent
+    }
     
     
 }
