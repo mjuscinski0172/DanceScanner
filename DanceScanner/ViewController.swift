@@ -10,6 +10,7 @@ import UIKit
 import CloudKit
 
 class ViewController: UIViewController {
+    var resetAllPassword = "57bw32Gc"
 
     override func viewDidLoad() {
         super.viewDidLoad()
