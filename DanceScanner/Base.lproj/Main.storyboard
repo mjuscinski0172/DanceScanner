@@ -49,6 +49,16 @@
                                     <segue destination="hc1-Rp-DCr" kind="show" id="dOX-mN-0kF"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="POv-Ab-kAI">
+                                <rect key="frame" x="20" y="974" width="131" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Delete All Students">
+                                    <color key="titleColor" red="1" green="0.03887241627391691" blue="0.049791262454762841" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteAllButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hvI-m8-JGY"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -281,15 +291,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RPI-t3-nNU">
-                                <rect key="frame" x="572" y="974" width="176" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Add a Guest"/>
-                                <connections>
-                                    <segue destination="ITN-Ty-eZL" kind="show" identifier="detailToGuestSegue" id="n2x-wf-4cB"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -332,6 +333,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PYP-SW-czy"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Oq2-Ib-gRq">
+                        <barButtonItem key="rightBarButtonItem" title="Add a Guest" id="yBG-5F-rBw">
+                            <connections>
+                                <segue destination="ITN-Ty-eZL" kind="show" id="3hq-tM-0TK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="guestInfoTitleLabel" destination="jyD-ov-hLR" id="taY-uc-uVF"/>
                         <outlet property="guestNameLabel" destination="V2P-QW-3M6" id="7Ln-PY-zRY"/>
@@ -518,6 +526,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="n2x-wf-4cB"/>
+        <segue reference="3hq-tM-0TK"/>
     </inferredMetricsTieBreakers>
 </document>
