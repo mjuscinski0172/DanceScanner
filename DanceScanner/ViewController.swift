@@ -10,6 +10,7 @@ import UIKit
 import CloudKit
 
 class ViewController: UIViewController {
+    var resetAllPassword = "57bw32Gc"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,9 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    @IBAction func deleteAllButton(_ sender: UIButton) {
+        
+    }
+    
 }
 
