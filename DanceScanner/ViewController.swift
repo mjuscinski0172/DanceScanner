@@ -38,7 +38,7 @@ class ViewController: UIViewController {
                 let youDunGoofedAlert = UIAlertController(title: "Password Incorrect", message: "The password you entered was incorrect.", preferredStyle: .alert)
                 let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 youDunGoofedAlert.addAction(OKAction)
-                present(youDunGoofedAlert, animated: true, completion: nil)
+                self.present(youDunGoofedAlert, animated: true, completion: nil)
             }
         }
         passwordAlert.addAction(cancelAction)
