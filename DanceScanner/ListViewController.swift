@@ -21,6 +21,10 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         createStudentArray()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         let student = studentArray[indexPath.row]
