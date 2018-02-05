@@ -32,7 +32,13 @@ class ViewController: UIViewController {
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
             let passwordTextField = passwordAlert.textFields![0]
             if passwordTextField.text == self.resetAllPassword {
-                
+                let areYouPositive = UIAlertController(title: "Are you sure?", message: "You cannot go back from here.", preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                let cancelAction2 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+                areYouPositive.addAction(OKAction)
+                areYouPositive.addAction(cancelAction2)
+                self.present(areYouPositive, animated: true, completion: nil)
             }
             else {
                 let youDunGoofedAlert = UIAlertController(title: "Password Incorrect", message: "The password you entered was incorrect.", preferredStyle: .alert)
