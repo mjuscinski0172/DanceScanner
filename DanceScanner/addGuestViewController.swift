@@ -32,6 +32,7 @@ class addGuestViewController: UIViewController {
             alert.addAction(alertAccept)
         }
         else {
+            
             var guestName = guestNameTextField.text
             var guestSchool = guestSchoolTextField.text
             var guestParentNumber = parentPhoneNumberTextField.text
