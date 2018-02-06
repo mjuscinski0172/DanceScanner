@@ -21,7 +21,6 @@ class addGuestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(selectedStudent.firstName + selectedStudent.lastName)
     }
     
     @IBAction func whenConfirmButtonPressed(_ sender: UIButton) {
@@ -30,6 +29,7 @@ class addGuestViewController: UIViewController {
             let alert = UIAlertController(title: "Error", message: "It appears that you have missed some information about this student. Please look back and type in ALL the information", preferredStyle: .alert)
             let alertAccept = UIAlertAction(title: "Close", style: .cancel, handler: nil)
             alert.addAction(alertAccept)
+            present(alert, animated: true, completion: nil)
         }
         else {
             var guestName = guestNameTextField.text
