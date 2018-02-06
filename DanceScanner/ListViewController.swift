@@ -50,8 +50,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         })
         resultsController.tableView.reloadData()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
+        override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
     }
     
@@ -137,3 +136,4 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         nvc.database = database
     }
 }
+
