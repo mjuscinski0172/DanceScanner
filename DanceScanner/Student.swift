@@ -18,11 +18,11 @@ class Student {
     var checkOutTime: String
     var guestName: String
     var guestSchool: String
-    var guestNumber: String
+    var guestParentPhone: String
     
     
     
-    init(firstName f: String, lastName l: String, altIDNumber a: String, idNumber i: String, checkedInOrOut c: String, checkInTime t: String, checkOutTime o: String, guestName g: String, guestSchool s: String, guestNumber n: String) {
+    init(firstName f: String, lastName l: String, altIDNumber a: String, idNumber i: String, checkedInOrOut c: String, checkInTime t: String, checkOutTime o: String, guestName g: String, guestSchool s: String, guestParentPhone n: String) {
         firstName = f
         lastName = l
         altIDNumber = a
@@ -31,7 +31,7 @@ class Student {
         checkInTime = t
         checkOutTime = o
         guestName = g
-        guestNumber = n
+        guestParentPhone = n
         guestSchool = s
     }
 }

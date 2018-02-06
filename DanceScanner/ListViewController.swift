@@ -51,6 +51,10 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         resultsController.tableView.reloadData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         if tableView == resultsController.tableView{
@@ -116,8 +120,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let checkOutTime = student.object(forKey: "checkOutTime") as! String
                 let guestName = student.object(forKey: "guestName") as! String
                 let guestSchool = student.object(forKey: "guestSchool") as! String
-                let guestNumber = student.object(forKey: "guestParentPhone") as! String
-                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestNumber: guestNumber)
+                let guestParentPhone = student.object(forKey: "guestParentPhone") as! String
+                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone)
                 self.studentArray.append(newStudent)
             }
             DispatchQueue.main.async {

@@ -14,6 +14,8 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
     var database =  CKContainer.default().publicCloudDatabase
+    var studentArray: NSArray!
+    var altId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,13 +70,12 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             let url = URL(string: urlString)!
             URLSession.shared.dataTask(with: url, completionHandler: { (myData, response, error) in
                 if let JSONObject = try? JSONSerialization.jsonObject(with: myData!, options: .allowFragments) as! NSDictionary {
-                    let studentArray = JSONObject.object(forKey: altID) as! NSArray
-                    let studentDictionary = studentArray.firstObject as! NSDictionary
+                    self.studentArray = JSONObject.object(forKey: altID) as! NSArray
+                    let studentDictionary = self.studentArray.firstObject as! NSDictionary
                     let firstName = studentDictionary.object(forKey: "First") as! NSString
                     let lastName = studentDictionary.object(forKey: "Last") as! NSString
                     let ID = studentDictionary.object(forKey: "ID") as! NSInteger
                 
-                    
                     let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
                     let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
                         let place = CKRecord(recordType: "Students")
@@ -85,6 +86,9 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                         place.setObject("Purchased" as CKRecordValue, forKey: "checkedInOrOut")
                         place.setObject("" as CKRecordValue, forKey: "checkInTime")
                         place.setObject("" as CKRecordValue, forKey: "checkOutTime")
+                        place.setObject("" as CKRecordValue, forKey: "guestName")
+                        place.setObject("" as CKRecordValue, forKey: "guestSchool")
+                        place.setObject("" as CKRecordValue, forKey: "guestParentPhone")
                         self.database.save(place) { (record, error) in
                             if error != nil {
                                 let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
@@ -124,7 +128,8 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                 let barcodeReadable = barcodeData as? AVMetadataMachineReadableCodeObject
                 
                 if let readableCode = barcodeReadable{
-                    getJSON(altID: readableCode.stringValue!)
+                    self.altId = readableCode.stringValue!
+                    getJSON(altID: altId)
                 }
                 
             }
@@ -140,5 +145,11 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         if (session?.isRunning == true) {
             session.stopRunning()
         }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nvc = segue.destination as! addGuestViewController
+        nvc.selectedStudentArray = studentArray
+        nvc.altId = altId
+        nvc.database = database
     }
 }
