@@ -9,45 +9,98 @@
 import UIKit
 import CloudKit
 
-class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
     @IBOutlet weak var tableView: UITableView!
     
     var studentArray = [Student]()
+    var filteredArray = [Student]()
     let database = CKContainer.default().publicCloudDatabase
     
+    var searchController = UISearchController()
+    var resultsController = UITableViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         createStudentArray()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        searchController = UISearchController(searchResultsController: resultsController)
+        tableView.tableHeaderView = searchController.searchBar
+        searchController.searchResultsUpdater = self
+        
+        resultsController.tableView.delegate = self
+        resultsController.tableView.dataSource = self
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    
+    
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        filteredArray = studentArray.filter({ (studentArray:Student) -> Bool in
+            
+            let fullName = studentArray.firstName + " " + studentArray.lastName
+            
+            if (studentArray.lastName.lowercased().contains(searchController.searchBar.text!.lowercased()) || studentArray.firstName.lowercased().contains(searchController.searchBar.text!.lowercased()) || fullName.lowercased().contains(searchController.searchBar.text!.lowercased()) || studentArray.guestName.lowercased().contains(searchController.searchBar.text!.lowercased())){
+                return true
+            } else{
+                return false
+            }
+        })
+        resultsController.tableView.reloadData()
+    }
+        override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        let student = studentArray[indexPath.row]
-        cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
-        cell.detailTextLabel?.text = "                                 " + student.guestName
-        
-        let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 52))
-        label.textAlignment = .center
-        label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 1.5)
-        label.text = "\(student.checkedInOrOut)".uppercased()
-        if student.checkedInOrOut == "In" {
+        let cell = UITableViewCell()
+        if tableView == resultsController.tableView{
+            let student = filteredArray[indexPath.row]
+            cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
+            cell.detailTextLabel?.text = "                                 " + student.guestName
+            
+            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
+            label.textAlignment = .center
+            label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 1.5)
+            label.text = "\(student.checkedInOrOut)".uppercased()
+            if student.checkedInOrOut == "In" {
+                label.textColor = UIColor.green.darker(by: 30)
+            }
+            if student.checkedInOrOut == "Out" {
+                label.textColor = .red
+            }
+            cell.addSubview(label)
+    
+            return cell
+        } else {
+            let student = studentArray[indexPath.row]
+            cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
+            cell.detailTextLabel?.text = "                                 " + student.guestName
+            
+            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
+            label.textAlignment = .center
+            label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 1.5)
+            label.text = "\(student.checkedInOrOut)".uppercased()
+            if student.checkedInOrOut == "In" {
             label.textColor = UIColor.green.darker(by: 30)
+            }
+            if student.checkedInOrOut == "Out" {
+                label.textColor = .red
+            }
+            cell.addSubview(label)
+            
+            return cell
         }
-        if student.checkedInOrOut == "Out" {
-            label.textColor = .red
-        }
-        cell.addSubview(label)
-        
-        return cell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return studentArray.count
+        if tableView == resultsController.tableView{
+            return filteredArray.count
+        } else{
+            return studentArray.count
+        }
     }
     
     func createStudentArray() {
@@ -83,3 +136,4 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         nvc.database = database
     }
 }
+
