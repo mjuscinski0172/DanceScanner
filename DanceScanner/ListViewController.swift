@@ -53,30 +53,51 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        let student: Student!
-        if tableView == resultsController.tableView{
-            student = filteredArray[indexPath.row]
+        if let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
+            //        let student: Student!
+            //        if tableView == resultsController.tableView{
+            //            student = filteredArray[indexPath.row]
+            //        }
+            //        else{
+            let student = studentArray[indexPath.row]
+            //        }
+            cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
+            cell.detailTextLabel?.text = "                                 " + student.guestName
+            
+            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
+            label.textAlignment = .center
+            label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 1.5)
+            label.text = "\(student.checkedInOrOut)".uppercased()
+            if student.checkedInOrOut == "In" {
+                label.textColor = UIColor.green.darker(by: 30)
+            }
+            if student.checkedInOrOut == "Out" {
+                label.textColor = .red
+            }
+            cell.addSubview(label)
+            
+            return cell
         }
-        else{
-            student = studentArray[indexPath.row]
+        else {
+            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "newCell")
+            let student = filteredArray[indexPath.row]
+            cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
+            cell.detailTextLabel?.text = "                                 " + student.guestName
+            
+            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
+            label.textAlignment = .center
+            label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 1.5)
+            label.text = "\(student.checkedInOrOut)".uppercased()
+            if student.checkedInOrOut == "In" {
+                label.textColor = UIColor.green.darker(by: 30)
+            }
+            if student.checkedInOrOut == "Out" {
+                label.textColor = .red
+            }
+            cell.addSubview(label)
+            
+            return cell
         }
-        cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
-        cell.detailTextLabel?.text = "                                 " + student.guestName
-        
-        let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
-        label.textAlignment = .center
-        label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 1.5)
-        label.text = "\(student.checkedInOrOut)".uppercased()
-        if student.checkedInOrOut == "In" {
-            label.textColor = UIColor.green.darker(by: 30)
-        }
-        if student.checkedInOrOut == "Out" {
-            label.textColor = .red
-        }
-        cell.addSubview(label)
-        
-        return cell
         
     }
     
@@ -86,6 +107,11 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         } else{
             return studentArray.count
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "listToDetail", sender: (Any).self)
+        resultsController.dismiss(animated: true, completion: nil)
     }
     
     func createStudentArray() {
@@ -116,14 +142,15 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let nvc = segue.destination as! detailsViewController
-        let indexPath = tableView.indexPathForSelectedRow!
-        if tableView == resultsController.tableView{
-            nvc.selectedStudent = filteredArray[indexPath.row]
-        }
-        else{
+        //        let indexPath = tableView.indexPathForSelectedRow!
+        if let indexPath = tableView.indexPathForSelectedRow{
             nvc.selectedStudent = studentArray[indexPath.row]
         }
-//        nvc.selectedStudent = studentArray[indexPath.row]
+        else{
+            let indexPath = resultsController.tableView.indexPathForSelectedRow!
+            nvc.selectedStudent = filteredArray[indexPath.row]
+        }
+        //        nvc.selectedStudent = studentArray[indexPath.row]
         nvc.database = database
     }
 }
