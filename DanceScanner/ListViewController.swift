@@ -11,6 +11,7 @@ import CloudKit
 
 class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var studentArray = [Student]()
     let database = CKContainer.default().publicCloudDatabase
@@ -18,18 +19,27 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+        tableView.backgroundColor = .black
+        tableView.separatorColor = .black
+        searchBar.backgroundImage = UIImage(named: "gray")
+        
         createStudentArray()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         let student = studentArray[indexPath.row]
-        cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
-        cell.detailTextLabel?.text = "                                 " + student.guestName
+        cell.backgroundColor = UIColor.darkGray.darker(by: 25)
+        cell.textLabel?.text = "                           " + "\(student.firstName) \(student.lastName)"
+        cell.detailTextLabel?.text = "                                       " + student.guestName
+        cell.detailTextLabel?.textColor = .lightGray
+        cell.textLabel?.textColor = .white
         
-        let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 52))
+        let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
+        label.textColor = .white
         label.textAlignment = .center
-        label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 1.5)
+        label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 0.5)
         label.text = "\(student.checkedInOrOut)".uppercased()
         if student.checkedInOrOut == "In" {
             label.textColor = UIColor.green.darker(by: 30)

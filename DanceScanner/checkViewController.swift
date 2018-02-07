@@ -18,6 +18,8 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+
         session = AVCaptureSession()
         
         let videoCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video)

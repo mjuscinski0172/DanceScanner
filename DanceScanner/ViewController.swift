@@ -14,8 +14,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         var database = CKContainer.default().publicCloudDatabase
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
     }
 
     override func didReceiveMemoryWarning() {

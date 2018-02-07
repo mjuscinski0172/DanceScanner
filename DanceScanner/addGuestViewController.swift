@@ -21,7 +21,8 @@ class addGuestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(selectedStudent.firstName + selectedStudent.lastName)
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+
     }
     
     @IBAction func whenConfirmButtonPressed(_ sender: UIButton) {

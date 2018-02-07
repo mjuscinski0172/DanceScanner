@@ -35,7 +35,8 @@ class detailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

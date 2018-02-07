@@ -19,6 +19,8 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+
         session = AVCaptureSession()
         
         let videoCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video)
@@ -51,6 +53,14 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         previewLayer.frame = view.layer.bounds
         previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         view.layer.addSublayer(previewLayer)
+        
+        let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
+        tabBar.barStyle = .blackTranslucent
+        let checkTabButton = UITabBarItem(title: "Check In/Out", image: nil, tag: 0)
+        let listTabButton = UITabBarItem(title: "List", image: nil, tag: 0)
+        tabBar.setItems([checkTabButton, listTabButton], animated: false)
+
+        view.addSubview(tabBar)
         
         session.startRunning()
     }
