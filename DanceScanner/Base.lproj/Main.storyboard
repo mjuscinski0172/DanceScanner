@@ -130,9 +130,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="2w0-KP-wVB" kind="show" id="XcJ-Qz-AHk"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -147,6 +144,7 @@
                     <connections>
                         <outlet property="searchBar" destination="yuj-l5-Ra4" id="9KC-F8-Oih"/>
                         <outlet property="tableView" destination="ZjO-a3-ESm" id="huH-SA-tpW"/>
+                        <segue destination="2w0-KP-wVB" kind="show" identifier="listToDetail" id="fHe-Wt-SuF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OY1-a8-WnT" userLabel="First Responder" sceneMemberID="firstResponder"/>

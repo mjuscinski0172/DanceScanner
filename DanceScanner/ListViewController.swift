@@ -9,13 +9,16 @@
 import UIKit
 import CloudKit
 
-class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
     var studentArray = [Student]()
+    var filteredArray = [Student]()
     let database = CKContainer.default().publicCloudDatabase
     
+    var searchController = UISearchController()
+    var resultsController = UITableViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +28,34 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         searchBar.backgroundImage = UIImage(named: "gray")
         
         createStudentArray()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        searchController = UISearchController(searchResultsController: resultsController)
+        tableView.tableHeaderView = searchController.searchBar
+        searchController.searchResultsUpdater = self
+        
+        resultsController.tableView.delegate = self
+        resultsController.tableView.dataSource = self
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        filteredArray = studentArray.filter({ (studentArray:Student) -> Bool in
+            
+            let fullName = studentArray.firstName + " " + studentArray.lastName
+            
+            if (studentArray.lastName.lowercased().contains(searchController.searchBar.text!.lowercased()) || studentArray.firstName.lowercased().contains(searchController.searchBar.text!.lowercased()) || fullName.lowercased().contains(searchController.searchBar.text!.lowercased()) || studentArray.guestName.lowercased().contains(searchController.searchBar.text!.lowercased())){
+                return true
+            } else{
+                return false
+            }
+        })
+        resultsController.tableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -44,16 +75,40 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if student.checkedInOrOut == "In" {
             label.textColor = UIColor.green.darker(by: 30)
         }
-        if student.checkedInOrOut == "Out" {
-            label.textColor = .red
+        else {
+            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "newCell")
+            let student = filteredArray[indexPath.row]
+            cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
+            cell.detailTextLabel?.text = "                                 " + student.guestName
+            
+            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
+            label.textAlignment = .center
+            label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 1.5)
+            label.text = "\(student.checkedInOrOut)".uppercased()
+            if student.checkedInOrOut == "In" {
+                label.textColor = UIColor.green.darker(by: 30)
+            }
+            if student.checkedInOrOut == "Out" {
+                label.textColor = .red
+            }
+            cell.addSubview(label)
+            
+            return cell
         }
-        cell.addSubview(label)
         
-        return cell
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return studentArray.count
+        if tableView == resultsController.tableView{
+            return filteredArray.count
+        } else{
+            return studentArray.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "listToDetail", sender: (Any).self)
+        resultsController.dismiss(animated: true, completion: nil)
     }
     
     func createStudentArray() {
@@ -84,8 +139,16 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let nvc = segue.destination as! detailsViewController
-        let indexPath = tableView.indexPathForSelectedRow!
-        nvc.selectedStudent = studentArray[indexPath.row]
+        //        let indexPath = tableView.indexPathForSelectedRow!
+        if let indexPath = tableView.indexPathForSelectedRow{
+            nvc.selectedStudent = studentArray[indexPath.row]
+        }
+        else{
+            let indexPath = resultsController.tableView.indexPathForSelectedRow!
+            nvc.selectedStudent = filteredArray[indexPath.row]
+        }
+        //        nvc.selectedStudent = studentArray[indexPath.row]
         nvc.database = database
     }
 }
+
