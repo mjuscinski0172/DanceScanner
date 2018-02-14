@@ -39,6 +39,10 @@ class ViewController: UIViewController {
                 let areYouPositive = UIAlertController(title: "Are you sure?", message: "You cannot go back from here.", preferredStyle: .alert)
                 let OKAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
                     self.createStudentArray()
+                    let thanks = UIAlertController(title: "You have just deleted EVERYONE", message: "What do you say for wasting our work?", preferredStyle: .alert)
+                    let thanksButton = UIAlertAction(title: "Thanks", style: .default, handler: nil)
+                    thanks.addAction(thanksButton)
+                    self.present(thanks, animated: true, completion: nil)
                 })
                 let cancelAction2 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 
@@ -70,7 +74,17 @@ class ViewController: UIViewController {
                 self.studentArray.append(student)
             }
             DispatchQueue.main.async {
-                print("Nothing")
+                for student in self.studentArray {
+                    print("Ka-Chang")
+                    self.database.delete(withRecordID: student.recordID, completionHandler: { (id, error) in
+                        if error != nil {
+                            let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(okAction)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    })
+                }
             }
         }
     }
