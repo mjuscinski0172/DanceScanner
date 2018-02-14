@@ -62,8 +62,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
-
+        if let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
             let student = studentArray[indexPath.row]
             cell.backgroundColor = UIColor.darkGray.darker(by: 25)
             cell.textLabel?.text = "                           " + "\(student.firstName) \(student.lastName)"
@@ -71,9 +70,10 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.detailTextLabel?.textColor = .lightGray
             cell.textLabel?.textColor = .white
             
-            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
+            let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
+            label.textColor = .white
             label.textAlignment = .center
-            label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 1.5)
+            label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 0.5)
             label.text = "\(student.checkedInOrOut)".uppercased()
             if student.checkedInOrOut == "In" {
                 label.textColor = UIColor.green.darker(by: 30)
