@@ -11,7 +11,7 @@ import CloudKit
 
 class ViewController: UIViewController {
     var resetAllPassword = "57bw32Gc"
-    var studentArray = [Student]()
+    var studentArray = [CKRecord]()
     var database = CKContainer.default().publicCloudDatabase
 
     
@@ -63,23 +63,11 @@ class ViewController: UIViewController {
     
     func createStudentArray() {
         studentArray.removeAll()
-        
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: "Students", predicate: predicate)
         database.perform(query, inZoneWith: nil) { (records, error) in
             for student in records! {
-                let firstName = student.object(forKey: "firstName") as! String
-                let lastName = student.object(forKey: "lastName") as! String
-                let altIDNumber = student.object(forKey: "altIDNumber") as! String
-                let idNumber = student.object(forKey: "idNumber") as! String
-                let checkedInOrOut = student.object(forKey: "checkedInOrOut") as! String
-                let checkInTime = student.object(forKey: "checkInTime") as! String
-                let checkOutTime = student.object(forKey: "checkOutTime") as! String
-                let guestName = student.object(forKey: "guestName") as! String
-                let guestSchool = student.object(forKey: "guestSchool") as! String
-                let guestParentPhone = student.object(forKey: "guestParentPhone") as! String
-                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone)
-                self.studentArray.append(newStudent)
+                self.studentArray.append(student)
             }
             DispatchQueue.main.async {
                 print("Nothing")
