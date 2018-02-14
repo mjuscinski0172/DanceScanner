@@ -82,6 +82,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 label.textColor = .red
             }
             cell.addSubview(label)
+            
             return cell
         }
         else {

@@ -54,10 +54,14 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         view.layer.addSublayer(previewLayer)
         
+        let appearance = UITabBarItem.appearance()
+        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        appearance.setTitleTextAttributes(attributes, for: .normal)
+        
         let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
         tabBar.barStyle = .black
-        let checkTabButton = UITabBarItem(title: "Check In/Out", image: nil, tag: 0)
-        let listTabButton = UITabBarItem(title: "List", image: nil, tag: 0)
+        let checkTabButton = UITabBarItem(title: "Check In/Out", image: nil, tag: 1)
+        let listTabButton = UITabBarItem(title: "List", image: nil, tag: 2)
         tabBar.setItems([checkTabButton, listTabButton], animated: false)
 
         view.addSubview(tabBar)

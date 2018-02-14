@@ -19,11 +19,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 //        var database = CKContainer.default().publicCloudDatabase
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
 
     @IBAction func deleteAllButton(_ sender: UIButton) {
