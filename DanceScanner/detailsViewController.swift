@@ -31,6 +31,7 @@ class detailsViewController: UIViewController {
     @IBOutlet weak var guestNameLabel: UILabel!
     @IBOutlet weak var guestSchoolLabel: UILabel!
     @IBOutlet weak var guestParentPhoneLabel: UILabel!
+    @IBOutlet weak var revoveGuestButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -81,6 +82,8 @@ class detailsViewController: UIViewController {
             guestNameLabel.alpha = 0
             guestSchoolLabel.alpha = 0
             guestParentPhoneLabel.alpha = 0
+            revoveGuestButton.alpha = 0
+            revoveGuestButton.isEnabled = false
         }
         else {
             lineLabel.alpha = 1
@@ -91,10 +94,87 @@ class detailsViewController: UIViewController {
             guestNameLabel.alpha = 1
             guestSchoolLabel.alpha = 1
             guestParentPhoneLabel.alpha = 1
+            revoveGuestButton.alpha = 1
+            revoveGuestButton.isEnabled = true
             
             guestNameLabel.text = selectedStudent.guestName
             guestSchoolLabel.text = selectedStudent.guestSchool
             guestParentPhoneLabel.text = selectedStudent.guestParentPhone
+        }
+    }
+    
+    @IBAction func removeStudent(_ sender: UIButton) {
+        let predicate = NSPredicate(value: true)
+        let query = CKQuery(recordType: "Students", predicate: predicate)
+        database.perform(query, inZoneWith: nil) { (records, error) in
+            for student in records! {
+                if student.object(forKey: "firstName") as! String == self.selectedStudent.firstName  {
+                    self.database.delete(withRecordID: student.recordID, completionHandler: { (record, error) in
+                        if error != nil {
+                            let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(okAction)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        else {
+                            Thread.sleep(forTimeInterval: 1.0)
+
+                            let alert = UIAlertController(title: "Student Deleted", message: nil, preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                                self.navigationController?.popViewController(animated: true)
+                            })
+                            alert.addAction(okAction)
+                            self.present(alert, animated: true, completion: nil)
+//                            self.navigationController?.popViewController(animated: true)
+                            print("Ba-zingas-Ka-chingas")
+                        }
+                    })
+                }
+            }
+            DispatchQueue.main.async {
+//                self.navigationController?.popViewController(animated: true)
+                print("Ba-zingas-Ka-chingas-Ba-bangas")
+            }
+        }
+    }
+    
+    @IBAction func removeGuest(_ sender: UIButton) {
+        let predicate = NSPredicate(value: true)
+        let query = CKQuery(recordType: "Students", predicate: predicate)
+        database.perform(query, inZoneWith: nil) { (records, error) in
+            for student in records! {
+                if student.object(forKey: "guestName") as! String == self.selectedStudent.guestName  {
+                    self.selectedStudent.guestName = ""
+                    self.selectedStudent.guestSchool =  ""
+                    self.selectedStudent.guestParentPhone = ""
+                    student.setObject("" as CKRecordValue, forKey: "guestName")
+                    student.setObject("" as CKRecordValue, forKey: "guestSchool")
+                    student.setObject("" as CKRecordValue, forKey: "guestParentPhone")
+                    self.database.save(student, completionHandler: { (record, error) in
+                        if error != nil {
+                            let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(okAction)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    })
+
+
+                }
+            }
+            DispatchQueue.main.async {
+                print("Ba-zang")
+                self.lineLabel.alpha = 0
+                self.guestInfoTitleLabel.alpha = 0
+                self.guestNameTitleLabel.alpha = 0
+                self.guestSchoolTitleLabel.alpha = 0
+                self.guestParentPhoneTitleLabel.alpha = 0
+                self.guestNameLabel.alpha = 0
+                self.guestSchoolLabel.alpha = 0
+                self.guestParentPhoneLabel.alpha = 0
+                self.revoveGuestButton.alpha = 0
+                self.revoveGuestButton.isEnabled = false
+            }
         }
     }
     

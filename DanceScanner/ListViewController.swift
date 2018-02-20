@@ -58,7 +58,10 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        tableView.reloadData()
+//        tableView.reloadData()
+        studentArray = []
+        filteredArray = []
+        createStudentArray()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

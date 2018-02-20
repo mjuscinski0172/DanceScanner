@@ -335,6 +335,32 @@
                                 <color key="textColor" red="0.93697376939999999" green="0.93697376939999999" blue="0.93697376939999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gvs-1d-ea2">
+                                <rect key="frame" x="635" y="974" width="113" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="113" id="6Xs-wG-EJ6"/>
+                                    <constraint firstAttribute="height" constant="30" id="mbW-dM-peO"/>
+                                </constraints>
+                                <state key="normal" title="Remove Student">
+                                    <color key="titleColor" red="1" green="0.038872416270000001" blue="0.049791262449999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="removeStudent:" destination="2w0-KP-wVB" eventType="touchUpInside" id="qri-Hr-CE6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dkr-3f-wbB">
+                                <rect key="frame" x="648" y="936" width="100" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="QbZ-xT-YzP"/>
+                                    <constraint firstAttribute="width" constant="100" id="pvm-Hz-DvM"/>
+                                </constraints>
+                                <state key="normal" title="Remove Guest">
+                                    <color key="titleColor" red="1" green="0.038872416270000001" blue="0.049791262449999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="removeGuest:" destination="2w0-KP-wVB" eventType="touchUpInside" id="Hl5-p6-JJM"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -366,9 +392,11 @@
                             <constraint firstItem="PYP-SW-czy" firstAttribute="trailing" secondItem="jyD-ov-hLR" secondAttribute="trailing" constant="313" id="MEs-DF-ueA"/>
                             <constraint firstItem="PYP-SW-czy" firstAttribute="trailing" secondItem="L7c-UN-UqU" secondAttribute="trailing" constant="10" id="Ncw-gB-GTv"/>
                             <constraint firstItem="Xwu-cB-P1b" firstAttribute="top" secondItem="BNE-y9-oRJ" secondAttribute="bottom" constant="32" id="Njh-sY-ZHR"/>
+                            <constraint firstItem="PYP-SW-czy" firstAttribute="trailing" secondItem="Dkr-3f-wbB" secondAttribute="trailing" constant="20" id="OXj-bb-5dQ"/>
                             <constraint firstItem="9kr-9k-avD" firstAttribute="leading" secondItem="PYP-SW-czy" secondAttribute="leading" constant="10" id="PlX-iI-zYJ"/>
                             <constraint firstItem="PYP-SW-czy" firstAttribute="trailing" secondItem="dRC-uN-EDX" secondAttribute="trailing" constant="10" id="QE1-3d-ySd"/>
                             <constraint firstItem="Xwu-cB-P1b" firstAttribute="top" secondItem="BNE-y9-oRJ" secondAttribute="bottom" constant="32" id="QSk-cl-011"/>
+                            <constraint firstItem="PYP-SW-czy" firstAttribute="bottom" secondItem="gvs-1d-ea2" secondAttribute="bottom" constant="20" id="R8S-Uj-Lcp"/>
                             <constraint firstItem="BNE-y9-oRJ" firstAttribute="leading" secondItem="PYP-SW-czy" secondAttribute="leading" constant="67" id="S5s-A9-hPL"/>
                             <constraint firstItem="eTa-YN-WvW" firstAttribute="top" secondItem="bc2-v6-SSR" secondAttribute="bottom" constant="32" id="Stc-Qf-ZLV"/>
                             <constraint firstItem="VjK-vK-WOh" firstAttribute="top" secondItem="IZ4-Mg-fhi" secondAttribute="bottom" constant="8" id="Tk3-Uk-Hyf"/>
@@ -387,6 +415,7 @@
                             <constraint firstItem="V2P-QW-3M6" firstAttribute="top" secondItem="jyD-ov-hLR" secondAttribute="bottom" constant="33" id="cPc-jN-xMZ"/>
                             <constraint firstItem="Pux-LC-aBq" firstAttribute="top" secondItem="cSc-sE-DbC" secondAttribute="bottom" constant="91" id="cgx-DX-8le"/>
                             <constraint firstItem="cSc-sE-DbC" firstAttribute="top" secondItem="gRi-M0-kXU" secondAttribute="bottom" constant="44" id="dEH-2I-R3n"/>
+                            <constraint firstItem="gvs-1d-ea2" firstAttribute="top" secondItem="Dkr-3f-wbB" secondAttribute="bottom" constant="8" id="dOt-Z5-uAW"/>
                             <constraint firstItem="L7c-UN-UqU" firstAttribute="centerX" secondItem="lVf-nk-TXt" secondAttribute="centerX" id="dUb-7f-Vww"/>
                             <constraint firstItem="PYP-SW-czy" firstAttribute="bottom" secondItem="eTa-YN-WvW" secondAttribute="bottom" constant="45" id="fA8-nK-5UZ"/>
                             <constraint firstItem="bc2-v6-SSR" firstAttribute="leading" secondItem="BNE-y9-oRJ" secondAttribute="trailing" constant="18" id="fFz-Op-yVl"/>
@@ -411,6 +440,7 @@
                             <constraint firstItem="PYP-SW-czy" firstAttribute="trailing" secondItem="gRi-M0-kXU" secondAttribute="trailing" constant="10" id="ykJ-mN-BpZ"/>
                             <constraint firstItem="Pux-LC-aBq" firstAttribute="leading" secondItem="PYP-SW-czy" secondAttribute="leading" constant="67" id="zEi-j8-MTU"/>
                             <constraint firstItem="eTa-YN-WvW" firstAttribute="leading" secondItem="Xwu-cB-P1b" secondAttribute="trailing" constant="20" id="zHI-Z7-gLP"/>
+                            <constraint firstItem="PYP-SW-czy" firstAttribute="trailing" secondItem="gvs-1d-ea2" secondAttribute="trailing" constant="20" id="zJM-sc-Sa4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PYP-SW-czy"/>
                     </view>
@@ -432,6 +462,7 @@
                         <outlet property="idLabel" destination="dRC-uN-EDX" id="AO5-Z7-XtE"/>
                         <outlet property="lineLabel" destination="cSc-sE-DbC" id="iwo-6L-oAX"/>
                         <outlet property="nameLabel" destination="L7c-UN-UqU" id="YBE-5D-2YU"/>
+                        <outlet property="revoveGuestButton" destination="Dkr-3f-wbB" id="TMW-fy-Eur"/>
                         <outlet property="statusLabel" destination="VjK-vK-WOh" id="XC5-NS-0Ax"/>
                         <outlet property="statusTitlesLabel" destination="IZ4-Mg-fhi" id="j0G-QX-5oZ"/>
                         <outlet property="timeInLabel" destination="yn3-Kf-sLz" id="qxc-CO-BSa"/>
@@ -589,6 +620,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="RV3-aM-IFv"/>
+        <segue reference="3hq-tM-0TK"/>
     </inferredMetricsTieBreakers>
 </document>
