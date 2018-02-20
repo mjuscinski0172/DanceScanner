@@ -9,7 +9,7 @@
 import UIKit
 import CloudKit
 
-class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
+class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UITabBarDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -41,6 +41,29 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         resultsController.tableView.delegate = self
         resultsController.tableView.dataSource = self
+        
+        let appearance = UITabBarItem.appearance()
+        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.blue.lighter(by: 30)!]
+        appearance.setTitleTextAttributes(attributes, for: .normal)
+        appearance.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.white], for: .selected)
+        
+        let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
+        tabBar.delegate = self
+        tabBar.barStyle = .black
+        let purchaseTabButton = UITabBarItem(title: "Purchase Tickets", image: nil, tag: 1)
+        let checkTabButton = UITabBarItem(title: "Check In/Out", image: nil, tag: 2)
+        tabBar.setItems([purchaseTabButton, checkTabButton], animated: false)
+        
+        view.addSubview(tabBar)
+    }
+    
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if item.tag == 1 {
+            
+        }
+        else if item.tag == 2{
+            
+        }
     }
     
     func updateSearchResults(for searchController: UISearchController) {

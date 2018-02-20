@@ -10,7 +10,7 @@ import UIKit
 import AVKit
 import CloudKit
 
-class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UITabBarDelegate {
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
     var firstTimeCalled = true
@@ -53,7 +53,30 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         view.layer.addSublayer(previewLayer)
         
+        let appearance = UITabBarItem.appearance()
+        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.blue.lighter(by: 30)!]
+        appearance.setTitleTextAttributes(attributes, for: .normal)
+        appearance.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.white], for: .selected)
+        
+        let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
+        tabBar.delegate = self
+        tabBar.barStyle = .black
+        let purchaseTabButton = UITabBarItem(title: "Purchase Tickets", image: nil, tag: 1)
+        let listTabButton = UITabBarItem(title: "List", image: nil, tag: 3)
+        tabBar.setItems([purchaseTabButton, listTabButton], animated: false)
+        
+        view.addSubview(tabBar)
+        
         session.startRunning()
+    }
+    
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if item.tag == 1 {
+            
+        }
+        else if item.tag == 3 {
+            
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

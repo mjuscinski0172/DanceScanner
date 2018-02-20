@@ -417,7 +417,7 @@
                     <navigationItem key="navigationItem" id="Oq2-Ib-gRq">
                         <barButtonItem key="rightBarButtonItem" title="Add a Guest" id="yBG-5F-rBw">
                             <connections>
-                                <segue destination="ITN-Ty-eZL" kind="show" id="3hq-tM-0TK"/>
+                                <segue destination="ITN-Ty-eZL" kind="show" identifier="" id="3hq-tM-0TK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -456,6 +456,7 @@
                     </view>
                     <connections>
                         <segue destination="ITN-Ty-eZL" kind="show" identifier="addGuestSegue" id="RV3-aM-IFv"/>
+                        <segue destination="3v1-v6-gsQ" kind="show" identifier="tabCheckSegue" id="zWW-l2-NhB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XlW-Ku-enJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -589,6 +590,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="RV3-aM-IFv"/>
+        <segue reference="zWW-l2-NhB"/>
+        <segue reference="3hq-tM-0TK"/>
     </inferredMetricsTieBreakers>
 </document>
