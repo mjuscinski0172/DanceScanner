@@ -54,9 +54,9 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         view.layer.addSublayer(previewLayer)
         
         let appearance = UITabBarItem.appearance()
-        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.blue.lighter(by: 30)!]
+        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         appearance.setTitleTextAttributes(attributes, for: .normal)
-        appearance.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.white], for: .selected)
+        appearance.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.blue.lighter(by: 30)!], for: .selected)
         
         let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
         tabBar.delegate = self
@@ -72,10 +72,20 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if item.tag == 1 {
+            print("purchase")
+            self.performSegue(withIdentifier: "tabPurchaseSegue", sender: self)
             
+            var navigationArray = self.navigationController?.viewControllers ?? [Any]()
+            navigationArray.remove(at: 1)
+            navigationController?.viewControllers = (navigationArray as? [UIViewController])!
         }
         else if item.tag == 3 {
+            print("list")
+            self.performSegue(withIdentifier: "tabListSegue2", sender: self)
             
+            var navigationArray = self.navigationController?.viewControllers ?? [Any]()
+            navigationArray.remove(at: 1)
+            navigationController?.viewControllers = (navigationArray as? [UIViewController])!
         }
     }
     

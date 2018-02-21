@@ -17,6 +17,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     var studentArray: NSArray!
     var altId = ""
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
@@ -57,9 +58,9 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         view.layer.addSublayer(previewLayer)
         
         let appearance = UITabBarItem.appearance()
-        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.blue.lighter(by: 30)!]
+        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         appearance.setTitleTextAttributes(attributes, for: .normal)
-        appearance.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.white], for: .selected)
+        appearance.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.blue.lighter(by: 30)!], for: .selected)
         
         let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
         tabBar.delegate = self
@@ -87,10 +88,18 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         if item.tag == 2 {
             print("check")
             self.performSegue(withIdentifier: "tabCheckSegue", sender: self)
+            
+            var navigationArray = self.navigationController?.viewControllers ?? [Any]()
+            navigationArray.remove(at: 1)
+            navigationController?.viewControllers = (navigationArray as? [UIViewController])!
         }
         else if item.tag == 3 {
             print("list")
             self.performSegue(withIdentifier: "tabListSegue", sender: self)
+            
+            var navigationArray = self.navigationController?.viewControllers ?? [Any]()
+            navigationArray.remove(at: 1)
+            navigationController?.viewControllers = (navigationArray as? [UIViewController])!
         }
     }
     

@@ -43,9 +43,9 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         resultsController.tableView.dataSource = self
         
         let appearance = UITabBarItem.appearance()
-        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.blue.lighter(by: 30)!]
+        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         appearance.setTitleTextAttributes(attributes, for: .normal)
-        appearance.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.white], for: .selected)
+        appearance.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.blue.lighter(by: 30)!], for: .selected)
         
         let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
         tabBar.delegate = self
@@ -59,10 +59,20 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if item.tag == 1 {
+            print("purchase")
+            self.performSegue(withIdentifier: "tabPurchaseSegue2", sender: self)
             
+            var navigationArray = self.navigationController?.viewControllers ?? [Any]()
+            navigationArray.remove(at: 1)
+            navigationController?.viewControllers = (navigationArray as? [UIViewController])!
         }
         else if item.tag == 2{
+            print("check")
+            self.performSegue(withIdentifier: "tabCheckSegue2", sender: self)
             
+            var navigationArray = self.navigationController?.viewControllers ?? [Any]()
+            navigationArray.remove(at: 1)
+            navigationController?.viewControllers = (navigationArray as? [UIViewController])!
         }
     }
     
@@ -179,17 +189,19 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let nvc = segue.destination as! detailsViewController
-        //        let indexPath = tableView.indexPathForSelectedRow!
-        if let indexPath = tableView.indexPathForSelectedRow{
-            nvc.selectedStudent = studentArray[indexPath.row]
+        if segue.identifier == "listToDetail" {
+            let nvc = segue.destination as! detailsViewController
+            //        let indexPath = tableView.indexPathForSelectedRow!
+            if let indexPath = tableView.indexPathForSelectedRow{
+                nvc.selectedStudent = studentArray[indexPath.row]
+            }
+            else{
+                let indexPath = resultsController.tableView.indexPathForSelectedRow!
+                nvc.selectedStudent = filteredArray[indexPath.row]
+            }
+            //        nvc.selectedStudent = studentArray[indexPath.row]
+            nvc.database = database
         }
-        else{
-            let indexPath = resultsController.tableView.indexPathForSelectedRow!
-            nvc.selectedStudent = filteredArray[indexPath.row]
-        }
-        //        nvc.selectedStudent = studentArray[indexPath.row]
-        nvc.database = database
     }
 }
 
