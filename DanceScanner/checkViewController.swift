@@ -88,8 +88,9 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         let query = CKQuery(recordType: "Students", predicate: predicate)
         database.perform(query, inZoneWith: nil) { (records, error) in
             if let myRecords = records {
-                let student = myRecords.first!
-             
+                if let student = myRecords.first{
+                    
+                
                 if student.object(forKey: "checkedInOrOut") as! String == "Purchased" {
                     student.setObject("In" as CKRecordValue, forKey: "checkedInOrOut")
                   
@@ -152,6 +153,14 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 }
                 else {
                     let alert = UIAlertController(title: "Error", message: "This student has not purchased tickets", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                        self.runSession()
+                    })
+                    alert.addAction(okAction)
+                    self.present(alert, animated: true, completion: nil)
+                }
+                } else{
+                    let alert = UIAlertController(title: "Error", message: "This student has not purchased a ticket", preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
                         self.runSession()
                     })
