@@ -1,16 +1,16 @@
  
-//  checkViewController.swift
-//  DanceScanner
-//
-//  Created by Akhil Nair on 1/9/18.
-//  Copyright © 2018 Michal Juscinski. All rights reserved.
-//
-
-import UIKit
-import AVKit
-import CloudKit
-
-class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+ //  checkViewController.swift
+ //  DanceScanner
+ //
+ //  Created by Akhil Nair on 1/9/18.
+ //  Copyright © 2018 Michal Juscinski. All rights reserved.
+ //
+ 
+ import UIKit
+ import AVKit
+ import CloudKit
+ 
+ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
     var firstTimeCalled = true
@@ -19,7 +19,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
-
+        
         session = AVCaptureSession()
         
         let videoCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video)
@@ -27,6 +27,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         
         do {
             videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice!)
+            
         }
         catch {
             return
@@ -65,7 +66,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         super.viewWillDisappear(animated)
         stopSession()
     }
-
+    
     func checkOnCloudKit(altID: String){
         let place = CKRecord(recordType: "Students")
         let date = Date()
@@ -73,7 +74,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         let hour = calendar.component(.hour, from: date)
         let minutes = calendar.component(.minute, from: date)
         var correctedMinutes = "\(minutes)"
-
+        
         if minutes < 10 {
             correctedMinutes = "0\(minutes)"
         }
@@ -82,23 +83,25 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         }
         let seconds = calendar.component(.second, from: date)
         let timeOf = "\(hour):\(correctedMinutes)"
-//        print("hours = \(hour):\(correctedMinutes):\(seconds)")
-
+        //        print("hours = \(hour):\(correctedMinutes):\(seconds)")
+        
         let predicate =  NSPredicate(format: "altIDNumber = '\(altID)'")
         let query = CKQuery(recordType: "Students", predicate: predicate)
+        var student: CKRecord!
         database.perform(query, inZoneWith: nil) { (records, error) in
             if let myRecords = records {
-                let student = myRecords.first!
-             
+                 student = myRecords.first!
+                
                 if student.object(forKey: "checkedInOrOut") as! String == "Purchased" {
                     student.setObject("In" as CKRecordValue, forKey: "checkedInOrOut")
-                  
+                    
                     student.setObject(timeOf as CKRecordValue, forKey: "checkInTime")
-
+                    
                     self.database.save(student) { (record, error) in
                         if error != nil {
                             let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
                             let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                                
                                 self.runSession()
                             })
                             alert.addAction(okAction)
@@ -106,19 +109,32 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                         }
                         else {
                             let alert = UIAlertController(title: "Checked In", message: nil, preferredStyle: .alert)
+                            let isGuestThere = UIAlertAction(title: "Is the guest present?", style: .default, handler: { (action) in
+                                if student.object(forKey: "guestName") as? String != nil{
+                                    student.setObject("Yes" as CKRecordValue, forKey: "guestCheckIn")
+                                    
+                                }
+                                self.runSession()
+
+                                
+                            })
                             let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                            
                                 self.runSession()
                             })
                             alert.addAction(okAction)
+                            alert.addAction(isGuestThere)
                             self.present(alert, animated: true, completion: nil)
                         }
                     }
                 }
                 else if student.object(forKey: "checkedInOrOut") as! String == "In" {
                     student.setObject("Out" as CKRecordValue, forKey: "checkedInOrOut")
-                   
+                    
                     student.setObject(timeOf as CKRecordValue, forKey: "checkOutTime")
-
+                    
+                    
+                    
                     self.database.save(student) { (record, error) in
                         if error != nil {
                             let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
@@ -139,7 +155,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 }
                 else if student.object(forKey: "checkedInOrOut") as! String == "Out" {
                     student.setObject("Out" as CKRecordValue, forKey: "checkedInOrOut")
-//                    print("c")
+                    //                    print("c")
                     self.database.save(student, completionHandler: { (record, error) in
                         let alert = UIAlertController(title: "Error", message: "This student has already been checked out", preferredStyle: .alert)
                         let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
@@ -171,12 +187,12 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         stopSession()
-            if let barcodeData = metadataObjects.first {
-                let barcodeReadable = barcodeData as? AVMetadataMachineReadableCodeObject
-                
-                if let readableCode = barcodeReadable{
-                    checkOnCloudKit(altID: readableCode.stringValue!)
-                }
+        if let barcodeData = metadataObjects.first {
+            let barcodeReadable = barcodeData as? AVMetadataMachineReadableCodeObject
+            
+            if let readableCode = barcodeReadable{
+                checkOnCloudKit(altID: readableCode.stringValue!)
+            }
         }
     }
     
@@ -191,4 +207,4 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             session.stopRunning()
         }
     }
-}
+ }
