@@ -10,17 +10,20 @@ import UIKit
 import AVFoundation
 import CloudKit
 
-class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UITabBarDelegate {
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
     var database =  CKContainer.default().publicCloudDatabase
     var studentArray: NSArray!
     var altId = ""
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
-
+//        self.navigationItem.backBarButtonItem?.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.red.lighter(by: 35)], for: .normal)
+        
+        
         session = AVCaptureSession()
         
         let videoCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video)
@@ -57,13 +60,15 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         let appearance = UITabBarItem.appearance()
         let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         appearance.setTitleTextAttributes(attributes, for: .normal)
+        appearance.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.blue.lighter(by: 30)!], for: .selected)
         
         let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
+        tabBar.delegate = self
         tabBar.barStyle = .black
-        let checkTabButton = UITabBarItem(title: "Check In/Out", image: nil, tag: 1)
-        let listTabButton = UITabBarItem(title: "List", image: nil, tag: 2)
+        let checkTabButton = UITabBarItem(title: "Check In/Out", image: nil, tag: 2)
+        let listTabButton = UITabBarItem(title: "List", image: nil, tag: 3)
         tabBar.setItems([checkTabButton, listTabButton], animated: false)
-
+        
         view.addSubview(tabBar)
         
         session.startRunning()
@@ -77,6 +82,25 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         stopSession()
+    }
+    
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if item.tag == 2 {
+            print("check")
+            self.performSegue(withIdentifier: "tabCheckSegue", sender: self)
+            
+            var navigationArray = self.navigationController?.viewControllers ?? [Any]()
+            navigationArray.remove(at: 1)
+            navigationController?.viewControllers = (navigationArray as? [UIViewController])!
+        }
+        else if item.tag == 3 {
+            print("list")
+            self.performSegue(withIdentifier: "tabListSegue", sender: self)
+            
+            var navigationArray = self.navigationController?.viewControllers ?? [Any]()
+            navigationArray.remove(at: 1)
+            navigationController?.viewControllers = (navigationArray as? [UIViewController])!
+        }
     }
     
     func getJSON(altID: String){
@@ -103,6 +127,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                         place.setObject("" as CKRecordValue, forKey: "guestName")
                         place.setObject("" as CKRecordValue, forKey: "guestSchool")
                         place.setObject("" as CKRecordValue, forKey: "guestParentPhone")
+                        place.setObject("" as CKRecordValue, forKey: "guestCheckIn")
                         self.database.save(place) { (record, error) in
                             if error != nil {
                                 let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
@@ -161,9 +186,12 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         }
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addGuestSegue" {
         let nvc = segue.destination as! addGuestViewController
         nvc.selectedStudentArray = studentArray
         nvc.altId = altId
         nvc.database = database
+        }
+        
     }
 }

@@ -36,11 +36,11 @@ class ViewController: UIViewController {
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
             let passwordTextField = passwordAlert.textFields![0]
             if passwordTextField.text == self.resetAllPassword {
-                let areYouPositive = UIAlertController(title: "Are you sure?", message: "You cannot go back from here.", preferredStyle: .alert)
-                let OKAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                let areYouPositive = UIAlertController(title: "Are you sure?", message: "All student records will be deleted", preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
                     self.createStudentArray()
-                    let thanks = UIAlertController(title: "You have just deleted EVERYONE", message: "What do you say for wasting our work?", preferredStyle: .alert)
-                    let thanksButton = UIAlertAction(title: "Thanks", style: .default, handler: nil)
+                    let thanks = UIAlertController(title: "All student records have been deleted", message: "", preferredStyle: .alert)
+                    let thanksButton = UIAlertAction(title: "Ok", style: .default, handler: nil)
                     thanks.addAction(thanksButton)
                     self.present(thanks, animated: true, completion: nil)
                 })

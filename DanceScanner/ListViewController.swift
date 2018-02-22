@@ -9,7 +9,7 @@
 import UIKit
 import CloudKit
 
-class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
+class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UITabBarDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -41,6 +41,39 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         resultsController.tableView.delegate = self
         resultsController.tableView.dataSource = self
+        
+        let appearance = UITabBarItem.appearance()
+        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        appearance.setTitleTextAttributes(attributes, for: .normal)
+        appearance.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.blue.lighter(by: 30)!], for: .selected)
+        
+        let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
+        tabBar.delegate = self
+        tabBar.barStyle = .black
+        let purchaseTabButton = UITabBarItem(title: "Purchase Tickets", image: nil, tag: 1)
+        let checkTabButton = UITabBarItem(title: "Check In/Out", image: nil, tag: 2)
+        tabBar.setItems([purchaseTabButton, checkTabButton], animated: false)
+        
+        view.addSubview(tabBar)
+    }
+    
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if item.tag == 1 {
+            print("purchase")
+            self.performSegue(withIdentifier: "tabPurchaseSegue2", sender: self)
+            
+            var navigationArray = self.navigationController?.viewControllers ?? [Any]()
+            navigationArray.remove(at: 1)
+            navigationController?.viewControllers = (navigationArray as? [UIViewController])!
+        }
+        else if item.tag == 2{
+            print("check")
+            self.performSegue(withIdentifier: "tabCheckSegue2", sender: self)
+            
+            var navigationArray = self.navigationController?.viewControllers ?? [Any]()
+            navigationArray.remove(at: 1)
+            navigationController?.viewControllers = (navigationArray as? [UIViewController])!
+        }
     }
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -146,7 +179,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let guestName = student.object(forKey: "guestName") as! String
                 let guestSchool = student.object(forKey: "guestSchool") as! String
                 let guestParentPhone = student.object(forKey: "guestParentPhone") as! String
-                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone)
+                let guestCheckIn = student.object(forKey: "guestCheckIn") as! String
+                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone, guestCheckIn: guestCheckIn)
                 self.studentArray.append(newStudent)
             }
             DispatchQueue.main.async {
@@ -156,17 +190,19 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let nvc = segue.destination as! detailsViewController
-        //        let indexPath = tableView.indexPathForSelectedRow!
-        if let indexPath = tableView.indexPathForSelectedRow{
-            nvc.selectedStudent = studentArray[indexPath.row]
+        if segue.identifier == "listToDetail" {
+            let nvc = segue.destination as! detailsViewController
+            //        let indexPath = tableView.indexPathForSelectedRow!
+            if let indexPath = tableView.indexPathForSelectedRow{
+                nvc.selectedStudent = studentArray[indexPath.row]
+            }
+            else {
+                let indexPath = resultsController.tableView.indexPathForSelectedRow!
+                nvc.selectedStudent = filteredArray[indexPath.row]
+            }
+            //        nvc.selectedStudent = studentArray[indexPath.row]
+            nvc.database = database
         }
-        else{
-            let indexPath = resultsController.tableView.indexPathForSelectedRow!
-            nvc.selectedStudent = filteredArray[indexPath.row]
-        }
-        //        nvc.selectedStudent = studentArray[indexPath.row]
-        nvc.database = database
     }
 }
 
