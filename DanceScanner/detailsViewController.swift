@@ -10,10 +10,12 @@ import UIKit
 import CloudKit
 
 class detailsViewController: UIViewController {
-
+    
+    var superSecretPassword = "57bw32Gc"
+    
     var selectedStudent: Student!
     var database: CKDatabase!
-//    var detailsStudentArray = [Student]()
+    //    var detailsStudentArray = [Student]()
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
@@ -37,7 +39,7 @@ class detailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -104,86 +106,127 @@ class detailsViewController: UIViewController {
     }
     
     @IBAction func removeStudent(_ sender: UIButton) {
-        let predicate = NSPredicate(value: true)
-        let query = CKQuery(recordType: "Students", predicate: predicate)
-        database.perform(query, inZoneWith: nil) { (records, error) in
-            for student in records! {
-                if student.object(forKey: "firstName") as! String == self.selectedStudent.firstName  {
-                    self.database.delete(withRecordID: student.recordID, completionHandler: { (record, error) in
-                        if error != nil {
-                            let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
-                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                            alert.addAction(okAction)
-                            self.present(alert, animated: true, completion: nil)
-                        }
-                        else {
-                            Thread.sleep(forTimeInterval: 1.0)
-
-                            let alert = UIAlertController(title: "Student Deleted", message: nil, preferredStyle: .alert)
-                            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
-                                self.navigationController?.popViewController(animated: true)
+        let alert = UIAlertController(title: "Delete this", message: "Pls input passwrd", preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.placeholder = "Put here"
+        }
+        let cancelAction = UIAlertAction(title: "Oh noes I shouldn't do this", style: .destructive, handler: nil)
+        let confirmAction = UIAlertAction(title: "Yes is good", style: .default) { (action) in
+            let passTextField = alert.textFields![0]
+            if passTextField.text == self.superSecretPassword {
+                
+                let predicate = NSPredicate(value: true)
+                let query = CKQuery(recordType: "Students", predicate: predicate)
+                self.database.perform(query, inZoneWith: nil) { (records, error) in
+                    for student in records! {
+                        if student.object(forKey: "firstName") as! String == self.selectedStudent.firstName  {
+                            self.database.delete(withRecordID: student.recordID, completionHandler: { (record, error) in
+                                if error != nil {
+                                    let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                    alert.addAction(okAction)
+                                    self.present(alert, animated: true, completion: nil)
+                                }
+                                else {
+                                    Thread.sleep(forTimeInterval: 1.0)
+                                    
+                                    let alert = UIAlertController(title: "Student Deleted", message: nil, preferredStyle: .alert)
+                                    let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                                        self.navigationController?.popViewController(animated: true)
+                                    })
+                                    alert.addAction(okAction)
+                                    self.present(alert, animated: true, completion: nil)
+                                    //                            self.navigationController?.popViewController(animated: true)
+                                    print("Ba-zingas-Ka-chingas")
+                                }
                             })
-                            alert.addAction(okAction)
-                            self.present(alert, animated: true, completion: nil)
-//                            self.navigationController?.popViewController(animated: true)
-                            print("Ba-zingas-Ka-chingas")
                         }
-                    })
+                    }
+                    DispatchQueue.main.async {
+                        //                self.navigationController?.popViewController(animated: true)
+                        print("Ba-zingas-Ka-chingas-Ba-bangas")
+                    }
                 }
             }
-            DispatchQueue.main.async {
-//                self.navigationController?.popViewController(animated: true)
-                print("Ba-zingas-Ka-chingas-Ba-bangas")
+            else {
+                let failureAlert = UIAlertController(title: "You suck", message: "You put in the wrong pass dumbo", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Aww man", style: .default, handler: nil)
+                failureAlert.addAction(okAction)
+                self.present(failureAlert, animated: true, completion: nil)
             }
         }
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
+        
     }
     
     @IBAction func removeGuest(_ sender: UIButton) {
-        let predicate = NSPredicate(value: true)
-        let query = CKQuery(recordType: "Students", predicate: predicate)
-        database.perform(query, inZoneWith: nil) { (records, error) in
-            for student in records! {
-                if student.object(forKey: "guestName") as! String == self.selectedStudent.guestName  {
-                    self.selectedStudent.guestName = ""
-                    self.selectedStudent.guestSchool =  ""
-                    self.selectedStudent.guestParentPhone = ""
-                    student.setObject("" as CKRecordValue, forKey: "guestName")
-                    student.setObject("" as CKRecordValue, forKey: "guestSchool")
-                    student.setObject("" as CKRecordValue, forKey: "guestParentPhone")
-                    self.database.save(student, completionHandler: { (record, error) in
-                        if error != nil {
-                            let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
-                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                            alert.addAction(okAction)
-                            self.present(alert, animated: true, completion: nil)
+        let alert = UIAlertController(title: "Delete this", message: "Pls input passwrd", preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.placeholder = "Put here"
+        }
+        let cancelAction = UIAlertAction(title: "Oh noes I shouldn't do this", style: .destructive, handler: nil)
+        let confirmAction = UIAlertAction(title: "Yes is good", style: .default) { (action) in
+            let passTextField = alert.textFields![0]
+            if passTextField.text == self.superSecretPassword {
+                let predicate = NSPredicate(value: true)
+                let query = CKQuery(recordType: "Students", predicate: predicate)
+                self.database.perform(query, inZoneWith: nil) { (records, error) in
+                    for student in records! {
+                        if student.object(forKey: "guestName") as! String == self.selectedStudent.guestName  {
+                            self.selectedStudent.guestName = ""
+                            self.selectedStudent.guestSchool =  ""
+                            self.selectedStudent.guestParentPhone = ""
+                            student.setObject("" as CKRecordValue, forKey: "guestName")
+                            student.setObject("" as CKRecordValue, forKey: "guestSchool")
+                            student.setObject("" as CKRecordValue, forKey: "guestParentPhone")
+                            self.database.save(student, completionHandler: { (record, error) in
+                                if error != nil {
+                                    let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                    alert.addAction(okAction)
+                                    self.present(alert, animated: true, completion: nil)
+                                }
+                            })
+                            
+                            
                         }
-                    })
-
-
+                    }
+                    DispatchQueue.main.async {
+                        print("Ba-zang")
+                        self.lineLabel.alpha = 0
+                        self.guestInfoTitleLabel.alpha = 0
+                        self.guestNameTitleLabel.alpha = 0
+                        self.guestSchoolTitleLabel.alpha = 0
+                        self.guestParentPhoneTitleLabel.alpha = 0
+                        self.guestNameLabel.alpha = 0
+                        self.guestSchoolLabel.alpha = 0
+                        self.guestParentPhoneLabel.alpha = 0
+                        self.revoveGuestButton.alpha = 0
+                        self.revoveGuestButton.isEnabled = false
+                    }
                 }
             }
-            DispatchQueue.main.async {
-                print("Ba-zang")
-                self.lineLabel.alpha = 0
-                self.guestInfoTitleLabel.alpha = 0
-                self.guestNameTitleLabel.alpha = 0
-                self.guestSchoolTitleLabel.alpha = 0
-                self.guestParentPhoneTitleLabel.alpha = 0
-                self.guestNameLabel.alpha = 0
-                self.guestSchoolLabel.alpha = 0
-                self.guestParentPhoneLabel.alpha = 0
-                self.revoveGuestButton.alpha = 0
-                self.revoveGuestButton.isEnabled = false
+            else {
+                let failureAlert = UIAlertController(title: "You suck", message: "You put in the wrong pass dumbo", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Aww man", style: .default, handler: nil)
+                failureAlert.addAction(okAction)
+                self.present(failureAlert, animated: true, completion: nil)
             }
         }
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let nvc = segue.destination as! addGuestViewController
         nvc.database = database
         nvc.selectedStudent = selectedStudent
-//        detailsStudentArray.append(selectedStudent)
-//        nvc.selectedStudentArray = detailsStudentArray as NSArray
+        //        detailsStudentArray.append(selectedStudent)
+        //        nvc.selectedStudentArray = detailsStudentArray as NSArray
     }
     
     
