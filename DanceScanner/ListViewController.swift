@@ -196,7 +196,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if let indexPath = tableView.indexPathForSelectedRow{
                 nvc.selectedStudent = studentArray[indexPath.row]
             }
-            else{
+            else {
                 let indexPath = resultsController.tableView.indexPathForSelectedRow!
                 nvc.selectedStudent = filteredArray[indexPath.row]
             }

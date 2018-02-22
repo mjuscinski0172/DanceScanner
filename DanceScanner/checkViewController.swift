@@ -207,7 +207,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                     alert.addAction(okAction)
                     self.present(alert, animated: true, completion: nil)
                 }
-                } else{
+                } else {
                     let alert = UIAlertController(title: "Error", message: "This student has not purchased a ticket", preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
                         self.runSession()
@@ -217,7 +217,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 }
             }
         }
-    }
+    
     
     func scanningNotPossible() {
         let alert = UIAlertController(title: "This device can't scan.", message: "How did you mess this up? It was only supposed to be sent to camera-equipped iPads!", preferredStyle: .alert)
