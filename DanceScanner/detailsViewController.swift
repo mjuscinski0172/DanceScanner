@@ -106,12 +106,12 @@ class detailsViewController: UIViewController {
     }
     
     @IBAction func removeStudent(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Delete this", message: "Pls input passwrd", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Delete this", message: "", preferredStyle: .alert)
         alert.addTextField { (textField) in
             textField.placeholder = "Put here"
         }
-        let cancelAction = UIAlertAction(title: "Oh noes I shouldn't do this", style: .destructive, handler: nil)
-        let confirmAction = UIAlertAction(title: "Yes is good", style: .default) { (action) in
+        let cancelAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
+        let confirmAction = UIAlertAction(title: "Yes", style: .default) { (action) in
             let passTextField = alert.textFields![0]
             if passTextField.text == self.superSecretPassword {
                 
@@ -149,8 +149,8 @@ class detailsViewController: UIViewController {
                 }
             }
             else {
-                let failureAlert = UIAlertController(title: "You suck", message: "You put in the wrong pass dumbo", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Aww man", style: .default, handler: nil)
+                let failureAlert = UIAlertController(title: "Password Incorrect", message: "", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
                 failureAlert.addAction(okAction)
                 self.present(failureAlert, animated: true, completion: nil)
             }
@@ -162,12 +162,12 @@ class detailsViewController: UIViewController {
     }
     
     @IBAction func removeGuest(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Delete this", message: "Pls input passwrd", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Delete this", message: "", preferredStyle: .alert)
         alert.addTextField { (textField) in
             textField.placeholder = "Put here"
         }
-        let cancelAction = UIAlertAction(title: "Oh noes I shouldn't do this", style: .destructive, handler: nil)
-        let confirmAction = UIAlertAction(title: "Yes is good", style: .default) { (action) in
+        let cancelAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
+        let confirmAction = UIAlertAction(title: "Yes", style: .default) { (action) in
             let passTextField = alert.textFields![0]
             if passTextField.text == self.superSecretPassword {
                 let predicate = NSPredicate(value: true)
@@ -189,8 +189,6 @@ class detailsViewController: UIViewController {
                                     self.present(alert, animated: true, completion: nil)
                                 }
                             })
-                            
-                            
                         }
                     }
                     DispatchQueue.main.async {
@@ -209,8 +207,8 @@ class detailsViewController: UIViewController {
                 }
             }
             else {
-                let failureAlert = UIAlertController(title: "You suck", message: "You put in the wrong pass dumbo", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Aww man", style: .default, handler: nil)
+                let failureAlert = UIAlertController(title: "Password Incorrect", message: "", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
                 failureAlert.addAction(okAction)
                 self.present(failureAlert, animated: true, completion: nil)
             }
