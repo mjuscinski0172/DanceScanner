@@ -223,6 +223,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 }
             }
         }
+    }
     
     
     func scanningNotPossible() {
@@ -255,3 +256,5 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         }
     }
  }
+
+ 
