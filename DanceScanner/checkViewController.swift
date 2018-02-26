@@ -1,16 +1,16 @@
  
- //  checkViewController.swift
- //  DanceScanner
- //
- //  Created by Akhil Nair on 1/9/18.
- //  Copyright © 2018 Michal Juscinski. All rights reserved.
- //
- 
- import UIKit
- import AVKit
- import CloudKit
- 
- class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+//  checkViewController.swift
+//  DanceScanner
+//
+//  Created by Akhil Nair on 1/9/18.
+//  Copyright © 2018 Michal Juscinski. All rights reserved.
+//
+
+import UIKit
+import AVKit
+import CloudKit
+
+class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UITabBarDelegate {
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
     var firstTimeCalled = true
@@ -54,7 +54,40 @@
         previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         view.layer.addSublayer(previewLayer)
         
+        let appearance = UITabBarItem.appearance()
+        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        appearance.setTitleTextAttributes(attributes, for: .normal)
+        appearance.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.blue.lighter(by: 30)!], for: .selected)
+        
+        let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
+        tabBar.delegate = self
+        tabBar.barStyle = .black
+        let purchaseTabButton = UITabBarItem(title: "Purchase Tickets", image: nil, tag: 1)
+        let listTabButton = UITabBarItem(title: "List", image: nil, tag: 3)
+        tabBar.setItems([purchaseTabButton, listTabButton], animated: false)
+        
+        view.addSubview(tabBar)
+        
         session.startRunning()
+    }
+    
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if item.tag == 1 {
+            print("purchase")
+            self.performSegue(withIdentifier: "tabPurchaseSegue", sender: self)
+            
+            var navigationArray = self.navigationController?.viewControllers ?? [Any]()
+            navigationArray.remove(at: 1)
+            navigationController?.viewControllers = (navigationArray as? [UIViewController])!
+        }
+        else if item.tag == 3 {
+            print("list")
+            self.performSegue(withIdentifier: "tabListSegue2", sender: self)
+            
+            var navigationArray = self.navigationController?.viewControllers ?? [Any]()
+            navigationArray.remove(at: 1)
+            navigationController?.viewControllers = (navigationArray as? [UIViewController])!
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -190,7 +223,7 @@
                 }
             }
         }
-    }
+    
     
     func scanningNotPossible() {
         let alert = UIAlertController(title: "This device can't scan.", message: "How did you mess this up? It was only supposed to be sent to camera-equipped iPads!", preferredStyle: .alert)
