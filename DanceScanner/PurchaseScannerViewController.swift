@@ -124,6 +124,8 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                         place.setObject("Purchased" as CKRecordValue, forKey: "checkedInOrOut")
                         place.setObject("" as CKRecordValue, forKey: "checkInTime")
                         place.setObject("" as CKRecordValue, forKey: "checkOutTime")
+                        place.setObject("Not implemented yet" as CKRecordValue, forKey: "studentParentPhone")
+                        place.setObject("Not implemented yet" as CKRecordValue, forKey: "studentParentName")
                         place.setObject("" as CKRecordValue, forKey: "guestName")
                         place.setObject("" as CKRecordValue, forKey: "guestSchool")
                         place.setObject("" as CKRecordValue, forKey: "guestParentPhone")
