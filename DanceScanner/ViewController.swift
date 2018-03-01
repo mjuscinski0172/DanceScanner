@@ -17,13 +17,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        var database = CKContainer.default().publicCloudDatabase
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+//        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+//        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+//        blurEffectView.frame = self.view.bounds
+//        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//
+//        self.view.insertSubview(blurEffectView, at: 0)
         
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
         
     }
 

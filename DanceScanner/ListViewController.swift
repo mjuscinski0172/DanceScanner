@@ -176,6 +176,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let checkedInOrOut = student.object(forKey: "checkedInOrOut") as! String
                 let checkInTime = student.object(forKey: "checkInTime") as! String
                 let checkOutTime = student.object(forKey: "checkOutTime") as! String
+                let studentParentName = student.object(forKey: "studentParentName") as! String
+                let studentParentPhone = student.object(forKey: "studentParentPhone") as! String
                 let guestName = student.object(forKey: "guestName") as! String
                 let guestSchool = student.object(forKey: "guestSchool") as! String
                 let guestParentPhone = student.object(forKey: "guestParentPhone") as! String

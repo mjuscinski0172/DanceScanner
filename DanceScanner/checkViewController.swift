@@ -123,7 +123,7 @@
         var student: CKRecord!
         database.perform(query, inZoneWith: nil) { (records, error) in
             if let myRecords = records {
-                if let student = myRecords.first{
+                if let student = myRecords.first {
                     
                     if student.object(forKey: "checkedInOrOut") as! String == "Purchased" {
                         if student.object(forKey: "guestName") as! String != "" {
