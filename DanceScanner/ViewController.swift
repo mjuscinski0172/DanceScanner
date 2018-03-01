@@ -17,10 +17,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let blurEffect = UIBlurEffect(style: .extraLight)
+//        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
 //        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurEffectView.frame = self.view.frame
-//        
+//        blurEffectView.frame = self.view.bounds
+//        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//
 //        self.view.insertSubview(blurEffectView, at: 0)
         
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent

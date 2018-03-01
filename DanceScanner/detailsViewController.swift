@@ -38,8 +38,8 @@ class detailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
         
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -106,9 +106,9 @@ class detailsViewController: UIViewController {
     }
     
     @IBAction func removeStudent(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Delete this", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Delete Student?", message: "", preferredStyle: .alert)
         alert.addTextField { (textField) in
-            textField.placeholder = "Put here"
+            textField.placeholder = "Insert Password"
         }
         let cancelAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
         let confirmAction = UIAlertAction(title: "Yes", style: .default) { (action) in
@@ -162,9 +162,9 @@ class detailsViewController: UIViewController {
     }
     
     @IBAction func removeGuest(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Delete this", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Delete Student?", message: "", preferredStyle: .alert)
         alert.addTextField { (textField) in
-            textField.placeholder = "Put here"
+            textField.placeholder = "Enter Password"
         }
         let cancelAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
         let confirmAction = UIAlertAction(title: "Yes", style: .default) { (action) in
