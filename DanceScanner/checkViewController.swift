@@ -1,16 +1,16 @@
  
-//  checkViewController.swift
-//  DanceScanner
-//
-//  Created by Akhil Nair on 1/9/18.
-//  Copyright © 2018 Michal Juscinski. All rights reserved.
-//
-
-import UIKit
-import AVKit
-import CloudKit
-
-class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UITabBarDelegate {
+ //  checkViewController.swift
+ //  DanceScanner
+ //
+ //  Created by Akhil Nair on 1/9/18.
+ //  Copyright © 2018 Michal Juscinski. All rights reserved.
+ //
+ 
+ import UIKit
+ import AVKit
+ import CloudKit
+ 
+ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UITabBarDelegate {
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
     var firstTimeCalled = true
@@ -126,8 +126,53 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 if let student = myRecords.first{
                     
                     if student.object(forKey: "checkedInOrOut") as! String == "Purchased" {
-                        student.setObject("In" as CKRecordValue, forKey: "checkedInOrOut")
-                        student.setObject(timeOf as CKRecordValue, forKey: "checkInTime")
+                        if student.object(forKey: "guestName") as! String != "" {
+                            let alertPleaseWork = UIAlertController(title: "Is the guest present?", message: nil, preferredStyle: .alert)
+                            let yesAction = UIAlertAction(title: "Yes", style: .default, handler: {(action) in
+                                print(100)
+                                student.setObject("In" as CKRecordValue, forKey: "checkedInOrOut")
+                                student.setObject(timeOf as CKRecordValue, forKey: "checkInTime")
+                                self.database.save(student, completionHandler: { (record, error) in
+                                    if error != nil {
+                                        let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                                        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                        alert.addAction(okAction)
+                                        self.present(alert, animated: true, completion: nil)
+                                    }
+                                    
+                                })
+                                
+                                self.runSession()
+                            })
+                            let noAction = UIAlertAction(title: "No", style: .destructive, handler: {(action) in
+                                self.runSession()
+                            })
+                            alertPleaseWork.addAction(yesAction)
+                            alertPleaseWork.addAction(noAction)
+                            self.present(alertPleaseWork, animated: true, completion: nil)
+                        }
+                            
+                        else {
+                            student.setObject("In" as CKRecordValue, forKey: "checkedInOrOut")
+                            student.setObject(timeOf as CKRecordValue, forKey: "checkInTime")
+                            self.database.save(student, completionHandler: { (record, error) in
+                                if error != nil {
+                                    let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                    alert.addAction(okAction)
+                                    self.present(alert, animated: true, completion: nil)
+                                }
+                                
+                            })
+                            let alert = UIAlertController(title: "Checked In", message: nil, preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                                
+                                self.runSession()
+                            })
+                            alert.addAction(okAction)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        
                         
                         self.database.save(student) { (record, error) in
                             if error != nil {
@@ -139,32 +184,7 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                                 alert.addAction(okAction)
                                 self.present(alert, animated: true, completion: nil)
                             }
-                            if student.object(forKey: "guestName") as! String != "" {
-                                let alert = UIAlertController(title: "Is the guest present?", message: nil, preferredStyle: .alert)
-                                let yesAction = UIAlertAction(title: "Yes", style: .default, handler: {(action) in
-                                    print(100)
-                                    student.setObject("Present" as CKRecordValue, forKey: "guestCheckIn")
-                                    self.runSession()
-                                })
-                                let noAction = UIAlertAction(title: "No", style: .destructive, handler: {(action) in
-                                    student.setObject("Not Present" as CKRecordValue, forKey: "guestCheckIn")
-
-                                    self.runSession()
-                                })
-                                alert.addAction(yesAction)
-                                alert.addAction(noAction)
-                                self.present(alert, animated: true, completion: nil)
-                            }
-
-                            else {
-                                let alert = UIAlertController(title: "Checked In", message: nil, preferredStyle: .alert)
-                                let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
-                                    
-                                    self.runSession()
-                                })
-                                alert.addAction(okAction)
-                                self.present(alert, animated: true, completion: nil)
-                            }
+                            
                         }
                     }
                     else if student.object(forKey: "checkedInOrOut") as! String == "In" {
@@ -256,5 +276,5 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         }
     }
  }
-
+ 
  
