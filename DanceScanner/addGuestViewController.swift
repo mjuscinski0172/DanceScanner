@@ -56,7 +56,6 @@ class addGuestViewController: UIViewController {
                 place.setObject(guestName as! CKRecordValue, forKey: "guestName")
                 place.setObject(guestSchool as! CKRecordValue, forKey: "guestSchool")
                 place.setObject(guestParentNumber as! CKRecordValue, forKey: "guestParentPhone")
-                place.setObject("Present" as! CKRecordValue, forKey: "guestCheckIn")
                 
                 
                 self.database.save(place) { (record, error) in
