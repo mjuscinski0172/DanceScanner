@@ -24,6 +24,8 @@ class detailsViewController: UIViewController {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var timeInTitleLabel: UILabel!
     @IBOutlet weak var timeOutTitleLabel: UILabel!
+    @IBOutlet weak var parentNameLabel: UILabel!
+    @IBOutlet weak var parentPhoneNumberLabel: UILabel!
     @IBOutlet weak var statusTitlesLabel: UILabel!
     @IBOutlet weak var lineLabel: UILabel!
     @IBOutlet weak var guestInfoTitleLabel: UILabel!
@@ -106,7 +108,7 @@ class detailsViewController: UIViewController {
     }
     
     @IBAction func removeStudent(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Delete this", message: "Pls input passwrd", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Delete this", message: "Please input passwrd", preferredStyle: .alert)
         alert.addTextField { (textField) in
             textField.placeholder = "Put here"
         }
