@@ -113,8 +113,8 @@ class detailsViewController: UIViewController {
         alert.addTextField { (textField) in
             textField.placeholder = "Insert Password"
         }
-        let cancelAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
-        let confirmAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+        let cancelAction = UIAlertAction(title: "No", style: .default, handler: nil)
+        let confirmAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
             let passTextField = alert.textFields![0]
             if passTextField.text == self.superSecretPassword {
                 
@@ -169,8 +169,8 @@ class detailsViewController: UIViewController {
         alert.addTextField { (textField) in
             textField.placeholder = "Enter Password"
         }
-        let cancelAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
-        let confirmAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+        let cancelAction = UIAlertAction(title: "No", style: .default, handler: nil)
+        let confirmAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
             let passTextField = alert.textFields![0]
             if passTextField.text == self.superSecretPassword {
                 let predicate = NSPredicate(value: true)
