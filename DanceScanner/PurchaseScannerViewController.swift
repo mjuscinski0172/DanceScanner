@@ -94,7 +94,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             navigationArray.remove(at: 1)
             navigationController?.viewControllers = (navigationArray as? [UIViewController])!
         }
-            //When the list button on the Tab Bar is pressed, segue to the listVC
+        //When the list button on the Tab Bar is pressed, segue to the listVC
         else if item.tag == 3 {
             print("list")
             self.performSegue(withIdentifier: "tabListSegue", sender: self)

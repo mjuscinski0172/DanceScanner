@@ -22,6 +22,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Sets colors for UI items
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
         tableView.backgroundColor = .black
         tableView.separatorColor = .black
@@ -29,47 +30,48 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         resultsController.tableView.backgroundColor = .black
         resultsController.tableView.separatorColor = .black
-        
+        //Pulls all students from CloudKit and places them into an array
         createStudentArray()
-        
+        //Sets this VC to be the delegate and dataSource of the table
         tableView.delegate = self
         tableView.dataSource = self
-        
+        resultsController.tableView.delegate = self
+        resultsController.tableView.dataSource = self
+        //Tells table to update when searched
         searchController = UISearchController(searchResultsController: resultsController)
         tableView.tableHeaderView = searchController.searchBar
         searchController.searchResultsUpdater = self
-        
-        resultsController.tableView.delegate = self
-        resultsController.tableView.dataSource = self
-        
+        //Sets appearance of Tab Bar
         let appearance = UITabBarItem.appearance()
         let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         appearance.setTitleTextAttributes(attributes, for: .normal)
         appearance.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.blue.lighter(by: 30)!], for: .selected)
-        
+        //Sets other properties of Tab Bar
         let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
         tabBar.delegate = self
         tabBar.barStyle = .black
         let purchaseTabButton = UITabBarItem(title: "Purchase Tickets", image: nil, tag: 1)
         let checkTabButton = UITabBarItem(title: "Check In/Out", image: nil, tag: 2)
         tabBar.setItems([purchaseTabButton, checkTabButton], animated: false)
-        
+        //Makes Tab Bar visible
         view.addSubview(tabBar)
     }
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        //When the purchase button on the Tab Bar is pressed, segue to the purchaseVC
         if item.tag == 1 {
             print("purchase")
             self.performSegue(withIdentifier: "tabPurchaseSegue2", sender: self)
-            
+            //Removes the current VC from the stack
             var navigationArray = self.navigationController?.viewControllers ?? [Any]()
             navigationArray.remove(at: 1)
             navigationController?.viewControllers = (navigationArray as? [UIViewController])!
         }
+        //When the check button on the Tab Bar is pressed, segue to the checkVC
         else if item.tag == 2{
             print("check")
             self.performSegue(withIdentifier: "tabCheckSegue2", sender: self)
-            
+            //Removes the current VC from the stack
             var navigationArray = self.navigationController?.viewControllers ?? [Any]()
             navigationArray.remove(at: 1)
             navigationController?.viewControllers = (navigationArray as? [UIViewController])!
@@ -78,7 +80,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func updateSearchResults(for searchController: UISearchController) {
         filteredArray = studentArray.filter({ (studentArray:Student) -> Bool in
-            
+            //Puts the students first and last names together, then compares any available name with the array of students
             let fullName = studentArray.firstName + " " + studentArray.lastName
             
             if (studentArray.lastName.lowercased().contains(searchController.searchBar.text!.lowercased()) || studentArray.firstName.lowercased().contains(searchController.searchBar.text!.lowercased()) || fullName.lowercased().contains(searchController.searchBar.text!.lowercased()) || studentArray.guestName.lowercased().contains(searchController.searchBar.text!.lowercased())){
@@ -92,6 +94,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidAppear(_ animated: Bool) {
 //        tableView.reloadData()
+        //Clears all arrays and pulls everything from CloudKit
         studentArray = []
         filteredArray = []
         createStudentArray()
@@ -99,13 +102,15 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
+            //If the table can pull the prototype cell (AKA this is the original table, not results), place the student for the cell's index into the cell
             let student = studentArray[indexPath.row]
+            //Sets cell colors and text
             cell.backgroundColor = UIColor.darkGray.darker(by: 25)
             cell.textLabel?.text = "                           " + "\(student.firstName) \(student.lastName)"
             cell.detailTextLabel?.text = "                                       " + student.guestName
             cell.detailTextLabel?.textColor = .lightGray
             cell.textLabel?.textColor = .white
-            
+            //Creates the status label
             let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
             label.textColor = .white
             label.textAlignment = .center
@@ -122,14 +127,16 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return cell
         }
         else {
+            //If the prototype cannot be pulled (AKA this is the results controller), create a new cell and place the student that has been searched into the cell
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "newCell")
             let student = filteredArray[indexPath.row]
+            //Sets color and text of cell
             cell.backgroundColor = UIColor.darkGray.darker(by: 25)
             cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
             cell.detailTextLabel?.text = "                                 " + student.guestName
             cell.detailTextLabel?.textColor = .lightGray
             cell.textLabel?.textColor = .white
-            
+            //Creates the status label
 //            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
             let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
             label.textAlignment = .center
@@ -150,6 +157,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //Displays the correct amount of cells based on the amount of students
         if tableView == resultsController.tableView{
             return filteredArray.count
         } else{
@@ -158,17 +166,20 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //If a cell on the resultsController is pressed, segue to the detailsVC
         self.performSegue(withIdentifier: "listToDetail", sender: (Any).self)
         resultsController.dismiss(animated: true, completion: nil)
     }
     
     func createStudentArray() {
+        //Clears studentArray and queries CloudKit
         studentArray.removeAll()
         
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: "Students", predicate: predicate)
         database.perform(query, inZoneWith: nil) { (records, error) in
             for student in records! {
+                //Pulls every student's information
                 let firstName = student.object(forKey: "firstName") as! String
                 let lastName = student.object(forKey: "lastName") as! String
                 let altIDNumber = student.object(forKey: "altIDNumber") as! String
@@ -181,9 +192,11 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let guestName = student.object(forKey: "guestName") as! String
                 let guestSchool = student.object(forKey: "guestSchool") as! String
                 let guestParentPhone = student.object(forKey: "guestParentPhone") as! String
+                //Creates an object of the Student class, puts all pulled information into it, and adds it to the array
                 let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone, studentParentName: studentParentName, studentParentPhone: studentParentPhone)
                 self.studentArray.append(newStudent)
             }
+            //Reloads the table with the new student
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -191,9 +204,10 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //Sends the student that was pressed to the detailsVC
         if segue.identifier == "listToDetail" {
             let nvc = segue.destination as! detailsViewController
-            //        let indexPath = tableView.indexPathForSelectedRow!
+//        let indexPath = tableView.indexPathForSelectedRow!
             if let indexPath = tableView.indexPathForSelectedRow{
                 nvc.selectedStudent = studentArray[indexPath.row]
             }
@@ -201,7 +215,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let indexPath = resultsController.tableView.indexPathForSelectedRow!
                 nvc.selectedStudent = filteredArray[indexPath.row]
             }
-            //        nvc.selectedStudent = studentArray[indexPath.row]
+//        nvc.selectedStudent = studentArray[indexPath.row]
             nvc.database = database
         }
     }
