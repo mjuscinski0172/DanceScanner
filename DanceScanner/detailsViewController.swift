@@ -8,6 +8,7 @@
 
 import UIKit
 import CloudKit
+import SafariServices
 
 class detailsViewController: UIViewController {
     
@@ -36,9 +37,6 @@ class detailsViewController: UIViewController {
     @IBOutlet weak var guestSchoolLabel: UILabel!
     @IBOutlet weak var guestParentPhoneLabel: UILabel!
     @IBOutlet weak var revoveGuestButton: UIButton!
-    @IBAction func toInfiniteCampus(_ sender: Any) {
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +75,12 @@ class detailsViewController: UIViewController {
             timeOutLabel.text = selectedStudent.checkOutTime
             statusLabel.text = "Checked Out"
         }
+    }
+    
+    
+    @IBAction func toInfiniteCampus(_ sender: Any) {
+        let svc = SFSafariViewController(url: URL(string: "https://ic.d214.org")!)
+        self.present(svc, animated: true, completion: nil)
     }
     
     func guestLabelAlphas() {
