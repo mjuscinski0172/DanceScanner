@@ -143,11 +143,9 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                                 let alert = UIAlertController(title: "Is the guest present?", message: nil, preferredStyle: .alert)
                                 let yesAction = UIAlertAction(title: "Yes", style: .default, handler: {(action) in
                                     print(100)
-                                    student.setObject("Present" as CKRecordValue, forKey: "guestCheckIn")
                                     self.runSession()
                                 })
                                 let noAction = UIAlertAction(title: "No", style: .destructive, handler: {(action) in
-                                    student.setObject("Not Present" as CKRecordValue, forKey: "guestCheckIn")
 
                                     self.runSession()
                                 })
@@ -194,7 +192,6 @@ class checkViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                     }
                     else if student.object(forKey: "checkedInOrOut") as! String == "Out" {
                         student.setObject("Out" as CKRecordValue, forKey: "checkedInOrOut")
-                        //                    print("c")
                         self.database.save(student, completionHandler: { (record, error) in
                             let alert = UIAlertController(title: "Error", message: "This student has already been checked out", preferredStyle: .alert)
                             let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in

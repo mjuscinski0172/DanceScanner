@@ -15,6 +15,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var studentArray = [Student]()
     var filteredArray = [Student]()
+    var alphabeticalStudentArray = [Student]()
     let database = CKContainer.default().publicCloudDatabase
     
     var searchController = UISearchController()
@@ -29,8 +30,6 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         resultsController.tableView.backgroundColor = .black
         resultsController.tableView.separatorColor = .black
-        
-        createStudentArray()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -77,7 +76,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        filteredArray = studentArray.filter({ (studentArray:Student) -> Bool in
+        filteredArray = alphabeticalStudentArray.filter({ (studentArray:Student) -> Bool in
             
             let fullName = studentArray.firstName + " " + studentArray.lastName
             
@@ -99,9 +98,9 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
-            let student = studentArray[indexPath.row]
-            cell.backgroundColor = UIColor.darkGray.darker(by: 25)
-            cell.textLabel?.text = "                           " + "\(student.firstName) \(student.lastName)"
+            let student = alphabeticalStudentArray[indexPath.row]
+            cell.backgroundColor = UIColor.darkGray.darker(by: 18)
+            cell.textLabel?.text = "                           " + "\(student.lastName), \(student.firstName)"
             cell.detailTextLabel?.text = "                                       " + student.guestName
             cell.detailTextLabel?.textColor = .lightGray
             cell.textLabel?.textColor = .white
@@ -124,13 +123,12 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         else {
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "newCell")
             let student = filteredArray[indexPath.row]
-            cell.backgroundColor = UIColor.darkGray.darker(by: 25)
-            cell.textLabel?.text = "                         " + "\(student.firstName) \(student.lastName)"
+            cell.backgroundColor = UIColor.darkGray.darker(by: 18)
+            cell.textLabel?.text = "                         " + "\(student.lastName), \(student.firstName)"
             cell.detailTextLabel?.text = "                                 " + student.guestName
             cell.detailTextLabel?.textColor = .lightGray
             cell.textLabel?.textColor = .white
             
-//            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
             let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
             label.textAlignment = .center
             label.textColor = .white
@@ -150,10 +148,10 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == resultsController.tableView{
+        if tableView == resultsController.tableView {
             return filteredArray.count
         } else{
-            return studentArray.count
+            return alphabeticalStudentArray.count
         }
     }
     
@@ -179,9 +177,11 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let guestName = student.object(forKey: "guestName") as! String
                 let guestSchool = student.object(forKey: "guestSchool") as! String
                 let guestParentPhone = student.object(forKey: "guestParentPhone") as! String
-                let guestCheckIn = student.object(forKey: "guestCheckIn") as! String
-                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone, guestCheckIn: guestCheckIn)
+                
+                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone)
                 self.studentArray.append(newStudent)
+
+                self.alphabeticalStudentArray = self.studentArray.sorted(by: { $0.lastName < $1.lastName })
             }
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -192,15 +192,13 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "listToDetail" {
             let nvc = segue.destination as! detailsViewController
-            //        let indexPath = tableView.indexPathForSelectedRow!
             if let indexPath = tableView.indexPathForSelectedRow{
-                nvc.selectedStudent = studentArray[indexPath.row]
+                nvc.selectedStudent = alphabeticalStudentArray[indexPath.row]
             }
             else {
                 let indexPath = resultsController.tableView.indexPathForSelectedRow!
                 nvc.selectedStudent = filteredArray[indexPath.row]
             }
-            //        nvc.selectedStudent = studentArray[indexPath.row]
             nvc.database = database
         }
     }

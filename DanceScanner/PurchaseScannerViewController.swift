@@ -23,7 +23,6 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
 //        self.navigationItem.backBarButtonItem?.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.red.lighter(by: 35)], for: .normal)
         
-        
         session = AVCaptureSession()
         
         let videoCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video)
@@ -104,52 +103,51 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     }
     
     func getJSON(altID: String){
-            let urlString = "https://api.myjson.com/bins/16ljdv"
-            let url = URL(string: urlString)!
-            URLSession.shared.dataTask(with: url, completionHandler: { (myData, response, error) in
-                if let JSONObject = try? JSONSerialization.jsonObject(with: myData!, options: .allowFragments) as! NSDictionary {
-                    self.studentArray = JSONObject.object(forKey: altID) as! NSArray
-                    let studentDictionary = self.studentArray.firstObject as! NSDictionary
-                    let firstName = studentDictionary.object(forKey: "First") as! NSString
-                    let lastName = studentDictionary.object(forKey: "Last") as! NSString
-                    let ID = studentDictionary.object(forKey: "ID") as! NSInteger
+        let urlString = "https://api.myjson.com/bins/16ljdv"
+        let url = URL(string: urlString)!
+        URLSession.shared.dataTask(with: url, completionHandler: { (myData, response, error) in
+            if let JSONObject = try? JSONSerialization.jsonObject(with: myData!, options: .allowFragments) as! NSDictionary {
+                self.studentArray = JSONObject.object(forKey: altID) as! NSArray
+                let studentDictionary = self.studentArray.firstObject as! NSDictionary
+                let firstName = studentDictionary.object(forKey: "First") as! NSString
+                let lastName = studentDictionary.object(forKey: "Last") as! NSString
+                let ID = studentDictionary.object(forKey: "ID") as! NSInteger
                 
-                    let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
-                    let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
-                        let place = CKRecord(recordType: "Students")
-                        place.setObject(firstName as CKRecordValue, forKey: "firstName")
-                        place.setObject(lastName as CKRecordValue, forKey: "lastName")
-                        place.setObject(String(ID) as CKRecordValue, forKey: "idNumber")
-                        place.setObject(String(altID) as CKRecordValue, forKey: "altIDNumber")
-                        place.setObject("Purchased" as CKRecordValue, forKey: "checkedInOrOut")
-                        place.setObject("" as CKRecordValue, forKey: "checkInTime")
-                        place.setObject("" as CKRecordValue, forKey: "checkOutTime")
-                        place.setObject("" as CKRecordValue, forKey: "guestName")
-                        place.setObject("" as CKRecordValue, forKey: "guestSchool")
-                        place.setObject("" as CKRecordValue, forKey: "guestParentPhone")
-                        place.setObject("" as CKRecordValue, forKey: "guestCheckIn")
-                        self.database.save(place) { (record, error) in
-                            if error != nil {
-                                let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
-                                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                                alert.addAction(okAction)
-                                self.present(alert, animated: true, completion: nil)
-                            }
-                            self.runSession()
+                let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
+                let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
+                    let place = CKRecord(recordType: "Students")
+                    place.setObject(firstName as CKRecordValue, forKey: "firstName")
+                    place.setObject(lastName as CKRecordValue, forKey: "lastName")
+                    place.setObject(String(ID) as CKRecordValue, forKey: "idNumber")
+                    place.setObject(String(altID) as CKRecordValue, forKey: "altIDNumber")
+                    place.setObject("Purchased" as CKRecordValue, forKey: "checkedInOrOut")
+                    place.setObject("" as CKRecordValue, forKey: "checkInTime")
+                    place.setObject("" as CKRecordValue, forKey: "checkOutTime")
+                    place.setObject("" as CKRecordValue, forKey: "guestName")
+                    place.setObject("" as CKRecordValue, forKey: "guestSchool")
+                    place.setObject("" as CKRecordValue, forKey: "guestParentPhone")
+                    self.database.save(place) { (record, error) in
+                        if error != nil {
+                            let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(okAction)
+                            self.present(alert, animated: true, completion: nil)
                         }
-                    })
-                    let addGuestButton = UIAlertAction(title: "Ticket with Guest", style: .default, handler: { (action) in
-                        self.performSegue(withIdentifier: "addGuestSegue", sender: self)
-                    })
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
                         self.runSession()
-                    })
-                    purchaseTicketsAlert.addAction(purchaseTicketButton)
-                    purchaseTicketsAlert.addAction(cancelAction)
-                    purchaseTicketsAlert.addAction(addGuestButton)
-                    self.present(purchaseTicketsAlert, animated: true, completion: nil)
-                }
-            }).resume()
+                    }
+                })
+                let addGuestButton = UIAlertAction(title: "Ticket with Guest", style: .default, handler: { (action) in
+                    self.performSegue(withIdentifier: "addGuestSegue", sender: self)
+                })
+                let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
+                    self.runSession()
+                })
+                purchaseTicketsAlert.addAction(purchaseTicketButton)
+                purchaseTicketsAlert.addAction(cancelAction)
+                purchaseTicketsAlert.addAction(addGuestButton)
+                self.present(purchaseTicketsAlert, animated: true, completion: nil)
+            }
+        }).resume()
     }
     
     func scanningNotPossible() {
@@ -168,7 +166,6 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                 self.altId = readableCode.stringValue!
                 getJSON(altID: altId)
             }
-            
         }
     }
     
@@ -183,13 +180,14 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             session.stopRunning()
         }
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addGuestSegue" {
-        let nvc = segue.destination as! addGuestViewController
-        nvc.selectedStudentArray = studentArray
-        nvc.altId = altId
-        nvc.database = database
+            let nvc = segue.destination as! addGuestViewController
+            nvc.selectedStudentArray = studentArray
+            nvc.altId = altId
+            nvc.database = database
         }
-        
     }
+    
 }

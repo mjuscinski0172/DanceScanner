@@ -54,7 +54,6 @@ class addGuestViewController: UIViewController {
                 place.setObject(guestName as! CKRecordValue, forKey: "guestName")
                 place.setObject(guestSchool as! CKRecordValue, forKey: "guestSchool")
                 place.setObject(guestParentNumber as! CKRecordValue, forKey: "guestParentPhone")
-                place.setObject("Present" as! CKRecordValue, forKey: "guestCheckIn")
                 
                 
                 self.database.save(place) { (record, error) in
@@ -71,7 +70,6 @@ class addGuestViewController: UIViewController {
                 selectedStudent.guestName = guestName!
                 selectedStudent.guestSchool = guestSchool!
                 selectedStudent.guestParentPhone = guestParentNumber!
-                selectedStudent.guestCheckIn = "Present"
                 
                 let predicate = NSPredicate(value: true)
                 let query = CKQuery(recordType: "Students", predicate: predicate)
@@ -82,7 +80,6 @@ class addGuestViewController: UIViewController {
                             student.setObject(guestName as! CKRecordValue, forKey: "guestName")
                             student.setObject(guestSchool as! CKRecordValue, forKey: "guestSchool")
                             student.setObject(guestParentNumber as! CKRecordValue, forKey: "guestParentPhone")
-                            student.setObject("Present" as! CKRecordValue, forKey: "guestCheckIn")
                             self.database.save(student, completionHandler: { (record, error) in
                                 if error != nil {
                                     let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
