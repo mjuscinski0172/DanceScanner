@@ -21,9 +21,8 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
-        //        self.navigationItem.backBarButtonItem?.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.red.lighter(by: 35)], for: .normal)
+//        self.navigationItem.backBarButtonItem?.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.red.lighter(by: 35)], for: .normal)
         
-        //Set up the background for the scanner
         session = AVCaptureSession()
         
         let videoCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video)
@@ -94,7 +93,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             navigationArray.remove(at: 1)
             navigationController?.viewControllers = (navigationArray as? [UIViewController])!
         }
-            //When the list button on the Tab Bar is pressed, segue to the listVC
+        //When the list button on the Tab Bar is pressed, segue to the listVC
         else if item.tag == 3 {
             print("list")
             self.performSegue(withIdentifier: "tabListSegue", sender: self)
@@ -106,21 +105,38 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     }
     
     func getJSON(altID: String){
-        //Connects to JSON and pulls data
         let urlString = "https://api.myjson.com/bins/16ljdv"
         let url = URL(string: urlString)!
         URLSession.shared.dataTask(with: url, completionHandler: { (myData, response, error) in
             if let JSONObject = try? JSONSerialization.jsonObject(with: myData!, options: .allowFragments) as! NSDictionary {
-                //Takes JSON information and places them into local varialbes
                 self.studentArray = JSONObject.object(forKey: altID) as! NSArray
                 let studentDictionary = self.studentArray.firstObject as! NSDictionary
                 let firstName = studentDictionary.object(forKey: "First") as! NSString
                 let lastName = studentDictionary.object(forKey: "Last") as! NSString
                 let ID = studentDictionary.object(forKey: "ID") as! NSInteger
-                //Creates an alert that allows the user to confirm the purchase with 3 buttons
+                
                 let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
                 let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
-                    self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID))
+                    let place = CKRecord(recordType: "Students")
+                    place.setObject(firstName as CKRecordValue, forKey: "firstName")
+                    place.setObject(lastName as CKRecordValue, forKey: "lastName")
+                    place.setObject(String(ID) as CKRecordValue, forKey: "idNumber")
+                    place.setObject(String(altID) as CKRecordValue, forKey: "altIDNumber")
+                    place.setObject("Purchased" as CKRecordValue, forKey: "checkedInOrOut")
+                    place.setObject("" as CKRecordValue, forKey: "checkInTime")
+                    place.setObject("" as CKRecordValue, forKey: "checkOutTime")
+                    place.setObject("" as CKRecordValue, forKey: "guestName")
+                    place.setObject("" as CKRecordValue, forKey: "guestSchool")
+                    place.setObject("" as CKRecordValue, forKey: "guestParentPhone")
+                    self.database.save(place) { (record, error) in
+                        if error != nil {
+                            let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(okAction)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        self.runSession()
+                    }
                 })
                 let addGuestButton = UIAlertAction(title: "Ticket with Guest", style: .default, handler: { (action) in
                     self.performSegue(withIdentifier: "addGuestSegue", sender: self)
@@ -128,7 +144,6 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                 let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
                     self.runSession()
                 })
-                //Adds all buttons and presents alert
                 purchaseTicketsAlert.addAction(purchaseTicketButton)
                 purchaseTicketsAlert.addAction(cancelAction)
                 purchaseTicketsAlert.addAction(addGuestButton)
@@ -182,7 +197,6 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                 self.altId = readableCode.stringValue!
                 getJSON(altID: altId)
             }
-            
         }
     }
     
@@ -199,6 +213,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             session.stopRunning()
         }
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //Shares information pulled from JSON with the addGuestVC
         if segue.identifier == "addGuestSegue" {
@@ -207,6 +222,6 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             nvc.altId = altId
             nvc.database = database
         }
-        
     }
+    
 }
