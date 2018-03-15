@@ -36,6 +36,8 @@ class detailsViewController: UIViewController {
     @IBOutlet weak var guestSchoolLabel: UILabel!
     @IBOutlet weak var guestParentPhoneLabel: UILabel!
     @IBOutlet weak var revoveGuestButton: UIButton!
+    @IBAction func toInfiniteCampus(_ sender: Any) {
+    }
     
     
     override func viewDidLoad() {
