@@ -34,7 +34,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         catch {
             return
         }
-        
+        //Adds input and output to session
         if (session.canAddInput(videoInput!)) {
             session.addInput(videoInput!)
         } else {
@@ -50,24 +50,24 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         } else {
             scanningNotPossible()
         }
-        
+        //Presents camera for scanner
         previewLayer = AVCaptureVideoPreviewLayer(session: session)
         previewLayer.frame = view.layer.bounds
         previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         view.layer.addSublayer(previewLayer)
-        
+        //Sets the appearance of the Tab Bar
         let appearance = UITabBarItem.appearance()
         let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         appearance.setTitleTextAttributes(attributes, for: .normal)
         appearance.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.blue.lighter(by: 30)!], for: .selected)
-        
+        //Creates the Tab Bar and displays it
         let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
         tabBar.delegate = self
         tabBar.barStyle = .black
         let checkTabButton = UITabBarItem(title: "Check In/Out", image: nil, tag: 2)
         let listTabButton = UITabBarItem(title: "List", image: nil, tag: 3)
         tabBar.setItems([checkTabButton, listTabButton], animated: false)
-        
+        //Adds tab bar and runs scanning session
         view.addSubview(tabBar)
         
         session.startRunning()
@@ -84,18 +84,20 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     }
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        //When the check button on the Tab Bar is pressed, segue to the checkVC
         if item.tag == 2 {
             print("check")
             self.performSegue(withIdentifier: "tabCheckSegue", sender: self)
-            
+            //Removes the current VC from the stack
             var navigationArray = self.navigationController?.viewControllers ?? [Any]()
             navigationArray.remove(at: 1)
             navigationController?.viewControllers = (navigationArray as? [UIViewController])!
         }
+        //When the list button on the Tab Bar is pressed, segue to the listVC
         else if item.tag == 3 {
             print("list")
             self.performSegue(withIdentifier: "tabListSegue", sender: self)
-            
+            //Removes the current VC from the stack
             var navigationArray = self.navigationController?.viewControllers ?? [Any]()
             navigationArray.remove(at: 1)
             navigationController?.viewControllers = (navigationArray as? [UIViewController])!
@@ -150,7 +152,35 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         }).resume()
     }
     
+    func purchaseTicket(firstName: String, lastName: String, ID: String, altID: String) {
+        //Sets the information of the student on CloudKit
+        let place = CKRecord(recordType: "Students")
+        place.setObject(firstName as CKRecordValue, forKey: "firstName")
+        place.setObject(lastName as CKRecordValue, forKey: "lastName")
+        place.setObject(String(ID) as CKRecordValue, forKey: "idNumber")
+        place.setObject(String(altID) as CKRecordValue, forKey: "altIDNumber")
+        place.setObject("Purchased" as CKRecordValue, forKey: "checkedInOrOut")
+        place.setObject("" as CKRecordValue, forKey: "checkInTime")
+        place.setObject("" as CKRecordValue, forKey: "checkOutTime")
+        place.setObject("Not implemented yet" as CKRecordValue, forKey: "studentParentPhone")
+        place.setObject("Not implemented yet" as CKRecordValue, forKey: "studentParentName")
+        place.setObject("" as CKRecordValue, forKey: "guestName")
+        place.setObject("" as CKRecordValue, forKey: "guestSchool")
+        place.setObject("" as CKRecordValue, forKey: "guestParentPhone")
+        //Saves student and checks for error
+        self.database.save(place) { (record, error) in
+            if error != nil {
+                let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
+            }
+            self.runSession()
+        }
+    }
+
     func scanningNotPossible() {
+        //Presents an alert if it is impossible to scan
         let alert = UIAlertController(title: "This device can't scan.", message: "How did you mess this up? It was only supposed to be sent to camera-equipped iPads!", preferredStyle: .alert)
         let closeButton = UIAlertAction(title: "Yeah, I really screwed this up", style: .destructive, handler: nil)
         alert.addAction(closeButton)
@@ -158,6 +188,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        //Places readable value of scanned barcode into the variable altID
         stopSession()
         if let barcodeData = metadataObjects.first {
             let barcodeReadable = barcodeData as? AVMetadataMachineReadableCodeObject
@@ -170,18 +201,21 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     }
     
     func runSession() {
+        //Starts to run the session again
         if (session?.isRunning == false) {
             session.startRunning()
         }
     }
     
     func stopSession() {
+        //Stops the session
         if (session?.isRunning == true) {
             session.stopRunning()
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //Shares information pulled from JSON with the addGuestVC
         if segue.identifier == "addGuestSegue" {
             let nvc = segue.destination as! addGuestViewController
             nvc.selectedStudentArray = studentArray

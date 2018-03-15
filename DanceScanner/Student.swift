@@ -9,13 +9,16 @@
 import Foundation
 
 class Student {
+    //Student information
     var firstName: String
     var lastName: String
     var altIDNumber: String
     var idNumber: String
+    //Checking in/out information
     var checkedInOrOut: String
     var checkInTime: String
     var checkOutTime: String
+    //Guest information
     var guestName: String
     var guestSchool: String
     var guestParentPhone: String

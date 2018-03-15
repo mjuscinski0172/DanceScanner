@@ -24,6 +24,8 @@ class detailsViewController: UIViewController {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var timeInTitleLabel: UILabel!
     @IBOutlet weak var timeOutTitleLabel: UILabel!
+    @IBOutlet weak var parentNameLabel: UILabel!
+    @IBOutlet weak var parentPhoneNumberLabel: UILabel!
     @IBOutlet weak var statusTitlesLabel: UILabel!
     @IBOutlet weak var lineLabel: UILabel!
     @IBOutlet weak var guestInfoTitleLabel: UILabel!
@@ -44,7 +46,8 @@ class detailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         guestLabelAlphas()
-        
+        parentNameLabel.text = selectedStudent.studentParentName
+        parentPhoneNumberLabel.text = selectedStudent.studentParentPhone
         nameLabel.text = selectedStudent.firstName + " " + selectedStudent.lastName
         idLabel.text = selectedStudent.idNumber
         if selectedStudent.checkedInOrOut == "Purchased"{
@@ -106,12 +109,12 @@ class detailsViewController: UIViewController {
     }
     
     @IBAction func removeStudent(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Delete Student?", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Delete this", message: "Please input passwrd", preferredStyle: .alert)
         alert.addTextField { (textField) in
             textField.placeholder = "Insert Password"
         }
-        let cancelAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
-        let confirmAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+        let cancelAction = UIAlertAction(title: "No", style: .default, handler: nil)
+        let confirmAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
             let passTextField = alert.textFields![0]
             if passTextField.text == self.superSecretPassword {
                 
@@ -166,8 +169,8 @@ class detailsViewController: UIViewController {
         alert.addTextField { (textField) in
             textField.placeholder = "Enter Password"
         }
-        let cancelAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
-        let confirmAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+        let cancelAction = UIAlertAction(title: "No", style: .default, handler: nil)
+        let confirmAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
             let passTextField = alert.textFields![0]
             if passTextField.text == self.superSecretPassword {
                 let predicate = NSPredicate(value: true)
