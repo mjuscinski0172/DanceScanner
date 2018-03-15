@@ -130,7 +130,7 @@
                         //If the student has purchased a ticket, run the following
                         if student.object(forKey: "guestName") as! String != "" {
                             //Creates an alert if there is a guest
-                            let alertPleaseWork = UIAlertController(title: "Check In", message: "Is the student's guest \(student.object(forKey: "guestName")!) here?", preferredStyle: .alert)
+                            let alertPleaseWork = UIAlertController(title: "Check In", message: "Is the student's guest, \(student.object(forKey: "guestName")!), here?", preferredStyle: .alert)
                             let noAction = UIAlertAction(title: "No", style: .destructive, handler: {(action) in
                                 self.runSession()
                             })

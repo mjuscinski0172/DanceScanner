@@ -164,8 +164,8 @@ class detailsViewController: UIViewController {
                 self.present(failureAlert, animated: true, completion: nil)
             }
         }
-        alert.addAction(confirmAction)
         alert.addAction(cancelAction)
+        alert.addAction(confirmAction)
         self.present(alert, animated: true, completion: nil)
         
     }
@@ -201,7 +201,6 @@ class detailsViewController: UIViewController {
                         }
                     }
                     DispatchQueue.main.async {
-                        print("Ba-zang")
                         self.lineLabel.alpha = 0
                         self.guestInfoTitleLabel.alpha = 0
                         self.guestNameTitleLabel.alpha = 0
@@ -222,8 +221,8 @@ class detailsViewController: UIViewController {
                 self.present(failureAlert, animated: true, completion: nil)
             }
         }
-        alert.addAction(confirmAction)
         alert.addAction(cancelAction)
+        alert.addAction(confirmAction)
         self.present(alert, animated: true, completion: nil)
         
     }
@@ -232,8 +231,7 @@ class detailsViewController: UIViewController {
         let nvc = segue.destination as! addGuestViewController
         nvc.database = database
         nvc.selectedStudent = selectedStudent
-        //        detailsStudentArray.append(selectedStudent)
-        //        nvc.selectedStudentArray = detailsStudentArray as NSArray
+
     }
     
     
