@@ -127,43 +127,25 @@
             if let myRecords = records {
                 if let student = myRecords.first {
                     if student.object(forKey: "checkedInOrOut") as! String == "Purchased" {
-                        student.setObject("In" as CKRecordValue, forKey: "checkedInOrOut")
-                        student.setObject(timeOf as CKRecordValue, forKey: "checkInTime")
-                        
-                        self.database.save(student) { (record, error) in
-                            if error != nil {
-                                let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
-                                let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
-                                    
-                                    self.runSession()
-                                })
-                                alert.addAction(okAction)
-                                self.present(alert, animated: true, completion: nil)
-                            }
-                            if student.object(forKey: "guestName") as! String != "" {
-                                let alert = UIAlertController(title: "Is the guest present?", message: nil, preferredStyle: .alert)
-                                let yesAction = UIAlertAction(title: "Yes", style: .default, handler: {(action) in
-                                    print(100)
-                                    self.runSession()
-                                })
-                                let noAction = UIAlertAction(title: "No", style: .destructive, handler: {(action) in
-
-                                    self.runSession()
-                                })
-                                alert.addAction(yesAction)
-                                alert.addAction(noAction)
-                                self.present(alert, animated: true, completion: nil)
-                            }
-
-                            else {
-                                let alert = UIAlertController(title: "Checked In", message: nil, preferredStyle: .alert)
-                                let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
-                                    
-                                    self.runSession()
-                                })
-                                alert.addAction(okAction)
-                                self.present(alert, animated: true, completion: nil)
-                            }
+                        //If the student has purchased a ticket, run the following
+                        if student.object(forKey: "guestName") as! String != "" {
+                            //Creates an alert if there is a guest
+                            let alertPleaseWork = UIAlertController(title: "Check In", message: "Is the student's guest \(student.object(forKey: "guestName")!) here?", preferredStyle: .alert)
+                            let noAction = UIAlertAction(title: "No", style: .destructive, handler: {(action) in
+                                self.runSession()
+                            })
+                            let yesAction = UIAlertAction(title: "Yes", style: .default, handler: {(action) in
+                                //Tells the function to set the student as in if the guest is present
+                                self.setInOrOut(message: "In", student: student, timeOf: timeOf)
+                            })
+                            //Adds all buttons and presents guest alert
+                            alertPleaseWork.addAction(yesAction)
+                            alertPleaseWork.addAction(noAction)
+                            self.present(alertPleaseWork, animated: true, completion: nil)
+                        }
+                        else {
+                            //If there is no guest, tells the function to set the student as in
+                            self.setInOrOut(message: "In", student: student, timeOf: timeOf)
                         }
                     }
                     else if student.object(forKey: "checkedInOrOut") as! String == "In" {
@@ -189,16 +171,8 @@
                         }
                     }
                     else if student.object(forKey: "checkedInOrOut") as! String == "Out" {
-                        student.setObject("Out" as CKRecordValue, forKey: "checkedInOrOut")
-                        self.database.save(student, completionHandler: { (record, error) in
-                            let alert = UIAlertController(title: "Error", message: "This student has already been checked out", preferredStyle: .alert)
-                            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
-                                self.runSession()
-                            })
-                            alert.addAction(okAction)
-                            self.present(alert, animated: true, completion: nil)
-                        })
-                        
+                        //If the student has already been checked out, tells the function to display an error message
+                        self.setInOrOut(message: "This student has already been checked out and cannot be allowed back into the dance", student: nil, timeOf: nil)
                     }
                     else {
                         //If the student is not one of the 3 status settings, tells the function to display an error message

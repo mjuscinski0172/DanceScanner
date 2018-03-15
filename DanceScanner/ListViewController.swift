@@ -132,7 +132,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.detailTextLabel?.text = "                                 " + student.guestName
             cell.detailTextLabel?.textColor = .lightGray
             cell.textLabel?.textColor = .white
-            
+            //Creates the status label
+//            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
             let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
             label.textAlignment = .center
             label.textColor = .white
@@ -152,7 +153,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == resultsController.tableView {
+        //Displays the correct amount of cells based on the amount of students
+        if tableView == resultsController.tableView{
             return filteredArray.count
         } else{
             return alphabeticalStudentArray.count
@@ -186,8 +188,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let guestName = student.object(forKey: "guestName") as! String
                 let guestSchool = student.object(forKey: "guestSchool") as! String
                 let guestParentPhone = student.object(forKey: "guestParentPhone") as! String
-                
-                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone)
+                //Creates an object of the Student class, puts all pulled information into it, and adds it to the array
+                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone, studentParentName: studentParentName, studentParentPhone: studentParentPhone)
                 self.studentArray.append(newStudent)
 
                 self.alphabeticalStudentArray = self.studentArray.sorted(by: { $0.lastName < $1.lastName })
@@ -203,6 +205,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //Sends the student that was pressed to the detailsVC
         if segue.identifier == "listToDetail" {
             let nvc = segue.destination as! detailsViewController
+//        let indexPath = tableView.indexPathForSelectedRow!
             if let indexPath = tableView.indexPathForSelectedRow{
                 nvc.selectedStudent = alphabeticalStudentArray[indexPath.row]
             }
@@ -210,6 +213,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let indexPath = resultsController.tableView.indexPathForSelectedRow!
                 nvc.selectedStudent = filteredArray[indexPath.row]
             }
+//        nvc.selectedStudent = studentArray[indexPath.row]
             nvc.database = database
         }
     }
