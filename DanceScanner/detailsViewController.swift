@@ -83,6 +83,12 @@ class detailsViewController: UIViewController {
         timeOutLabel.text = selectedStudent.checkOutTime
     }
     
+    @IBAction func toInfiniteCampus(_ sender: Any) {
+        //Sends the user to the infinite campus web site
+        let svc = SFSafariViewController(url: URL(string: "https://ic.d214.org")!)
+        self.present(svc, animated: true, completion: nil)
+    }
+    
     func guestLabelAlphas(onOrOff: Int) {
         //Depending on whether or not the student has a guest, show or hide all the things
         lineLabel.alpha = CGFloat(onOrOff)
@@ -156,7 +162,6 @@ class detailsViewController: UIViewController {
             }
         }
         //Add all buttons and present alert
-        alert.addAction(confirmAction)
         alert.addAction(cancelAction)
         alert.addAction(confirmAction)
         self.present(alert, animated: true, completion: nil)
@@ -221,7 +226,6 @@ class detailsViewController: UIViewController {
             }
         }
         //Add all buttons and present alert
-        alert.addAction(confirmAction)
         alert.addAction(cancelAction)
         alert.addAction(confirmAction)
         self.present(alert, animated: true, completion: nil)
@@ -233,6 +237,7 @@ class detailsViewController: UIViewController {
         let nvc = segue.destination as! addGuestViewController
         nvc.database = database
         nvc.selectedStudent = selectedStudent
+
     }
     
     
