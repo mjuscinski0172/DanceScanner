@@ -8,6 +8,7 @@
 
 import UIKit
 import CloudKit
+import SafariServices
 
 class detailsViewController: UIViewController {
     
@@ -36,9 +37,6 @@ class detailsViewController: UIViewController {
     @IBOutlet weak var guestSchoolLabel: UILabel!
     @IBOutlet weak var guestParentPhoneLabel: UILabel!
     @IBOutlet weak var revoveGuestButton: UIButton!
-    @IBAction func toInfiniteCampus(_ sender: Any) {
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,6 +158,7 @@ class detailsViewController: UIViewController {
         //Add all buttons and present alert
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)
+        alert.addAction(confirmAction)
         self.present(alert, animated: true, completion: nil)
         
     }
@@ -224,6 +223,7 @@ class detailsViewController: UIViewController {
         //Add all buttons and present alert
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)
+        alert.addAction(confirmAction)
         self.present(alert, animated: true, completion: nil)
         
     }

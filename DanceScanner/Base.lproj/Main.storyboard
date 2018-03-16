@@ -415,8 +415,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQb-DN-yJH">
-                                <rect key="frame" x="331" y="64" width="107" height="30"/>
+                                <rect key="frame" x="608" y="74" width="160" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" title="Infinite Campus"/>
                                 <connections>
                                     <action selector="toInfiniteCampus:" destination="2w0-KP-wVB" eventType="touchUpInside" id="OKc-9D-Lte"/>
