@@ -15,7 +15,7 @@ class addGuestViewController: UIViewController {
     @IBOutlet weak var guestSchoolTextField: UITextField!
     @IBOutlet weak var parentPhoneNumberTextField: UITextField!
     var database = CKContainer.default().publicCloudDatabase
-    var selectedStudentArray: NSArray!
+    var studentDictionary: NSDictionary!
     var altId: String!
     var selectedStudent: Student!
     
@@ -39,17 +39,23 @@ class addGuestViewController: UIViewController {
             var guestSchool = guestSchoolTextField.text
             var guestParentNumber = parentPhoneNumberTextField.text
             if selectedStudent == nil {
-                let studentDictionary = self.selectedStudentArray.firstObject as! NSDictionary
-                let firstName = studentDictionary.object(forKey: "First") as! NSString
-                let lastName = studentDictionary.object(forKey: "Last") as! NSString
-                let ID = studentDictionary.object(forKey: "ID") as! NSInteger
+//                let studentDictionary = self.selectedStudentArray.firstObject as! NSDictionary
+                let firstName = self.studentDictionary.object(forKey: "FIRST") as! NSString
+                let lastName = self.studentDictionary.object(forKey: "LAST") as! NSString
+                let ID = self.studentDictionary.object(forKey: "ID") as! NSInteger
+                let parentFirst = self.studentDictionary.object(forKey: "GRDFIRST") as! NSString
+                let parentLast = self.studentDictionary.object(forKey: "GRDLAST") as! NSString
+                let parentCell = self.studentDictionary.object(forKey: "GRDCELL") as! NSString
+                let parentHouseHold = self.studentDictionary.object(forKey: "GRDHHOLD") as! NSString
+                
                 let place = CKRecord(recordType: "Students")
                 place.setObject(firstName as CKRecordValue, forKey: "firstName")
                 place.setObject(lastName as CKRecordValue, forKey: "lastName")
                 place.setObject(String(ID) as CKRecordValue, forKey: "idNumber")
                 place.setObject(String(altId) as CKRecordValue, forKey: "altIDNumber")
-                place.setObject("Not implemented yet" as CKRecordValue, forKey: "studentParentName")
-                place.setObject("Not implemented yet" as CKRecordValue, forKey: "studentParentPhone")
+                place.setObject((String(parentFirst)+String(parentLast)) as CKRecordValue, forKey: "studentParentName")
+                place.setObject(String(parentHouseHold) as CKRecordValue, forKey: "studentParentPhone")
+                place.setObject(String(parentCell) as CKRecordValue, forKey: "studentParentCell")
                 place.setObject("Purchased" as CKRecordValue, forKey: "checkedInOrOut")
                 place.setObject("" as CKRecordValue, forKey: "checkInTime")
                 place.setObject("" as CKRecordValue, forKey: "checkOutTime")

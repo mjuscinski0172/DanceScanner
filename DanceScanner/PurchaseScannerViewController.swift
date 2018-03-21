@@ -14,7 +14,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
     var database =  CKContainer.default().publicCloudDatabase
-    var studentArray: NSArray!
+    var studentDictionary: NSDictionary!
     var altId = ""
     
     
@@ -107,20 +107,36 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     
     func getJSON(altID: String){
         //Connects to JSON and pulls data
-        let urlString = "https://api.myjson.com/bins/16ljdv"
-        let url = URL(string: urlString)!
+        var urlString = ""
+        var url: URL!
+        let predicate = NSPredicate(value: true)
+        let JSONQuery = CKQuery(recordType: "JSONurl", predicate: predicate)
+        database.perform(JSONQuery, inZoneWith: nil) { (records, error) in
+            urlString = records?.first?.object(forKey: "studentInfoUrl")! as! String
+            url = URL(string: urlString)!
+            self.placeIndices(url: url, altID: altID)
+        }
+    }
+    
+    func placeIndices(url: URL, altID: String) {
         URLSession.shared.dataTask(with: url, completionHandler: { (myData, response, error) in
             if let JSONObject = try? JSONSerialization.jsonObject(with: myData!, options: .allowFragments) as! NSDictionary {
                 //Takes JSON information and places them into local varialbes
-                self.studentArray = JSONObject.object(forKey: altID) as! NSArray
-                let studentDictionary = self.studentArray.firstObject as! NSDictionary
-                let firstName = studentDictionary.object(forKey: "First") as! NSString
-                let lastName = studentDictionary.object(forKey: "Last") as! NSString
-                let ID = studentDictionary.object(forKey: "ID") as! NSInteger
+                self.studentDictionary = JSONObject.object(forKey: altID) as! NSDictionary
+// //               self.studentArray = JSONObject.object(forKey: "altID") as! NSArray
+// //               let studentDictionary = self.studentArray.firstObject as! NSDictionary
+                let firstName = self.studentDictionary.object(forKey: "FIRST") as! NSString
+                let lastName = self.studentDictionary.object(forKey: "LAST") as! NSString
+                let ID = self.studentDictionary.object(forKey: "ID") as! NSInteger
+                let parentFirst = self.studentDictionary.object(forKey: "GRDFIRST") as! NSString
+                let parentLast = self.studentDictionary.object(forKey: "GRDLAST") as! NSString
+                let parentCell = self.studentDictionary.object(forKey: "GRDCELL") as! NSString
+                let parentHouseHold = self.studentDictionary.object(forKey: "GRDHHOLD") as! NSString
+
                 //Creates an alert that allows the user to confirm the purchase with 3 buttons
                 let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
                 let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
-                    self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID))
+                    self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold))
                 })
                 let addGuestButton = UIAlertAction(title: "Ticket with Guest", style: .default, handler: { (action) in
                     self.performSegue(withIdentifier: "addGuestSegue", sender: self)
@@ -137,7 +153,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         }).resume()
     }
     
-    func purchaseTicket(firstName: String, lastName: String, ID: String, altID: String) {
+    func purchaseTicket(firstName: String, lastName: String, ID: String, altID: String, parentName: String, parentCell: String, parentHouseHold: String) {
         //Sets the information of the student on CloudKit
         let place = CKRecord(recordType: "Students")
         place.setObject(firstName as CKRecordValue, forKey: "firstName")
@@ -147,8 +163,9 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         place.setObject("Purchased" as CKRecordValue, forKey: "checkedInOrOut")
         place.setObject("" as CKRecordValue, forKey: "checkInTime")
         place.setObject("" as CKRecordValue, forKey: "checkOutTime")
-        place.setObject("Not implemented yet" as CKRecordValue, forKey: "studentParentPhone")
-        place.setObject("Not implemented yet" as CKRecordValue, forKey: "studentParentName")
+        place.setObject(parentHouseHold as CKRecordValue, forKey: "studentParentPhone")
+        place.setObject(parentName as CKRecordValue, forKey: "studentParentName")
+        place.setObject(parentCell as CKRecordValue, forKey: "studentParentCell")
         place.setObject("" as CKRecordValue, forKey: "guestName")
         place.setObject("" as CKRecordValue, forKey: "guestSchool")
         place.setObject("" as CKRecordValue, forKey: "guestParentPhone")
@@ -203,7 +220,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         //Shares information pulled from JSON with the addGuestVC
         if segue.identifier == "addGuestSegue" {
             let nvc = segue.destination as! addGuestViewController
-            nvc.selectedStudentArray = studentArray
+            nvc.studentDictionary = studentDictionary
             nvc.altId = altId
             nvc.database = database
         }

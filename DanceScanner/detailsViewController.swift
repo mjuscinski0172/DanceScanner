@@ -47,7 +47,7 @@ class detailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         guestLabelAlphas()
         parentNameLabel.text = selectedStudent.studentParentName
-        parentPhoneNumberLabel.text = selectedStudent.studentParentPhone
+        parentPhoneNumberLabel.text = "\(selectedStudent.studentParentPhone) (Household), \(selectedStudent.studentParentCell) (Cell)"
         nameLabel.text = selectedStudent.firstName + " " + selectedStudent.lastName
         idLabel.text = selectedStudent.idNumber
         if selectedStudent.checkedInOrOut == "Purchased"{
