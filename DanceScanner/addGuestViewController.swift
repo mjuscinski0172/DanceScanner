@@ -53,7 +53,7 @@ class addGuestViewController: UIViewController {
                 place.setObject(lastName as CKRecordValue, forKey: "lastName")
                 place.setObject(String(ID) as CKRecordValue, forKey: "idNumber")
                 place.setObject(String(altId) as CKRecordValue, forKey: "altIDNumber")
-                place.setObject((String(parentFirst)+String(parentLast)) as CKRecordValue, forKey: "studentParentName")
+                place.setObject((String(parentFirst) + " " + String(parentLast)) as CKRecordValue, forKey: "studentParentName")
                 place.setObject(String(parentHouseHold) as CKRecordValue, forKey: "studentParentPhone")
                 place.setObject(String(parentCell) as CKRecordValue, forKey: "studentParentCell")
                 place.setObject("Purchased" as CKRecordValue, forKey: "checkedInOrOut")
