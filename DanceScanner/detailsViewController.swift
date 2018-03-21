@@ -45,77 +45,76 @@ class detailsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        guestLabelAlphas()
+        //Checks whether to make the guest section visible or not
+        if selectedStudent.guestName == ""{
+            guestLabelAlphas(onOrOff: 1)
+        }
+        else {
+            guestLabelAlphas(onOrOff: 0)
+        }
+        //Sets text in the labels
         parentNameLabel.text = selectedStudent.studentParentName
         parentPhoneNumberLabel.text = "\(selectedStudent.studentParentPhone) (Household), \(selectedStudent.studentParentCell) (Cell)"
         nameLabel.text = selectedStudent.firstName + " " + selectedStudent.lastName
         idLabel.text = selectedStudent.idNumber
+        //Depending on the student's status, display different amounts of labels
         if selectedStudent.checkedInOrOut == "Purchased"{
-            timeInLabel.alpha = 0
-            timeOutLabel.alpha = 0
-            timeInTitleLabel.alpha = 0
-            timeOutTitleLabel.alpha = 0
+            timeLabelAlphas(inness: 0, outness: 0)
             statusLabel.text = "Purchased Tickets"
             
         }
         else if selectedStudent.checkedInOrOut == "In" {
-            timeInLabel.alpha = 1
-            timeInLabel.text = selectedStudent.checkInTime
-            timeInTitleLabel.alpha = 1
-            timeOutTitleLabel.alpha = 0
-            timeOutLabel.alpha = 0
+            timeLabelAlphas(inness: 1, outness: 0)
             statusLabel.text = "In Dance"
         }
         else {
-            timeInLabel.alpha = 1
-            timeOutTitleLabel.alpha = 1
-            timeOutLabel.alpha = 1
-            timeOutTitleLabel.alpha = 1
-            timeInLabel.text = selectedStudent.checkInTime
-            timeOutLabel.text = selectedStudent.checkOutTime
+            timeLabelAlphas(inness: 1, outness: 1)
             statusLabel.text = "Checked Out"
         }
     }
     
+    func timeLabelAlphas(inness: Int, outness: Int) {
+        //If student has not checked in/out yet, hide the labels
+        timeInLabel.alpha = CGFloat(inness)
+        timeInLabel.text = selectedStudent.checkInTime
+        timeInTitleLabel.alpha = CGFloat(inness)
+        timeOutTitleLabel.alpha = CGFloat(outness)
+        timeOutLabel.alpha = CGFloat(outness)
+        timeOutLabel.text = selectedStudent.checkOutTime
+    }
     
     @IBAction func toInfiniteCampus(_ sender: Any) {
+        //Sends the user to the infinite campus web site
         let svc = SFSafariViewController(url: URL(string: "https://ic.d214.org")!)
         self.present(svc, animated: true, completion: nil)
     }
     
-    func guestLabelAlphas() {
-        if selectedStudent.guestName == "" {
-            lineLabel.alpha = 0
-            guestInfoTitleLabel.alpha = 0
-            guestNameTitleLabel.alpha = 0
-            guestSchoolTitleLabel.alpha = 0
-            guestParentPhoneTitleLabel.alpha = 0
-            guestNameLabel.alpha = 0
-            guestSchoolLabel.alpha = 0
-            guestParentPhoneLabel.alpha = 0
-            revoveGuestButton.alpha = 0
+    func guestLabelAlphas(onOrOff: Int) {
+        //Depending on whether or not the student has a guest, show or hide all the things
+        lineLabel.alpha = CGFloat(onOrOff)
+        guestInfoTitleLabel.alpha = CGFloat(onOrOff)
+        guestNameTitleLabel.alpha = CGFloat(onOrOff)
+        guestSchoolTitleLabel.alpha = CGFloat(onOrOff)
+        guestParentPhoneTitleLabel.alpha = CGFloat(onOrOff)
+        guestNameLabel.alpha = CGFloat(onOrOff)
+        guestSchoolLabel.alpha = CGFloat(onOrOff)
+        guestParentPhoneLabel.alpha = CGFloat(onOrOff)
+        revoveGuestButton.alpha = CGFloat(onOrOff)
+        if onOrOff == 0{
             revoveGuestButton.isEnabled = false
         }
-        else {
-            lineLabel.alpha = 1
-            guestInfoTitleLabel.alpha = 1
-            guestNameTitleLabel.alpha = 1
-            guestSchoolTitleLabel.alpha = 1
-            guestParentPhoneTitleLabel.alpha = 1
-            guestNameLabel.alpha = 1
-            guestSchoolLabel.alpha = 1
-            guestParentPhoneLabel.alpha = 1
-            revoveGuestButton.alpha = 1
+        else if onOrOff == 1{
             revoveGuestButton.isEnabled = true
-            
-            guestNameLabel.text = selectedStudent.guestName
-            guestSchoolLabel.text = selectedStudent.guestSchool
-            guestParentPhoneLabel.text = selectedStudent.guestParentPhone
         }
+        //Add guest info to labels
+        guestNameLabel.text = selectedStudent.guestName
+        guestSchoolLabel.text = selectedStudent.guestSchool
+        guestParentPhoneLabel.text = selectedStudent.guestParentPhone
     }
     
     @IBAction func removeStudent(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Delete this", message: "Please input passwrd", preferredStyle: .alert)
+        //Creates an alert to input password
+        let alert = UIAlertController(title: "Delete student?", message: "Please input password", preferredStyle: .alert)
         alert.addTextField { (textField) in
             textField.placeholder = "Insert Password"
         }
@@ -123,20 +122,23 @@ class detailsViewController: UIViewController {
         let confirmAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
             let passTextField = alert.textFields![0]
             if passTextField.text == self.superSecretPassword {
-                
+                //If the password inputted is correct, query the database
                 let predicate = NSPredicate(value: true)
                 let query = CKQuery(recordType: "Students", predicate: predicate)
                 self.database.perform(query, inZoneWith: nil) { (records, error) in
                     for student in records! {
                         if student.object(forKey: "firstName") as! String == self.selectedStudent.firstName  {
+                            //Delete the currently selected student from the database
                             self.database.delete(withRecordID: student.recordID, completionHandler: { (record, error) in
                                 if error != nil {
+                                    //Creates an alert to inform the user of the error if there is one
                                     let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
                                     let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                                     alert.addAction(okAction)
                                     self.present(alert, animated: true, completion: nil)
                                 }
                                 else {
+                                    //Inform the user of the deletion
                                     Thread.sleep(forTimeInterval: 1.0)
                                     
                                     let alert = UIAlertController(title: "Student Deleted", message: nil, preferredStyle: .alert)
@@ -145,33 +147,30 @@ class detailsViewController: UIViewController {
                                     })
                                     alert.addAction(okAction)
                                     self.present(alert, animated: true, completion: nil)
-                                    //                            self.navigationController?.popViewController(animated: true)
-                                    print("Ba-zingas-Ka-chingas")
                                 }
                             })
                         }
                     }
-                    DispatchQueue.main.async {
-                        //                self.navigationController?.popViewController(animated: true)
-                        print("Ba-zingas-Ka-chingas-Ba-bangas")
-                    }
                 }
             }
             else {
+                //If password is incorrect, inform the user
                 let failureAlert = UIAlertController(title: "Password Incorrect", message: "", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
                 failureAlert.addAction(okAction)
                 self.present(failureAlert, animated: true, completion: nil)
             }
         }
-        alert.addAction(confirmAction)
+        //Add all buttons and present alert
         alert.addAction(cancelAction)
+        alert.addAction(confirmAction)
         self.present(alert, animated: true, completion: nil)
         
     }
     
     @IBAction func removeGuest(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Delete Student?", message: "", preferredStyle: .alert)
+        //Creates an alert to input password
+        let alert = UIAlertController(title: "Delete Guest?", message: "Please input password", preferredStyle: .alert)
         alert.addTextField { (textField) in
             textField.placeholder = "Enter Password"
         }
@@ -179,11 +178,13 @@ class detailsViewController: UIViewController {
         let confirmAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
             let passTextField = alert.textFields![0]
             if passTextField.text == self.superSecretPassword {
+                //If the password inputted is correct, query the database
                 let predicate = NSPredicate(value: true)
                 let query = CKQuery(recordType: "Students", predicate: predicate)
                 self.database.perform(query, inZoneWith: nil) { (records, error) in
                     for student in records! {
                         if student.object(forKey: "guestName") as! String == self.selectedStudent.guestName  {
+                            //Clear all the guest information from the selected student
                             self.selectedStudent.guestName = ""
                             self.selectedStudent.guestSchool =  ""
                             self.selectedStudent.guestParentPhone = ""
@@ -192,6 +193,7 @@ class detailsViewController: UIViewController {
                             student.setObject("" as CKRecordValue, forKey: "guestParentPhone")
                             self.database.save(student, completionHandler: { (record, error) in
                                 if error != nil {
+                                    //Inform the user of any error
                                     let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
                                     let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                                     alert.addAction(okAction)
@@ -201,7 +203,7 @@ class detailsViewController: UIViewController {
                         }
                     }
                     DispatchQueue.main.async {
-                        print("Ba-zang")
+                        //Disable all guest things
                         self.lineLabel.alpha = 0
                         self.guestInfoTitleLabel.alpha = 0
                         self.guestNameTitleLabel.alpha = 0
@@ -216,24 +218,26 @@ class detailsViewController: UIViewController {
                 }
             }
             else {
+                //If password is incorrect, inform the user
                 let failureAlert = UIAlertController(title: "Password Incorrect", message: "", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
                 failureAlert.addAction(okAction)
                 self.present(failureAlert, animated: true, completion: nil)
             }
         }
-        alert.addAction(confirmAction)
+        //Add all buttons and present alert
         alert.addAction(cancelAction)
+        alert.addAction(confirmAction)
         self.present(alert, animated: true, completion: nil)
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //Sends current student to addGuestVC
         let nvc = segue.destination as! addGuestViewController
         nvc.database = database
         nvc.selectedStudent = selectedStudent
-        //        detailsStudentArray.append(selectedStudent)
-        //        nvc.selectedStudentArray = detailsStudentArray as NSArray
+
     }
     
     

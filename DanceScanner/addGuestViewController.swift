@@ -63,7 +63,6 @@ class addGuestViewController: UIViewController {
                 place.setObject(guestSchool as! CKRecordValue, forKey: "guestSchool")
                 place.setObject(guestParentNumber as! CKRecordValue, forKey: "guestParentPhone")
                 
-                
                 self.database.save(place) { (record, error) in
                     if error != nil {
                         let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
