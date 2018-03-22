@@ -100,9 +100,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZjO-a3-ESm">
-                                <rect key="frame" x="0.0" y="64" width="768" height="960"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZjO-a3-ESm">
+                                <rect key="frame" x="0.0" y="64" width="768" height="910"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="Search Student" id="yuj-l5-Ra4">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="56"/>
@@ -142,6 +141,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ZjO-a3-ESm" firstAttribute="trailing" secondItem="syT-Lf-rTI" secondAttribute="trailing" id="9oY-3U-o6m"/>
+                            <constraint firstItem="syT-Lf-rTI" firstAttribute="bottom" secondItem="ZjO-a3-ESm" secondAttribute="bottom" constant="50" id="EmU-bD-zwM"/>
+                            <constraint firstItem="ZjO-a3-ESm" firstAttribute="leading" secondItem="syT-Lf-rTI" secondAttribute="leading" id="oFL-h4-Vw6"/>
+                            <constraint firstItem="ZjO-a3-ESm" firstAttribute="top" secondItem="syT-Lf-rTI" secondAttribute="top" id="p4q-D5-Arq"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="syT-Lf-rTI"/>
                     </view>
                     <connections>
@@ -670,9 +675,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="gg0-Qp-0tL"/>
+        <segue reference="Rtq-Dl-KTl"/>
         <segue reference="3hq-tM-0TK"/>
-        <segue reference="J6t-uk-wuW"/>
+        <segue reference="0uB-Yf-yGZ"/>
         <segue reference="dOX-mN-0kF"/>
     </inferredMetricsTieBreakers>
 </document>
