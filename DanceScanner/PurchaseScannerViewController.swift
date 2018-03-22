@@ -71,7 +71,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         //Adds tab bar and runs scanning session
         view.addSubview(tabBar)
         
-        session.startRunning()
+        session.startRunning()      
     }
     
     override func viewWillAppear(_ animated: Bool) {
