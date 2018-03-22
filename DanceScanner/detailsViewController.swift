@@ -47,14 +47,14 @@ class detailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         //Checks whether to make the guest section visible or not
         if selectedStudent.guestName == ""{
-            guestLabelAlphas(onOrOff: 1)
+            guestLabelAlphas(onOrOff: 0)
         }
         else {
-            guestLabelAlphas(onOrOff: 0)
+            guestLabelAlphas(onOrOff: 1)
         }
         //Sets text in the labels
         parentNameLabel.text = selectedStudent.studentParentName
-        parentPhoneNumberLabel.text = "\(selectedStudent.studentParentPhone) (Household), \(selectedStudent.studentParentCell) (Cell)"
+        parentPhoneNumberLabel.text = "\(selectedStudent.studentParentPhone) (Household)\n\(selectedStudent.studentParentCell) (Cell)"
         nameLabel.text = selectedStudent.firstName + " " + selectedStudent.lastName
         idLabel.text = selectedStudent.idNumber
         //Depending on the student's status, display different amounts of labels

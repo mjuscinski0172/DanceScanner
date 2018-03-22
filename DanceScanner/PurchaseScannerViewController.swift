@@ -16,6 +16,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     var database =  CKContainer.default().publicCloudDatabase
     var studentDictionary: NSDictionary!
     var altId = ""
+    var url: URL!
     
     
     override func viewDidLoad() {
@@ -107,24 +108,10 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     
     func getJSON(altID: String){
         //Connects to JSON and pulls data
-        var urlString = ""
-        var url: URL!
-        let predicate = NSPredicate(value: true)
-        let JSONQuery = CKQuery(recordType: "JSONurl", predicate: predicate)
-        database.perform(JSONQuery, inZoneWith: nil) { (records, error) in
-            urlString = records?.first?.object(forKey: "studentInfoUrl")! as! String
-            url = URL(string: urlString)!
-            self.placeIndices(url: url, altID: altID)
-        }
-    }
-    
-    func placeIndices(url: URL, altID: String) {
         URLSession.shared.dataTask(with: url, completionHandler: { (myData, response, error) in
             if let JSONObject = try? JSONSerialization.jsonObject(with: myData!, options: .allowFragments) as! NSDictionary {
                 //Takes JSON information and places them into local varialbes
                 self.studentDictionary = JSONObject.object(forKey: altID) as! NSDictionary
-// //               self.studentArray = JSONObject.object(forKey: "altID") as! NSArray
-// //               let studentDictionary = self.studentArray.firstObject as! NSDictionary
                 let firstName = self.studentDictionary.object(forKey: "FIRST") as! NSString
                 let lastName = self.studentDictionary.object(forKey: "LAST") as! NSString
                 let ID = self.studentDictionary.object(forKey: "ID") as! NSInteger
@@ -132,11 +119,11 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                 let parentLast = self.studentDictionary.object(forKey: "GRDLAST") as! NSString
                 let parentCell = self.studentDictionary.object(forKey: "GRDCELL") as! NSString
                 let parentHouseHold = self.studentDictionary.object(forKey: "GRDHHOLD") as! NSString
-
+                
                 //Creates an alert that allows the user to confirm the purchase with 3 buttons
                 let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
                 let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
-                    self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold))
+                    self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + " " + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold))
                 })
                 let addGuestButton = UIAlertAction(title: "Ticket with Guest", style: .default, handler: { (action) in
                     self.performSegue(withIdentifier: "addGuestSegue", sender: self)
