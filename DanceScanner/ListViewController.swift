@@ -21,8 +21,14 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var searchController = UISearchController()
     var resultsController = UITableViewController()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let exportButton = UIBarButtonItem(title: "Export", style: .plain, target: self, action: #selector(exportData))
+        navigationItem.setRightBarButton(exportButton, animated: true)
+        
         //Sets colors for UI items
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
         tableView.backgroundColor = .black
@@ -54,6 +60,29 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tabBar.setItems([purchaseTabButton, checkTabButton], animated: false)
         //Makes Tab Bar visible
         view.addSubview(tabBar)
+    }
+    
+    @ objc func exportData() {
+        let fileName = "PromExport.csv"
+        let path = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
+        
+        var csvText: String = "ID Number,Last Name,First Name,Guest Name,Guest School\n"
+        for student in studentArray {
+            csvText += "\(student.idNumber),\(student.lastName),\(student.firstName),\(student.guestName),\(student.guestSchool)\n"
+        }
+        
+        do {
+            try csvText.write(to: path, atomically: true, encoding: String.Encoding.utf8)
+            
+            let vc = UIActivityViewController(activityItems: [path], applicationActivities: [])
+            vc.popoverPresentationController?.sourceView = self.view
+            present(vc, animated: true, completion: nil)
+            
+        } catch {
+            
+            print("Failed to create file")
+            print("\(error)")
+        }
     }
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -218,5 +247,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             nvc.database = database
         }
     }
+    
+    
+    
 }
 
