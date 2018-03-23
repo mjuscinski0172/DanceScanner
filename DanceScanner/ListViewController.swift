@@ -95,7 +95,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             navigationArray.remove(at: 1)
             navigationController?.viewControllers = (navigationArray as? [UIViewController])!
         }
-        //When the check button on the Tab Bar is pressed, segue to the checkVC
+            //When the check button on the Tab Bar is pressed, segue to the checkVC
         else if item.tag == 2{
             print("check")
             self.performSegue(withIdentifier: "tabCheckSegue2", sender: self)
@@ -121,7 +121,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        tableView.reloadData()
+        //        tableView.reloadData()
         //Clears all arrays and pulls everything from CloudKit
         studentArray = []
         filteredArray = []
@@ -129,7 +129,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
+        if let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
             let student = alphabeticalStudentArray[indexPath.row]
             cell.backgroundColor = UIColor.darkGray.darker(by: 18)
             cell.textLabel?.text = "                           " + "\(student.lastName), \(student.firstName)"
@@ -137,18 +137,31 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.detailTextLabel?.textColor = .lightGray
             cell.textLabel?.textColor = .white
             //Creates the status label
-            let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
-            label.textColor = .white
-            label.textAlignment = .center
-            label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 0.5)
-            label.text = "\(student.checkedInOrOut)".uppercased()
-            if student.checkedInOrOut == "In" {
-                label.textColor = UIColor.green.darker(by: 30)
+            if cell.subviews.count < 3 {
+                let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
+                label.textColor = .white
+                label.textAlignment = .center
+                label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 0.5)
+                label.text = "\(student.checkedInOrOut)".uppercased()
+                if student.checkedInOrOut == "In" {
+                    label.textColor = UIColor.green.darker(by: 30)
+                }
+                if student.checkedInOrOut == "Out" {
+                    label.textColor = .red
+                }
+                cell.addSubview(label)
             }
-            if student.checkedInOrOut == "Out" {
-                label.textColor = .red
+            else {
+                let label = cell.subviews[2] as! UILabel
+                label.textColor = .white
+                label.text = "\(student.checkedInOrOut)".uppercased()
+                if student.checkedInOrOut == "In" {
+                    label.textColor = UIColor.green.darker(by: 30)
+                }
+                if student.checkedInOrOut == "Out" {
+                    label.textColor = .red
+                }
             }
-            cell.addSubview(label)
             
             return cell
         }
@@ -162,19 +175,32 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.detailTextLabel?.textColor = .lightGray
             cell.textLabel?.textColor = .white
             //Creates the status label
-//            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
-            let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
-            label.textAlignment = .center
-            label.textColor = .white
-            label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 0.5)
-            label.text = "\(student.checkedInOrOut)".uppercased()
-            if student.checkedInOrOut == "In" {
-                label.textColor = UIColor.green.darker(by: 30)
+            //            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
+            if cell.subviews.count < 3 {
+                let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
+                label.textColor = .white
+                label.textAlignment = .center
+                label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 0.5)
+                label.text = "\(student.checkedInOrOut)".uppercased()
+                if student.checkedInOrOut == "In" {
+                    label.textColor = UIColor.green.darker(by: 30)
+                }
+                if student.checkedInOrOut == "Out" {
+                    label.textColor = .red
+                }
+                cell.addSubview(label)
             }
-            if student.checkedInOrOut == "Out" {
-                label.textColor = .red
+            else {
+                let label = cell.subviews[2] as! UILabel
+                label.textColor = .white
+                label.text = "\(student.checkedInOrOut)".uppercased()
+                if student.checkedInOrOut == "In" {
+                    label.textColor = UIColor.green.darker(by: 30)
+                }
+                if student.checkedInOrOut == "Out" {
+                    label.textColor = .red
+                }
             }
-            cell.addSubview(label)
             
             return cell
         }
@@ -221,7 +247,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 //Creates an object of the Student class, puts all pulled information into it, and adds it to the array
                 let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone, studentParentName: studentParentName, studentParentPhone: studentParentPhone, studentParentCell: studentParentCell)
                 self.studentArray.append(newStudent)
-
+                
                 self.alphabeticalStudentArray = self.studentArray.sorted(by: { $0.lastName < $1.lastName })
             }
             //Reloads the table with the new student
@@ -235,7 +261,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //Sends the student that was pressed to the detailsVC
         if segue.identifier == "listToDetail" {
             let nvc = segue.destination as! detailsViewController
-//        let indexPath = tableView.indexPathForSelectedRow!
+            //        let indexPath = tableView.indexPathForSelectedRow!
             if let indexPath = tableView.indexPathForSelectedRow{
                 nvc.selectedStudent = alphabeticalStudentArray[indexPath.row]
             }
@@ -243,7 +269,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let indexPath = resultsController.tableView.indexPathForSelectedRow!
                 nvc.selectedStudent = filteredArray[indexPath.row]
             }
-//        nvc.selectedStudent = studentArray[indexPath.row]
+            //        nvc.selectedStudent = studentArray[indexPath.row]
             nvc.database = database
         }
     }

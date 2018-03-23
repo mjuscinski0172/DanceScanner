@@ -72,6 +72,15 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         //Adds tab bar and runs scanning session
         view.addSubview(tabBar)
         
+        //Pulls the URL for the JSON
+        var urlString = ""
+        let predicate = NSPredicate(value: true)
+        let JSONQuery = CKQuery(recordType: "JSONurl", predicate: predicate)
+        database.perform(JSONQuery, inZoneWith: nil) { (records, error) in
+            urlString = records?.first?.object(forKey: "studentInfoUrl")! as! String
+            self.url = URL(string: urlString)!
+        }
+        
         session.startRunning()      
     }
     
@@ -108,7 +117,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     
     func getJSON(altID: String){
         //Connects to JSON and pulls data
-        URLSession.shared.dataTask(with: url, completionHandler: { (myData, response, error) in
+        URLSession.shared.dataTask(with: self.url, completionHandler: { (myData, response, error) in
             if let JSONObject = try? JSONSerialization.jsonObject(with: myData!, options: .allowFragments) as! NSDictionary {
                 //Takes JSON information and places them into local varialbes
                 self.studentDictionary = JSONObject.object(forKey: altID) as! NSDictionary
