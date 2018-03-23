@@ -169,11 +169,20 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         self.database.save(place) { (record, error) in
             if error != nil {
                 let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                    self.runSession()
+                })
                 alert.addAction(okAction)
                 self.present(alert, animated: true, completion: nil)
             }
-            self.runSession()
+            else {
+                let alert = UIAlertController(title: "Purchase Successful", message: "This student now has a ticket", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                    self.runSession()
+                })
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
 
