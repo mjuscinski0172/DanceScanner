@@ -108,7 +108,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func updateSearchResults(for searchController: UISearchController) {
         filteredArray = alphabeticalStudentArray.filter({ (studentArray:Student) -> Bool in
-            
+            //Updates the table to only show search results
             let fullName = studentArray.firstName + " " + studentArray.lastName
             
             if (studentArray.lastName.lowercased().contains(searchController.searchBar.text!.lowercased()) || studentArray.firstName.lowercased().contains(searchController.searchBar.text!.lowercased()) || fullName.lowercased().contains(searchController.searchBar.text!.lowercased()) || studentArray.guestName.lowercased().contains(searchController.searchBar.text!.lowercased())){
@@ -136,31 +136,15 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.detailTextLabel?.text = "                                       " + student.guestName
             cell.detailTextLabel?.textColor = .lightGray
             cell.textLabel?.textColor = .white
-            //Creates the status label
-            if cell.subviews.count < 3 {
-                let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
-                label.textColor = .white
-                label.textAlignment = .center
-                label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 0.5)
-                label.text = "\(student.checkedInOrOut)".uppercased()
-                if student.checkedInOrOut == "In" {
-                    label.textColor = UIColor.green.darker(by: 30)
-                }
-                if student.checkedInOrOut == "Out" {
-                    label.textColor = .red
-                }
-                cell.addSubview(label)
+            //Creates the status label and sets its text
+            let label = abc(cell: cell)
+            label.textColor = .white
+            label.text = "\(student.checkedInOrOut)".uppercased()
+            if student.checkedInOrOut == "In" {
+                label.textColor = UIColor.green.darker(by: 30)
             }
-            else {
-                let label = cell.subviews[2] as! UILabel
-                label.textColor = .white
-                label.text = "\(student.checkedInOrOut)".uppercased()
-                if student.checkedInOrOut == "In" {
-                    label.textColor = UIColor.green.darker(by: 30)
-                }
-                if student.checkedInOrOut == "Out" {
-                    label.textColor = .red
-                }
+            if student.checkedInOrOut == "Out" {
+                label.textColor = .red
             }
             
             return cell
@@ -174,37 +158,37 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.detailTextLabel?.text = "                                 " + student.guestName
             cell.detailTextLabel?.textColor = .lightGray
             cell.textLabel?.textColor = .white
-            //Creates the status label
             //            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
-            if cell.subviews.count < 3 {
-                let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
-                label.textColor = .white
-                label.textAlignment = .center
-                label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 0.5)
-                label.text = "\(student.checkedInOrOut)".uppercased()
-                if student.checkedInOrOut == "In" {
-                    label.textColor = UIColor.green.darker(by: 30)
-                }
-                if student.checkedInOrOut == "Out" {
-                    label.textColor = .red
-                }
-                cell.addSubview(label)
+            //Creates the status label and sets its text
+            let label = abc(cell: cell)
+            label.textColor = .white
+            label.text = "\(student.checkedInOrOut)".uppercased()
+            if student.checkedInOrOut == "In" {
+                label.textColor = UIColor.green.darker(by: 30)
             }
-            else {
-                let label = cell.subviews[2] as! UILabel
-                label.textColor = .white
-                label.text = "\(student.checkedInOrOut)".uppercased()
-                if student.checkedInOrOut == "In" {
-                    label.textColor = UIColor.green.darker(by: 30)
-                }
-                if student.checkedInOrOut == "Out" {
-                    label.textColor = .red
-                }
+            if student.checkedInOrOut == "Out" {
+                label.textColor = .red
             }
             
             return cell
         }
         
+    }
+    
+    func abc(cell: UITableViewCell) -> UILabel {
+        if cell.subviews.count < 3 {
+            //If the cell does not currently have a status label, create one and send it back
+            let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
+            label.textAlignment = .center
+            label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 0.5)
+            cell.addSubview(label)
+            return label
+        }
+        else {
+            //If the cell does have a status label, pull that label from the cell and send it back
+            let label = cell.subviews[2] as! UILabel
+            return label
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
