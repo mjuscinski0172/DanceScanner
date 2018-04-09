@@ -25,6 +25,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         //Sets colors for UI items
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+        self.navigationController?.navigationBar.tintColor = .white
+
         tableView.backgroundColor = .black
         tableView.separatorColor = .black
         searchBar.backgroundImage = UIImage(named: "gray")

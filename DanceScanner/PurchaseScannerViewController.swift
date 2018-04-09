@@ -18,11 +18,10 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     var altId = ""
     var url: URL!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
-        //        self.navigationItem.backBarButtonItem?.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.red.lighter(by: 35)], for: .normal)
+        self.navigationController?.navigationBar.tintColor = .white
         
         //Set up the background for the scanner
         session = AVCaptureSession()

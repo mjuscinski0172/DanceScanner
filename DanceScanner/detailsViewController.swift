@@ -42,6 +42,7 @@ class detailsViewController: UIViewController {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+//        self.navigationItem.backBarButtonItem?.tintColor = .white
     }
     
     override func viewWillAppear(_ animated: Bool) {
