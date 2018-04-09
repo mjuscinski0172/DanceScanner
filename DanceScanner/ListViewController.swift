@@ -21,8 +21,14 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var searchController = UISearchController()
     var resultsController = UITableViewController()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let exportButton = UIBarButtonItem(title: "Export", style: .plain, target: self, action: #selector(exportData))
+        navigationItem.setRightBarButton(exportButton, animated: true)
+        
         //Sets colors for UI items
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
         self.navigationController?.navigationBar.tintColor = .white
@@ -58,6 +64,29 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         view.addSubview(tabBar)
     }
     
+    @ objc func exportData() {
+        let fileName = "PromExport.csv"
+        let path = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
+        
+        var csvText: String = "ID Number,Last Name,First Name,Guest Name,Guest School\n"
+        for student in studentArray {
+            csvText += "\(student.idNumber),\(student.lastName),\(student.firstName),\(student.guestName),\(student.guestSchool)\n"
+        }
+        
+        do {
+            try csvText.write(to: path, atomically: true, encoding: String.Encoding.utf8)
+            
+            let vc = UIActivityViewController(activityItems: [path], applicationActivities: [])
+            vc.popoverPresentationController?.sourceView = self.view
+            present(vc, animated: true, completion: nil)
+            
+        } catch {
+            
+            print("Failed to create file")
+            print("\(error)")
+        }
+    }
+    
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         //When the purchase button on the Tab Bar is pressed, segue to the purchaseVC
         if item.tag == 1 {
@@ -68,7 +97,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             navigationArray.remove(at: 1)
             navigationController?.viewControllers = (navigationArray as? [UIViewController])!
         }
-        //When the check button on the Tab Bar is pressed, segue to the checkVC
+            //When the check button on the Tab Bar is pressed, segue to the checkVC
         else if item.tag == 2{
             print("check")
             self.performSegue(withIdentifier: "tabCheckSegue2", sender: self)
@@ -81,7 +110,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func updateSearchResults(for searchController: UISearchController) {
         filteredArray = alphabeticalStudentArray.filter({ (studentArray:Student) -> Bool in
-            
+            //Updates the table to only show search results
             let fullName = studentArray.firstName + " " + studentArray.lastName
             
             if (studentArray.lastName.lowercased().contains(searchController.searchBar.text!.lowercased()) || studentArray.firstName.lowercased().contains(searchController.searchBar.text!.lowercased()) || fullName.lowercased().contains(searchController.searchBar.text!.lowercased()) || studentArray.guestName.lowercased().contains(searchController.searchBar.text!.lowercased())){
@@ -94,7 +123,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        tableView.reloadData()
+        //        tableView.reloadData()
         //Clears all arrays and pulls everything from CloudKit
         studentArray = []
         filteredArray = []
@@ -102,18 +131,16 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
+        if let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
             let student = alphabeticalStudentArray[indexPath.row]
             cell.backgroundColor = UIColor.darkGray.darker(by: 18)
             cell.textLabel?.text = "                           " + "\(student.lastName), \(student.firstName)"
             cell.detailTextLabel?.text = "                                       " + student.guestName
             cell.detailTextLabel?.textColor = .lightGray
             cell.textLabel?.textColor = .white
-            //Creates the status label
-            let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
+            //Creates the status label and sets its text
+            let label = abc(cell: cell)
             label.textColor = .white
-            label.textAlignment = .center
-            label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 0.5)
             label.text = "\(student.checkedInOrOut)".uppercased()
             if student.checkedInOrOut == "In" {
                 label.textColor = UIColor.green.darker(by: 30)
@@ -121,7 +148,6 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if student.checkedInOrOut == "Out" {
                 label.textColor = .red
             }
-            cell.addSubview(label)
             
             return cell
         }
@@ -134,12 +160,10 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.detailTextLabel?.text = "                                 " + student.guestName
             cell.detailTextLabel?.textColor = .lightGray
             cell.textLabel?.textColor = .white
-            //Creates the status label
-//            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
-            let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
-            label.textAlignment = .center
+            //            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
+            //Creates the status label and sets its text
+            let label = abc(cell: cell)
             label.textColor = .white
-            label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 0.5)
             label.text = "\(student.checkedInOrOut)".uppercased()
             if student.checkedInOrOut == "In" {
                 label.textColor = UIColor.green.darker(by: 30)
@@ -147,11 +171,26 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if student.checkedInOrOut == "Out" {
                 label.textColor = .red
             }
-            cell.addSubview(label)
             
             return cell
         }
         
+    }
+    
+    func abc(cell: UITableViewCell) -> UILabel {
+        if cell.subviews.count < 3 {
+            //If the cell does not currently have a status label, create one and send it back
+            let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
+            label.textAlignment = .center
+            label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 0.5)
+            cell.addSubview(label)
+            return label
+        }
+        else {
+            //If the cell does have a status label, pull that label from the cell and send it back
+            let label = cell.subviews[2] as! UILabel
+            return label
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -194,7 +233,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 //Creates an object of the Student class, puts all pulled information into it, and adds it to the array
                 let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone, studentParentName: studentParentName, studentParentPhone: studentParentPhone, studentParentCell: studentParentCell)
                 self.studentArray.append(newStudent)
-
+                
                 self.alphabeticalStudentArray = self.studentArray.sorted(by: { $0.lastName < $1.lastName })
             }
             //Reloads the table with the new student
@@ -208,7 +247,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //Sends the student that was pressed to the detailsVC
         if segue.identifier == "listToDetail" {
             let nvc = segue.destination as! detailsViewController
-//        let indexPath = tableView.indexPathForSelectedRow!
+            //        let indexPath = tableView.indexPathForSelectedRow!
             if let indexPath = tableView.indexPathForSelectedRow{
                 nvc.selectedStudent = alphabeticalStudentArray[indexPath.row]
             }
@@ -216,9 +255,12 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let indexPath = resultsController.tableView.indexPathForSelectedRow!
                 nvc.selectedStudent = filteredArray[indexPath.row]
             }
-//        nvc.selectedStudent = studentArray[indexPath.row]
+            //        nvc.selectedStudent = studentArray[indexPath.row]
             nvc.database = database
         }
     }
+    
+    
+    
 }
 

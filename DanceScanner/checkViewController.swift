@@ -181,7 +181,7 @@
                     }
                 } else{
                     //If the student cannot be found in the records, tells the function to display an error message
-                    self.setInOrOut(message: "We cannot find this student in the database, so this student has most likely not purchased a ticket", student: nil, timeOf: nil)
+                    self.setInOrOut(message: "This student has not purchased a ticket", student: nil, timeOf: nil)
                 }
             }
         }
