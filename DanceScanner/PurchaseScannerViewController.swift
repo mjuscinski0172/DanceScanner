@@ -56,6 +56,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         previewLayer.frame = view.layer.bounds
         previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         view.layer.addSublayer(previewLayer)
+        
         //Sets the appearance of the Tab Bar
         let appearance = UITabBarItem.appearance()
         let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
