@@ -62,6 +62,7 @@ class addGuestViewController: UIViewController {
                 place.setObject(guestName as! CKRecordValue, forKey: "guestName")
                 place.setObject(guestSchool as! CKRecordValue, forKey: "guestSchool")
                 place.setObject(guestParentNumber as! CKRecordValue, forKey: "guestParentPhone")
+                place.setObject("Purchased" as CKRecordValue, forKey: "guestCheckIn")
                 
                 self.database.save(place) { (record, error) in
                     if error != nil {
@@ -87,6 +88,7 @@ class addGuestViewController: UIViewController {
                             student.setObject(guestName as! CKRecordValue, forKey: "guestName")
                             student.setObject(guestSchool as! CKRecordValue, forKey: "guestSchool")
                             student.setObject(guestParentNumber as! CKRecordValue, forKey: "guestParentPhone")
+                            student.setObject("Purchased" as CKRecordValue, forKey: "guestCheckIn")
                             self.database.save(student, completionHandler: { (record, error) in
                                 if error != nil {
                                     let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)

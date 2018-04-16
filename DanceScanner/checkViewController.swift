@@ -135,63 +135,87 @@
                             let noAction = UIAlertAction(title: "No", style: .destructive, handler: {(action) in
                                 self.runSession()
                             })
+                            let noActionOverride = UIAlertAction(title: "No, check in student only", style: .default, handler: { (action) in
+                                //Tells the function to check in only the student, not the guest
+                                self.setInOrOut(message: "In", guest: "Purchased", student: student, timeOf: timeOf)
+                            })
                             let yesAction = UIAlertAction(title: "Yes", style: .default, handler: {(action) in
                                 //Tells the function to set the student as in if the guest is present
-                                self.setInOrOut(message: "In", student: student, timeOf: timeOf)
+                                self.setInOrOut(message: "In", guest: "In", student: student, timeOf: timeOf)
                             })
                             //Adds all buttons and presents guest alert
                             alertPleaseWork.addAction(yesAction)
+                            alertPleaseWork.addAction(noActionOverride)
                             alertPleaseWork.addAction(noAction)
                             self.present(alertPleaseWork, animated: true, completion: nil)
                         }
                         else {
                             //If there is no guest, tells the function to set the student as in
-                            self.setInOrOut(message: "In", student: student, timeOf: timeOf)
+                            self.setInOrOut(message: "In", guest: nil, student: student, timeOf: timeOf)
                         }
                     }
                     else if student.object(forKey: "checkedInOrOut") as! String == "In" {
                         //If the student has been checked in, run the following
-                        if student.object(forKey: "guestName") as! String != "" {
+                        if student.object(forKey: "guestName") as! String != "" && student.object(forKey: "guestCheckIn") as! String == "In"{
                             //Creates an alert if there is a guest
                             let guestAlert = UIAlertController(title: "Check Out", message: "Is the student's guest \(student.object(forKey: "guestName")!) also checking out?", preferredStyle: .alert)
                             let noAction = UIAlertAction(title: "No", style: .default, handler: { (action) in
                                 self.runSession()
                             })
                             let yesAction = UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                                //Tells function to set the student as out if the guest is present
-                                self.setInOrOut(message: "Out", student: student, timeOf: timeOf)
+                                //Tells the function to set the student as out if the guest is present
+                                self.setInOrOut(message: "Out", guest: "Out", student: student, timeOf: timeOf)
                             })
                             //Adds all buttons and presents guest alert
                             guestAlert.addAction(yesAction)
                             guestAlert.addAction(noAction)
                             self.present(guestAlert, animated: true, completion: nil)
                         }
+                        else if student.object(forKey: "guestName") as! String != "" && student.object(forKey: "guestCheckIn") as! String == "Purchased" {
+                            //If the guest has not checked in yet but the student has, ask what to do
+                            let questionAlert = UIAlertController(title: "What do you want to do?", message: nil, preferredStyle: .alert)
+                            let checkInGuestAction = UIAlertAction(title: "Check in the guest", style: .default, handler: { (action) in
+                                //Tells the function the check the guest in
+                                self.setInOrOut(message: "In", guest: "In", student: student, timeOf: timeOf)
+                            })
+                            let checkOutStudentAction = UIAlertAction(title: "Check out the student", style: .default, handler: { (action) in
+                                //Tells the function to check the student out
+                                self.setInOrOut(message: "Out", guest: nil, student: student, timeOf: timeOf)
+                            })
+                            //Adds all buttons and presents alert
+                            questionAlert.addAction(checkOutStudentAction)
+                            questionAlert.addAction(checkInGuestAction)
+                            self.present(questionAlert, animated: true, completion: nil)
+                        }
                         else {
                             //If there is no guest, tell the function to set the student as out
-                            self.setInOrOut(message: "Out", student: student, timeOf: timeOf)
+                            self.setInOrOut(message: "Out", guest: nil, student: student, timeOf: timeOf)
                         }
                     }
                     else if student.object(forKey: "checkedInOrOut") as! String == "Out" {
                         //If the student has already been checked out, tells the function to display an error message
-                        self.setInOrOut(message: "This student has already been checked out and cannot be allowed back into the dance", student: nil, timeOf: nil)
+                        self.setInOrOut(message: "This student has already been checked out and cannot be allowed back into the dance", guest: nil, student: nil, timeOf: nil)
                     }
                     else {
                         //If the student is not one of the 3 status settings, tells the function to display an error message
-                        self.setInOrOut(message: "This student has not purchased a ticket", student: nil, timeOf: nil)
+                        self.setInOrOut(message: "This student has not purchased a ticket", guest: nil, student: nil, timeOf: nil)
                     }
                 } else{
                     //If the student cannot be found in the records, tells the function to display an error message
-                    self.setInOrOut(message: "This student has not purchased a ticket", student: nil, timeOf: nil)
+                    self.setInOrOut(message: "This student has not purchased a ticket", guest: nil, student: nil, timeOf: nil)
                 }
             }
         }
     }
     
-    func setInOrOut(message: String, student: CKRecord!, timeOf: String!){
+    func setInOrOut(message: String, guest: String!, student: CKRecord!, timeOf: String!){
         if message == "In" || message == "Out" {
             //If the function has been called to check someone in or out, set that student to be the correct status
             student.setObject(message as CKRecordValue, forKey: "checkedInOrOut")
             student.setObject(timeOf as CKRecordValue, forKey: "check\(message)Time")
+            if guest != nil {
+                student.setObject(guest as CKRecordValue, forKey: "guestCheckIn")
+            }
             self.database.save(student, completionHandler: { (record, error) in
                 //If the database returns an error while trying to save the student to CK, display an error message
                 if error != nil {

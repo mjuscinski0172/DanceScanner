@@ -139,7 +139,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.detailTextLabel?.textColor = .lightGray
             cell.textLabel?.textColor = .white
             //Creates the status label and sets its text
-            let label = abc(cell: cell)
+            let labels = abc(cell: cell)
+            let label = labels[0]
             label.textColor = .white
             label.text = "\(student.checkedInOrOut)".uppercased()
             if student.checkedInOrOut == "In" {
@@ -147,6 +148,16 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             if student.checkedInOrOut == "Out" {
                 label.textColor = .red
+            }
+            let guestLabel = labels[1]
+            guestLabel.textColor = .white
+            guestLabel.font = UIFont.systemFont(ofSize: 10)
+            guestLabel.text = "\(student.guestCheckIn)".uppercased()
+            if student.guestCheckIn == "In" {
+                guestLabel.textColor = UIColor.green.darker(by: 30)
+            }
+            if student.guestCheckIn == "Out" {
+                guestLabel.textColor = .red
             }
             
             return cell
@@ -162,7 +173,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.textLabel?.textColor = .white
             //            let label = UILabel(frame: CGRect(x: 5, y: 2, width: 115, height: 40))
             //Creates the status label and sets its text
-            let label = abc(cell: cell)
+            let labels = abc(cell: cell)
+            let label = labels[0]
             label.textColor = .white
             label.text = "\(student.checkedInOrOut)".uppercased()
             if student.checkedInOrOut == "In" {
@@ -171,25 +183,42 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if student.checkedInOrOut == "Out" {
                 label.textColor = .red
             }
+            let guestLabel = labels[1]
+            guestLabel.textColor = .white
+            guestLabel.font = UIFont.systemFont(ofSize: 10)
+            guestLabel.text = "\(student.guestCheckIn)".uppercased()
+            if student.guestCheckIn == "In" {
+                guestLabel.textColor = UIColor.green.darker(by: 30)
+            }
+            if student.guestCheckIn == "Out" {
+                guestLabel.textColor = .red
+            }
             
             return cell
         }
         
     }
     
-    func abc(cell: UITableViewCell) -> UILabel {
+    func abc(cell: UITableViewCell) -> [UILabel] {
         if cell.subviews.count < 3 {
-            //If the cell does not currently have a status label, create one and send it back
-            let label = UILabel(frame: CGRect(x: 5, y: 0, width: 120, height: 55))
+            //If the cell does not currently have a status label, create one
+            let label = UILabel(frame: CGRect(x: 5, y: -10, width: 120, height: 55))
             label.textAlignment = .center
             label.layer.addBorder(edge: UIRectEdge.right, color: UIColor.black, thickness: 0.5)
             cell.addSubview(label)
-            return label
+            //Also create a label for the guest's status
+            let guestLabel = UILabel(frame: CGRect(x: 5, y: 30, width: 120, height: 20))
+            guestLabel.textAlignment = .center
+            guestLabel.layer.addBorder(edge: .right, color: .black, thickness: 0.5)
+            cell.addSubview(guestLabel)
+            //Send both labels back
+            return [label, guestLabel]
         }
         else {
             //If the cell does have a status label, pull that label from the cell and send it back
             let label = cell.subviews[2] as! UILabel
-            return label
+            let guestLabel = cell.subviews[3] as! UILabel
+            return [label, guestLabel]
         }
     }
     
@@ -230,8 +259,9 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let guestName = student.object(forKey: "guestName") as! String
                 let guestSchool = student.object(forKey: "guestSchool") as! String
                 let guestParentPhone = student.object(forKey: "guestParentPhone") as! String
+                let guestCheckIn = student.object(forKey: "guestCheckIn") as! String
                 //Creates an object of the Student class, puts all pulled information into it, and adds it to the array
-                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone, studentParentName: studentParentName, studentParentPhone: studentParentPhone, studentParentCell: studentParentCell)
+                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone, guestCheckIn: guestCheckIn, studentParentName: studentParentName, studentParentPhone: studentParentPhone, studentParentCell: studentParentCell)
                 self.studentArray.append(newStudent)
                 
                 self.alphabeticalStudentArray = self.studentArray.sorted(by: { $0.lastName < $1.lastName })
