@@ -165,6 +165,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         place.setObject("" as CKRecordValue, forKey: "guestName")
         place.setObject("" as CKRecordValue, forKey: "guestSchool")
         place.setObject("" as CKRecordValue, forKey: "guestParentPhone")
+        place.setObject("" as CKRecordValue, forKey: "guestCheckIn")
         //Saves student and checks for error
         self.database.save(place) { (record, error) in
             if error != nil {
