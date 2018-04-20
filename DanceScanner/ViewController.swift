@@ -25,6 +25,7 @@ class ViewController: UIViewController {
 //
 //        self.view.insertSubview(blurEffectView, at: 0)
         
+        self.internetTest()
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
         
     }
@@ -83,6 +84,31 @@ class ViewController: UIViewController {
             self.present(youDunGoofedAlert, animated: true, completion: nil)
         }
         
+    }
+    
+    func internetTest() {
+        let predicate = NSPredicate(value: true)
+        let query = CKQuery(recordType: "JSONurl", predicate: predicate)
+        database.perform(query, inZoneWith: nil) { (records, error) in
+            if records?.count == 0 {
+                //If we cannot pull the JSON URL from CloudKit, there is probably no internet so tell the user
+                let alert = UIAlertController(title: "Error: No Internet Connection", message: "Please connect to the Internet and try again", preferredStyle: .alert)
+                let retryAction = UIAlertAction(title: "Retry", style: .default, handler: { (action) in
+                    self.internetTest()
+                })
+                alert.addAction(retryAction)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else if error != nil{
+                //Creates an alert to inform the user of the error if there is one
+                let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Retry", style: .default, handler: { (action) in
+                    self.internetTest()
+                })
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     func createStudentArray() {

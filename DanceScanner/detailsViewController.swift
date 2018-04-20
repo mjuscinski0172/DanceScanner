@@ -62,7 +62,6 @@ class detailsViewController: UIViewController {
         if selectedStudent.checkedInOrOut == "Purchased"{
             timeLabelAlphas(inness: 0, outness: 0)
             statusLabel.text = "Purchased Tickets"
-            
         }
         else if selectedStudent.checkedInOrOut == "In" {
             timeLabelAlphas(inness: 1, outness: 0)
