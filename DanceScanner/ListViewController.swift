@@ -187,6 +187,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if student.checkedInOrOut == "Out" {
                 label.textColor = .red
             }
+            //Creates the guest status label and sets its text
             let guestLabel = labels[1]
             guestLabel.textColor = .white
             guestLabel.font = UIFont.systemFont(ofSize: 10)
