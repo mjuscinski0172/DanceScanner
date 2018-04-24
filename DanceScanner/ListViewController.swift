@@ -44,15 +44,18 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.dataSource = self
         resultsController.tableView.delegate = self
         resultsController.tableView.dataSource = self
+        
         //Tells table to update when searched
         searchController = UISearchController(searchResultsController: resultsController)
         tableView.tableHeaderView = searchController.searchBar
         searchController.searchResultsUpdater = self
+        
         //Sets appearance of Tab Bar
         let appearance = UITabBarItem.appearance()
         let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         appearance.setTitleTextAttributes(attributes, for: .normal)
         appearance.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.blue.lighter(by: 30)!], for: .selected)
+        
         //Sets other properties of Tab Bar
         let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
         tabBar.delegate = self
@@ -60,6 +63,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let purchaseTabButton = UITabBarItem(title: "Purchase Tickets", image: nil, tag: 1)
         let checkTabButton = UITabBarItem(title: "Check In/Out", image: nil, tag: 2)
         tabBar.setItems([purchaseTabButton, checkTabButton], animated: false)
+        
         //Makes Tab Bar visible
         view.addSubview(tabBar)
     }
