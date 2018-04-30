@@ -69,9 +69,9 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let fileName = "PromExport.csv"
         let path = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
         
-        var csvText: String = "ID Number,Last Name,First Name,Guest Name,Guest School\n"
+        var csvText: String = "ID Number,Last Name,First Name,Guest Name,Guest School,Student Food Choice,Guest Food Choice\n"
         for student in studentArray {
-            csvText += "\(student.idNumber),\(student.lastName),\(student.firstName),\(student.guestName),\(student.guestSchool)\n"
+            csvText += "\(student.idNumber),\(student.lastName),\(student.firstName),\(student.guestName),\(student.guestSchool),\(student.foodChoice),\(student.guestFoodChoice)\n"
         }
         
         do {
