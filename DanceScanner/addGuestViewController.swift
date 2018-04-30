@@ -18,11 +18,36 @@ class addGuestViewController: UIViewController {
     var studentDictionary: NSDictionary!
     var altId: String!
     var selectedStudent: Student!
+    var isProm: Bool!
+    
+    @IBOutlet weak var studentFoodTitleLabel: UILabel!
+    @IBOutlet weak var guestFoodTitleLabel: UILabel!
+    @IBOutlet weak var studentFoodControl: UISegmentedControl!
+    @IBOutlet weak var guestFoodControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if isProm == true {
+            studentFoodTitleLabel.alpha = 1
+            studentFoodControl.alpha = 1
+            studentFoodControl.isEnabled = true
+            guestFoodTitleLabel.alpha = 1
+            guestFoodControl.alpha = 1
+            guestFoodControl.isEnabled = true
+        }
+        else {
+            studentFoodTitleLabel.alpha = 0
+            studentFoodControl.alpha = 0
+            studentFoodControl.isEnabled = false
+            guestFoodTitleLabel.alpha = 0
+            guestFoodControl.alpha = 0
+            guestFoodControl.isEnabled = false
+        }
     }
     
     @IBAction func whenConfirmButtonPressed(_ sender: UIButton) {
@@ -34,7 +59,12 @@ class addGuestViewController: UIViewController {
             present(alert, animated: true, completion: nil)
         }
         else {
-            
+            var studentFoodChoice = 0
+            var guestFoodChoice = 0
+            if isProm == true {
+                studentFoodChoice = studentFoodControl.selectedSegmentIndex + 1
+                guestFoodChoice = guestFoodControl.selectedSegmentIndex + 1
+            }
             var guestName = guestNameTextField.text
             var guestSchool = guestSchoolTextField.text
             var guestParentNumber = parentPhoneNumberTextField.text
@@ -63,6 +93,8 @@ class addGuestViewController: UIViewController {
                 place.setObject(guestSchool as! CKRecordValue, forKey: "guestSchool")
                 place.setObject(guestParentNumber as! CKRecordValue, forKey: "guestParentPhone")
                 place.setObject("Purchased" as CKRecordValue, forKey: "guestCheckIn")
+                place.setObject("\(studentFoodChoice)" as CKRecordValue, forKey: "foodChoice")
+                place.setObject("\(guestFoodChoice)" as CKRecordValue, forKey: "guestFoodChoice")
                 
                 self.database.save(place) { (record, error) in
                     if error != nil {
@@ -89,6 +121,8 @@ class addGuestViewController: UIViewController {
                             student.setObject(guestSchool as! CKRecordValue, forKey: "guestSchool")
                             student.setObject(guestParentNumber as! CKRecordValue, forKey: "guestParentPhone")
                             student.setObject("Purchased" as CKRecordValue, forKey: "guestCheckIn")
+                            student.setObject("\(studentFoodChoice)" as CKRecordValue, forKey: "foodChoice")
+                            student.setObject("\(guestFoodChoice)" as CKRecordValue, forKey: "guestFoodChoice")
                             self.database.save(student, completionHandler: { (record, error) in
                                 if error != nil {
                                     let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)

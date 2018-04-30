@@ -37,6 +37,10 @@ class detailsViewController: UIViewController {
     @IBOutlet weak var guestSchoolLabel: UILabel!
     @IBOutlet weak var guestParentPhoneLabel: UILabel!
     @IBOutlet weak var revoveGuestButton: UIButton!
+    @IBOutlet weak var foodChoiceTitleLabel: UILabel!
+    @IBOutlet weak var foodChoiceLabel: UILabel!
+    @IBOutlet weak var guestFoodChoiceTitleLabel: UILabel!
+    @IBOutlet weak var guestFoodLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +75,15 @@ class detailsViewController: UIViewController {
             timeLabelAlphas(inness: 1, outness: 1)
             statusLabel.text = "Checked Out"
         }
+        if selectedStudent.foodChoice == 0 {
+            foodChoiceLabel.alpha = 0
+            foodChoiceTitleLabel.alpha = 0
+        }
+        else {
+            foodChoiceLabel.alpha = 1
+            foodChoiceTitleLabel.alpha = 1
+            foodChoiceLabel.text = "\(selectedStudent.foodChoice)"
+        }
     }
     
     func timeLabelAlphas(inness: Int, outness: Int) {
@@ -100,6 +113,8 @@ class detailsViewController: UIViewController {
         guestSchoolLabel.alpha = CGFloat(onOrOff)
         guestParentPhoneLabel.alpha = CGFloat(onOrOff)
         revoveGuestButton.alpha = CGFloat(onOrOff)
+        guestFoodLabel.alpha = CGFloat(onOrOff)
+        guestFoodChoiceTitleLabel.alpha = CGFloat(onOrOff)
         if onOrOff == 0{
             revoveGuestButton.isEnabled = false
         }
@@ -110,6 +125,7 @@ class detailsViewController: UIViewController {
         guestNameLabel.text = selectedStudent.guestName
         guestSchoolLabel.text = selectedStudent.guestSchool
         guestParentPhoneLabel.text = selectedStudent.guestParentPhone
+        guestFoodLabel.text = "\(selectedStudent.guestFoodChoice)"
     }
     
     @IBAction func removeStudent(_ sender: UIButton) {

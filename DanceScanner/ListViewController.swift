@@ -17,7 +17,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var filteredArray = [Student]()
     var alphabeticalStudentArray = [Student]()
     let database = CKContainer.default().publicCloudDatabase
-    
+    var isProm: Bool!
+
     var searchController = UISearchController()
     var resultsController = UITableViewController()
     
@@ -261,8 +262,10 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let guestSchool = student.object(forKey: "guestSchool") as! String
                 let guestParentPhone = student.object(forKey: "guestParentPhone") as! String
                 let guestCheckIn = student.object(forKey: "guestCheckIn") as! String
+                let foodChoice = Int(student.object(forKey: "foodChoice") as! String)
+                let guestFoodChoice = Int(student.object(forKey: "guestFoodChoice") as! String)
                 //Creates an object of the Student class, puts all pulled information into it, and adds it to the array
-                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone, guestCheckIn: guestCheckIn, studentParentName: studentParentName, studentParentPhone: studentParentPhone, studentParentCell: studentParentCell)
+                let newStudent = Student(firstName: firstName, lastName: lastName, altIDNumber: altIDNumber, idNumber: idNumber, checkedInOrOut: checkedInOrOut, checkInTime: checkInTime, checkOutTime: checkOutTime, guestName: guestName, guestSchool: guestSchool, guestParentPhone: guestParentPhone, guestCheckIn: guestCheckIn, studentParentName: studentParentName, studentParentPhone: studentParentPhone, studentParentCell: studentParentCell, foodChoice: foodChoice!, guestFoodChoice: guestFoodChoice!)
                 self.studentArray.append(newStudent)
                 
                 self.alphabeticalStudentArray = self.studentArray.sorted(by: { $0.lastName < $1.lastName })

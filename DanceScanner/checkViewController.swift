@@ -15,6 +15,7 @@
     var previewLayer: AVCaptureVideoPreviewLayer!
     var firstTimeCalled = true
     var database = CKContainer.default().publicCloudDatabase
+    var isProm: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()

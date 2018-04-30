@@ -17,6 +17,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     var studentDictionary: NSDictionary!
     var altId = ""
     var url: URL!
+    var isProm: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,7 +105,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             navigationArray.remove(at: 1)
             navigationController?.viewControllers = (navigationArray as? [UIViewController])!
         }
-        //When the list button on the Tab Bar is pressed, segue to the listVC
+            //When the list button on the Tab Bar is pressed, segue to the listVC
         else if item.tag == 3 {
             print("list")
             self.performSegue(withIdentifier: "tabListSegue", sender: self)
@@ -129,27 +130,69 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                 let parentCell = self.studentDictionary.object(forKey: "GRDCELL") as! NSString
                 let parentHouseHold = self.studentDictionary.object(forKey: "GRDHHOLD") as! NSString
                 
-                //Creates an alert that allows the user to confirm the purchase with 3 buttons
-                let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
-                let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
-                    self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + " " + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold))
-                })
-                let addGuestButton = UIAlertAction(title: "Ticket with Guest", style: .default, handler: { (action) in
-                    self.performSegue(withIdentifier: "addGuestSegue", sender: self)
-                })
-                let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
-                    self.runSession()
-                })
-                //Adds all buttons and presents alert
-                purchaseTicketsAlert.addAction(purchaseTicketButton)
-                purchaseTicketsAlert.addAction(cancelAction)
-                purchaseTicketsAlert.addAction(addGuestButton)
-                self.present(purchaseTicketsAlert, animated: true, completion: nil)
+                if self.isProm == false {
+                    //Creates an alert that allows the user to confirm the purchase with 3 buttons
+                    let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
+                    let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
+                        self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + " " + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold), foodChoice: "0")
+                    })
+                    let addGuestButton = UIAlertAction(title: "Ticket with Guest", style: .default, handler: { (action) in
+                        self.performSegue(withIdentifier: "addGuestSegue", sender: self)
+                    })
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
+                        self.runSession()
+                    })
+                    //Adds all buttons and presents alert
+                    purchaseTicketsAlert.addAction(purchaseTicketButton)
+                    purchaseTicketsAlert.addAction(cancelAction)
+                    purchaseTicketsAlert.addAction(addGuestButton)
+                    self.present(purchaseTicketsAlert, animated: true, completion: nil)
+                }
+                else {
+                    //Creates an alert that allows the user to confirm the purchase with 3 buttons (Prom edition)
+                    let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)\n", preferredStyle: .alert)
+                    let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
+                        //Creates an alert to check for food choices
+                        let fuudAlert = UIAlertController(title: "Select Food Choice", message: "Which food choice does the student want?", preferredStyle: .alert)
+                        let oneAction = UIAlertAction(title: "1", style: .default, handler: { (action) in
+                            //Purchases a ticket with food choice 1
+                            self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + " " + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold), foodChoice: "1")
+                        })
+                        let twoAction = UIAlertAction(title: "2", style: .default, handler: { (action) in
+                            //Purchases a ticket with food choice 2
+                            self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + " " + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold), foodChoice: "2")
+                        })
+                        let threeAction = UIAlertAction(title: "3", style: .default, handler: { (action) in
+                            //Purchases a ticket with food choice 3
+                            self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + " " + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold), foodChoice: "3")
+                        })
+                        let cancelButton = UIAlertAction(title: "Cancel", style: .default, handler: { (action) in
+                            self.runSession()
+                        })
+                        //Adds all buttons and presents alert
+                        fuudAlert.addAction(oneAction)
+                        fuudAlert.addAction(twoAction)
+                        fuudAlert.addAction(threeAction)
+                        fuudAlert.addAction(cancelButton)
+                        self.present(fuudAlert, animated: true, completion: nil)
+                    })
+                    let addGuestButton = UIAlertAction(title: "Ticket with Guest", style: .default, handler: { (action) in
+                        self.performSegue(withIdentifier: "addGuestSegue", sender: self)
+                    })
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
+                        self.runSession()
+                    })
+                    //Adds all buttons and presents alert
+                    purchaseTicketsAlert.addAction(purchaseTicketButton)
+                    purchaseTicketsAlert.addAction(cancelAction)
+                    purchaseTicketsAlert.addAction(addGuestButton)
+                    self.present(purchaseTicketsAlert, animated: true, completion: nil)
+                }
             }
         }).resume()
     }
     
-    func purchaseTicket(firstName: String, lastName: String, ID: String, altID: String, parentName: String, parentCell: String, parentHouseHold: String) {
+    func purchaseTicket(firstName: String, lastName: String, ID: String, altID: String, parentName: String, parentCell: String, parentHouseHold: String, foodChoice: String) {
         //Sets the information of the student on CloudKit
         let place = CKRecord(recordType: "Students")
         place.setObject(firstName as CKRecordValue, forKey: "firstName")
@@ -166,6 +209,8 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         place.setObject("" as CKRecordValue, forKey: "guestSchool")
         place.setObject("" as CKRecordValue, forKey: "guestParentPhone")
         place.setObject("" as CKRecordValue, forKey: "guestCheckIn")
+        place.setObject("0" as CKRecordValue, forKey: "guestFoodChoice")
+        place.setObject(foodChoice as CKRecordValue, forKey: "foodChoice")
         //Saves student and checks for error
         self.database.save(place) { (record, error) in
             if error != nil {
@@ -186,7 +231,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             }
         }
     }
-
+    
     func scanningNotPossible() {
         //Presents an alert if it is impossible to scan
         let alert = UIAlertController(title: "This device can't scan.", message: "How did you mess this up? It was only supposed to be sent to camera-equipped iPads!", preferredStyle: .alert)
@@ -229,6 +274,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             nvc.studentDictionary = studentDictionary
             nvc.altId = altId
             nvc.database = database
+            nvc.isProm = isProm
         }
     }
     
