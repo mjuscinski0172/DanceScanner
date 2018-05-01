@@ -130,64 +130,88 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
                 let parentCell = self.studentDictionary.object(forKey: "GRDCELL") as! NSString
                 let parentHouseHold = self.studentDictionary.object(forKey: "GRDHHOLD") as! NSString
                 
-                if self.isProm == false {
-                    //Creates an alert that allows the user to confirm the purchase with 3 buttons
-                    let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
-                    let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
-                        self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + " " + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold), foodChoice: "0")
-                    })
-                    let addGuestButton = UIAlertAction(title: "Ticket with Guest", style: .default, handler: { (action) in
-                        self.performSegue(withIdentifier: "addGuestSegue", sender: self)
-                    })
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
-                        self.runSession()
-                    })
-                    //Adds all buttons and presents alert
-                    purchaseTicketsAlert.addAction(purchaseTicketButton)
-                    purchaseTicketsAlert.addAction(cancelAction)
-                    purchaseTicketsAlert.addAction(addGuestButton)
-                    self.present(purchaseTicketsAlert, animated: true, completion: nil)
-                }
-                else {
-                    //Creates an alert that allows the user to confirm the purchase with 3 buttons (Prom edition)
-                    let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)\n", preferredStyle: .alert)
-                    let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
-                        //Creates an alert to check for food choices
-                        let fuudAlert = UIAlertController(title: "Select Food Choice", message: "Which food choice does the student want?", preferredStyle: .alert)
-                        let oneAction = UIAlertAction(title: "1", style: .default, handler: { (action) in
-                            //Purchases a ticket with food choice 1
-                            self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + " " + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold), foodChoice: "1")
-                        })
-                        let twoAction = UIAlertAction(title: "2", style: .default, handler: { (action) in
-                            //Purchases a ticket with food choice 2
-                            self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + " " + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold), foodChoice: "2")
-                        })
-                        let threeAction = UIAlertAction(title: "3", style: .default, handler: { (action) in
-                            //Purchases a ticket with food choice 3
-                            self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + " " + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold), foodChoice: "3")
-                        })
-                        let cancelButton = UIAlertAction(title: "Cancel", style: .default, handler: { (action) in
+                //Query the database for the altID that was scanned
+                let predicate =  NSPredicate(format: "altIDNumber = '\(altID)'")
+                let query = CKQuery(recordType: "Students", predicate: predicate)
+                self.database.perform(query, inZoneWith: nil, completionHandler: { (records, error) in
+                    if error != nil {
+                        //Inform the user of any error
+                        let alert = UIAlertController(title: "Error", message: error.debugDescription, preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
                             self.runSession()
                         })
-                        //Adds all buttons and presents alert
-                        fuudAlert.addAction(oneAction)
-                        fuudAlert.addAction(twoAction)
-                        fuudAlert.addAction(threeAction)
-                        fuudAlert.addAction(cancelButton)
-                        self.present(fuudAlert, animated: true, completion: nil)
-                    })
-                    let addGuestButton = UIAlertAction(title: "Ticket with Guest", style: .default, handler: { (action) in
-                        self.performSegue(withIdentifier: "addGuestSegue", sender: self)
-                    })
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
-                        self.runSession()
-                    })
-                    //Adds all buttons and presents alert
-                    purchaseTicketsAlert.addAction(purchaseTicketButton)
-                    purchaseTicketsAlert.addAction(cancelAction)
-                    purchaseTicketsAlert.addAction(addGuestButton)
-                    self.present(purchaseTicketsAlert, animated: true, completion: nil)
-                }
+                        alert.addAction(okAction)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    else if (records?.count)! > 0 {
+                        //Inform the user that the student is already purchased
+                        let alert = UIAlertController(title: "Error", message: "The student already has a ticket", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                            self.runSession()
+                        })
+                        alert.addAction(okAction)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    else {
+                        if self.isProm == false {
+                            //Creates an alert that allows the user to confirm the purchase with 3 buttons
+                            let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)", preferredStyle: .alert)
+                            let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
+                                self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + " " + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold), foodChoice: "0")
+                            })
+                            let addGuestButton = UIAlertAction(title: "Ticket with Guest", style: .default, handler: { (action) in
+                                self.performSegue(withIdentifier: "addGuestSegue", sender: self)
+                            })
+                            let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
+                                self.runSession()
+                            })
+                            //Adds all buttons and presents alert
+                            purchaseTicketsAlert.addAction(purchaseTicketButton)
+                            purchaseTicketsAlert.addAction(cancelAction)
+                            purchaseTicketsAlert.addAction(addGuestButton)
+                            self.present(purchaseTicketsAlert, animated: true, completion: nil)
+                        }
+                        else {
+                            //Creates an alert that allows the user to confirm the purchase with 3 buttons (Prom edition)
+                            let purchaseTicketsAlert = UIAlertController(title: "Found an ID", message: "Student: \(firstName) \(lastName)\nStudent ID: \(ID)\n", preferredStyle: .alert)
+                            let purchaseTicketButton = UIAlertAction(title: "Purchase Ticket", style: .default, handler: { (action) in
+                                //Creates an alert to check for food choices
+                                let fuudAlert = UIAlertController(title: "Select Food Choice", message: "Which food choice does the student want?", preferredStyle: .alert)
+                                let oneAction = UIAlertAction(title: "1", style: .default, handler: { (action) in
+                                    //Purchases a ticket with food choice 1
+                                    self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + " " + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold), foodChoice: "1")
+                                })
+                                let twoAction = UIAlertAction(title: "2", style: .default, handler: { (action) in
+                                    //Purchases a ticket with food choice 2
+                                    self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + " " + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold), foodChoice: "2")
+                                })
+                                let threeAction = UIAlertAction(title: "3", style: .default, handler: { (action) in
+                                    //Purchases a ticket with food choice 3
+                                    self.purchaseTicket(firstName: firstName as String, lastName: lastName as String, ID: String(ID), altID: String(altID), parentName: String(parentFirst) + " " + String(parentLast), parentCell: String(parentCell), parentHouseHold: String(parentHouseHold), foodChoice: "3")
+                                })
+                                let cancelButton = UIAlertAction(title: "Cancel", style: .default, handler: { (action) in
+                                    self.runSession()
+                                })
+                                //Adds all buttons and presents alert
+                                fuudAlert.addAction(oneAction)
+                                fuudAlert.addAction(twoAction)
+                                fuudAlert.addAction(threeAction)
+                                fuudAlert.addAction(cancelButton)
+                                self.present(fuudAlert, animated: true, completion: nil)
+                            })
+                            let addGuestButton = UIAlertAction(title: "Ticket with Guest", style: .default, handler: { (action) in
+                                self.performSegue(withIdentifier: "addGuestSegue", sender: self)
+                            })
+                            let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
+                                self.runSession()
+                            })
+                            //Adds all buttons and presents alert
+                            purchaseTicketsAlert.addAction(purchaseTicketButton)
+                            purchaseTicketsAlert.addAction(cancelAction)
+                            purchaseTicketsAlert.addAction(addGuestButton)
+                            self.present(purchaseTicketsAlert, animated: true, completion: nil)
+                        }}
+                })
             }
         }).resume()
     }
