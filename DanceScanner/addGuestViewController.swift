@@ -32,7 +32,7 @@ class addGuestViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if isProm == true {
+        if isProm == true || selectedStudent.foodChoice != 0 {
             studentFoodTitleLabel.alpha = 1
             studentFoodControl.alpha = 1
             studentFoodControl.isEnabled = true

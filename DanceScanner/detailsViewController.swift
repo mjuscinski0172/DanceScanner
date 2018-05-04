@@ -52,14 +52,33 @@ class detailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         //Checks whether to make the guest section visible or not
         if selectedStudent.guestName == ""{
-            guestLabelAlphas(onOrOff: 0)
+            if selectedStudent.guestFoodChoice == 0 {
+            guestLabelAlphas(onOrOff: 0, food: false)
+            }
+            else {
+                guestLabelAlphas(onOrOff: 0, food: true)
+            }
         }
         else {
-            guestLabelAlphas(onOrOff: 1)
+            if selectedStudent.guestFoodChoice == 0 {
+                guestLabelAlphas(onOrOff: 1, food: false)
+            }
+            else {
+                guestLabelAlphas(onOrOff: 1, food: true)
+            }
         }
         //Sets text in the labels
         parentNameLabel.text = selectedStudent.studentParentName
         parentPhoneNumberLabel.text = "\(selectedStudent.studentParentPhone) (Household)\n\(selectedStudent.studentParentCell) (Cell)"
+        if selectedStudent.studentParentCell == "" {
+            parentPhoneNumberLabel.text = "\(selectedStudent.studentParentPhone) (Household)\nNo Cell Number"
+        }
+        else if selectedStudent.studentParentPhone == "" {
+            parentPhoneNumberLabel.text = "No Household Number\n\(selectedStudent.studentParentCell) (Cell)"
+        }
+        else if selectedStudent.studentParentPhone == "" && selectedStudent.studentParentCell == "" {
+            parentPhoneNumberLabel.text = "No Household Number\nNo Cell Number"
+        }
         nameLabel.text = selectedStudent.firstName + " " + selectedStudent.lastName
         idLabel.text = selectedStudent.idNumber
         //Depending on the student's status, display different amounts of labels
@@ -102,7 +121,7 @@ class detailsViewController: UIViewController {
         self.present(svc, animated: true, completion: nil)
     }
     
-    func guestLabelAlphas(onOrOff: Int) {
+    func guestLabelAlphas(onOrOff: Int, food: Bool) {
         //Depending on whether or not the student has a guest, show or hide all the things
         lineLabel.alpha = CGFloat(onOrOff)
         guestInfoTitleLabel.alpha = CGFloat(onOrOff)
@@ -113,8 +132,14 @@ class detailsViewController: UIViewController {
         guestSchoolLabel.alpha = CGFloat(onOrOff)
         guestParentPhoneLabel.alpha = CGFloat(onOrOff)
         revoveGuestButton.alpha = CGFloat(onOrOff)
+        if food == true {
         guestFoodLabel.alpha = CGFloat(onOrOff)
         guestFoodChoiceTitleLabel.alpha = CGFloat(onOrOff)
+        }
+        else {
+            guestFoodLabel.alpha = CGFloat(0)
+            guestFoodChoiceTitleLabel.alpha = CGFloat(0)
+        }
         if onOrOff == 0{
             revoveGuestButton.isEnabled = false
         }
@@ -225,9 +250,11 @@ class detailsViewController: UIViewController {
                         self.guestNameTitleLabel.alpha = 0
                         self.guestSchoolTitleLabel.alpha = 0
                         self.guestParentPhoneTitleLabel.alpha = 0
+                        self.guestFoodChoiceTitleLabel.alpha = 0
                         self.guestNameLabel.alpha = 0
                         self.guestSchoolLabel.alpha = 0
                         self.guestParentPhoneLabel.alpha = 0
+                        self.guestFoodLabel.alpha = 0
                         self.revoveGuestButton.alpha = 0
                         self.revoveGuestButton.isEnabled = false
                     }
