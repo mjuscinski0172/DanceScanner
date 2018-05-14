@@ -53,7 +53,7 @@ class detailsViewController: UIViewController {
         //Checks whether to make the guest section visible or not
         if selectedStudent.guestName == ""{
             if selectedStudent.guestFoodChoice == 0 {
-            guestLabelAlphas(onOrOff: 0, food: false)
+                guestLabelAlphas(onOrOff: 0, food: false)
             }
             else {
                 guestLabelAlphas(onOrOff: 0, food: true)
@@ -133,8 +133,8 @@ class detailsViewController: UIViewController {
         guestParentPhoneLabel.alpha = CGFloat(onOrOff)
         revoveGuestButton.alpha = CGFloat(onOrOff)
         if food == true {
-        guestFoodLabel.alpha = CGFloat(onOrOff)
-        guestFoodChoiceTitleLabel.alpha = CGFloat(onOrOff)
+            guestFoodLabel.alpha = CGFloat(onOrOff)
+            guestFoodChoiceTitleLabel.alpha = CGFloat(onOrOff)
         }
         else {
             guestFoodLabel.alpha = CGFloat(0)
