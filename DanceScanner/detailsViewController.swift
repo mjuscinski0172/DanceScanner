@@ -280,7 +280,12 @@ class detailsViewController: UIViewController {
         let nvc = segue.destination as! addGuestViewController
         nvc.database = database
         nvc.selectedStudent = selectedStudent
-
+        if selectedStudent.foodChoice != 0{
+            nvc.isProm = true
+        }
+        else {
+            nvc.isProm = false
+        }
     }
     
     
