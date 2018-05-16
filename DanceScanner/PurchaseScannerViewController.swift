@@ -305,7 +305,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             nvc.isProm = isProm
         }
         else if segue.identifier == "tabListSegue" {
-            let nvc = segue.destination as! checkViewController
+            let nvc = segue.destination as! ListViewController
             nvc.isProm = isProm
         }
     }
