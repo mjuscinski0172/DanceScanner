@@ -15,6 +15,7 @@
     var previewLayer: AVCaptureVideoPreviewLayer!
     var firstTimeCalled = true
     var database = CKContainer.default().publicCloudDatabase
+    var isProm: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -265,6 +266,17 @@
             if let readableCode = barcodeReadable{
                 checkOnCloudKit(altID: readableCode.stringValue!)
             }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "tabPurchaseSegue" {
+            let nvc = segue.destination as! PurchaseScannerViewController
+            nvc.isProm = isProm
+        }
+        else if segue.identifier == "tabListSegue2" {
+            let nvc = segue.destination as! ListViewController
+            nvc.isProm = isProm
         }
     }
     

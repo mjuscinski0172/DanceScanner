@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     var studentArray = [CKRecord]()
     var database = CKContainer.default().publicCloudDatabase
 
+    @IBOutlet weak var homecomingOrPromSC: UISegmentedControl!
     @IBOutlet weak var deleteAllButton: UIButton!
     
     override func viewDidLoad() {
@@ -107,6 +108,37 @@ class ViewController: UIViewController {
                 })
                 alert.addAction(okAction)
                 self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "mainToPurchase" {
+            let nvc = segue.destination as! PurchaseScannerViewController
+            print(homecomingOrPromSC.selectedSegmentIndex)
+            if homecomingOrPromSC.selectedSegmentIndex == 1 {
+                nvc.isProm = true
+            }
+            else {
+                nvc.isProm = false
+            }
+        }
+        else if segue.identifier == "mainToList" {
+            let nvc = segue.destination as! ListViewController
+            if homecomingOrPromSC.selectedSegmentIndex == 1 {
+                nvc.isProm = true
+            }
+            else {
+                nvc.isProm = false
+            }
+        }
+        else if segue.identifier == "mainToCheck" {
+            let nvc = segue.destination as! checkViewController
+            if homecomingOrPromSC.selectedSegmentIndex == 1 {
+                nvc.isProm = true
+            }
+            else {
+                nvc.isProm = false
             }
         }
     }
