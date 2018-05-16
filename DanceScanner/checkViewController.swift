@@ -269,6 +269,17 @@
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "tabPurchaseSegue" {
+            let nvc = segue.destination as! PurchaseScannerViewController
+            nvc.isProm = isProm
+        }
+        else if segue.identifier == "tabListSegue2" {
+            let nvc = segue.destination as! ListViewController
+            nvc.isProm = isProm
+        }
+    }
+    
     func runSession() {
         //Starts to run the session again
         if (session?.isRunning == false) {

@@ -292,6 +292,14 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //        nvc.selectedStudent = studentArray[indexPath.row]
             nvc.database = database
         }
+        else if segue.identifier == "tabPurchaseSegue2" {
+            let nvc = segue.destination as! PurchaseScannerViewController
+            nvc.isProm = isProm
+        }
+        else if segue.identifier == "tabCheckSegue2" {
+            let nvc = segue.destination as! checkViewController
+            nvc.isProm = isProm
+        }
     }
     
     

@@ -132,6 +132,15 @@ class ViewController: UIViewController {
                 nvc.isProm = false
             }
         }
+        else if segue.identifier == "mainToCheck" {
+            let nvc = segue.destination as! checkViewController
+            if homecomingOrPromSC.selectedSegmentIndex == 1 {
+                nvc.isProm = true
+            }
+            else {
+                nvc.isProm = false
+            }
+        }
     }
     
     func createStudentArray() {
