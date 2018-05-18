@@ -35,6 +35,23 @@
                                     <segue destination="TYT-sY-W9G" kind="show" identifier="mainToPurchase" id="J6t-uk-wuW"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="as4-EN-2ex">
+                                <rect key="frame" x="184" y="452" width="400" height="120"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.31630992330275826" green="0.35231496890694519" blue="0.46075904187817263" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Check In/Out">
+                                    <color key="titleColor" red="0.93697376939999999" green="0.93697376939999999" blue="0.93697376939999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="40"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="3v1-v6-gsQ" kind="show" identifier="mainToCheck" id="gg0-Qp-0tL"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdh-56-Qfk">
                                 <rect key="frame" x="184" y="619" width="400" height="120"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -62,23 +79,6 @@
                                     <action selector="deleteAllButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hvI-m8-JGY"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="as4-EN-2ex">
-                                <rect key="frame" x="184" y="452" width="400" height="120"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.31630992330275826" green="0.35231496890694519" blue="0.46075904187817263" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Check In/Out">
-                                    <color key="titleColor" red="0.93697376939999999" green="0.93697376939999999" blue="0.93697376939999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="40"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="3v1-v6-gsQ" kind="show" identifier="mainToCheck" id="gg0-Qp-0tL"/>
-                                </connections>
-                            </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="kFm-qj-Vef">
                                 <rect key="frame" x="271" y="99" width="226" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -87,6 +87,9 @@
                                     <segment title="Prom"/>
                                 </segments>
                                 <color key="tintColor" red="0.31630992330000002" green="0.35231496890000003" blue="0.4607590419" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="switched:" destination="BYZ-38-t0r" eventType="valueChanged" id="x67-en-azS"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" red="0.11623572335025378" green="0.11623572335025378" blue="0.11623572335025378" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -94,8 +97,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="7Vx-MR-Sgm"/>
                     <connections>
+                        <outlet property="backgroundView" destination="8bC-Xf-vdC" id="qis-Vw-IcX"/>
+                        <outlet property="checkInOut" destination="as4-EN-2ex" id="KhR-rZ-swf"/>
                         <outlet property="deleteAllButton" destination="POv-Ab-kAI" id="OFE-s8-2qv"/>
                         <outlet property="homecomingOrPromSC" destination="kFm-qj-Vef" id="Vfb-PT-Xhi"/>
+                        <outlet property="purchaseTickets" destination="Fdy-6Y-LY8" id="v3e-ZY-JeR"/>
+                        <outlet property="ticketList" destination="zdh-56-Qfk" id="ngk-2H-IA7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

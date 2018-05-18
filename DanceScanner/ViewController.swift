@@ -14,8 +14,12 @@ class ViewController: UIViewController {
     var studentArray = [CKRecord]()
     var database = CKContainer.default().publicCloudDatabase
 
+    @IBOutlet var backgroundView: UIView!
     @IBOutlet weak var homecomingOrPromSC: UISegmentedControl!
     @IBOutlet weak var deleteAllButton: UIButton!
+    @IBOutlet weak var purchaseTickets: UIButton!
+    @IBOutlet weak var checkInOut: UIButton!
+    @IBOutlet weak var ticketList: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +29,7 @@ class ViewController: UIViewController {
 //        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 //
 //        self.view.insertSubview(blurEffectView, at: 0)
-        
+        chicken(buttonRed: 255, buttonGreen: 115, buttonBlue: 0, backRed: 92, backGreen: 60, backBlue: 31)
         self.internetTest()
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
         
@@ -52,6 +56,26 @@ class ViewController: UIViewController {
         passwordAlert.addAction(cancelAction)
         passwordAlert.addAction(confirmAction)
         present(passwordAlert, animated: true, completion: nil)
+    }
+    
+    @IBAction func switched(_ sender: UISegmentedControl) {
+        if homecomingOrPromSC.selectedSegmentIndex == 1 {
+            chicken(buttonRed: 81, buttonGreen: 88, buttonBlue: 117, backRed: 28, backGreen: 28, backBlue: 28)
+        }
+        else if homecomingOrPromSC.selectedSegmentIndex == 0 {
+            chicken(buttonRed: 255, buttonGreen: 115, buttonBlue: 0, backRed: 92, backGreen: 60, backBlue: 31)
+        }
+    }
+    
+    func chicken(buttonRed: Double, buttonGreen: Double, buttonBlue: Double, backRed: Double, backGreen: Double, backBlue: Double) {
+        let buttonColor = UIColor(red: CGFloat(buttonRed / 255.0), green: CGFloat(buttonGreen / 255.0), blue: CGFloat(buttonBlue / 255.0), alpha: 1)
+        let backColor = UIColor(red: CGFloat(backRed / 255.0), green: CGFloat(backGreen / 255.0), blue: CGFloat(backBlue / 255.0), alpha: 1)
+        purchaseTickets.backgroundColor = buttonColor
+        checkInOut.backgroundColor = buttonColor
+        ticketList.backgroundColor = buttonColor
+        homecomingOrPromSC.backgroundColor = backColor
+        homecomingOrPromSC.tintColor = buttonColor
+        backgroundView.backgroundColor = backColor
     }
     
     func createConfirmationAlert (goodOrBad: Bool){

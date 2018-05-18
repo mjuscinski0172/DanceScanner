@@ -70,12 +70,17 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @ objc func exportData() {
-        let fileName = "PromExport.csv"
+        let interval = TimeInterval(exactly: 0)
+        let date = Date(timeIntervalSinceNow: interval!)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-YY"
+        let dateString = dateFormatter.string(from: date)
+        let fileName = "DanceExport_\(dateString).csv"
         let path = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
         
-        var csvText: String = "ID Number,Last Name,First Name,Guest Name,Guest School,Student Food Choice,Guest Food Choice\n"
+        var csvText: String = "ID Number,Last Name,First Name,Guest Name,Guest School,Student Food Choice,Guest Food Choice,Check In Time,Check Out Time\n"
         for student in studentArray {
-            csvText += "\(student.idNumber),\(student.lastName),\(student.firstName),\(student.guestName),\(student.guestSchool),\(student.foodChoice),\(student.guestFoodChoice)\n"
+            csvText += "\(student.idNumber),\(student.lastName),\(student.firstName),\(student.guestName),\(student.guestSchool),\(student.foodChoice),\(student.guestFoodChoice), \(student.checkInTime),\(student.checkOutTime)\n"
         }
         
         do {
