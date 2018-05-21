@@ -41,11 +41,18 @@ class detailsViewController: UIViewController {
     @IBOutlet weak var foodChoiceLabel: UILabel!
     @IBOutlet weak var guestFoodChoiceTitleLabel: UILabel!
     @IBOutlet weak var guestFoodLabel: UILabel!
+    @IBOutlet weak var nameTitleLabel: UILabel!
+    @IBOutlet weak var idTitleLabel: UILabel!
+    @IBOutlet weak var parentNameTitleLabel: UILabel!
+    @IBOutlet weak var parentPhoneTitleLabel: UILabel!
+    @IBOutlet var backgroundView: UIView!
+    @IBOutlet weak var icButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+
 //        self.navigationItem.backBarButtonItem?.tintColor = .white
     }
     
@@ -103,6 +110,13 @@ class detailsViewController: UIViewController {
             foodChoiceTitleLabel.alpha = 1
             foodChoiceLabel.text = "\(selectedStudent.foodChoice)"
         }
+        //Sets colors based on HC or Prom
+        if selectedStudent.foodChoice == 0 {
+            chicken(buttonRed: 255, buttonGreen: 115, buttonBlue: 0, backRed: 92, backGreen: 60, backBlue: 31)
+        }
+        else {
+            chicken(buttonRed: 81, buttonGreen: 88, buttonBlue: 117, backRed: 28, backGreen: 28, backBlue: 28)
+        }
     }
     
     func timeLabelAlphas(inness: Int, outness: Int) {
@@ -113,6 +127,26 @@ class detailsViewController: UIViewController {
         timeOutTitleLabel.alpha = CGFloat(outness)
         timeOutLabel.alpha = CGFloat(outness)
         timeOutLabel.text = selectedStudent.checkOutTime
+    }
+    
+    func chicken(buttonRed: Double, buttonGreen: Double, buttonBlue: Double, backRed: Double, backGreen: Double, backBlue: Double) {
+        let buttonColor = UIColor(red: CGFloat(buttonRed / 255.0), green: CGFloat(buttonGreen / 255.0), blue: CGFloat(buttonBlue / 255.0), alpha: 1)
+        let backColor = UIColor(red: CGFloat(backRed / 255.0), green: CGFloat(backGreen / 255.0), blue: CGFloat(backBlue / 255.0), alpha: 1)
+        icButton.backgroundColor = buttonColor
+        nameTitleLabel.textColor = buttonColor
+        idTitleLabel.textColor = buttonColor
+        statusTitlesLabel.textColor = buttonColor
+        parentNameTitleLabel.textColor = buttonColor
+        parentPhoneTitleLabel.textColor = buttonColor
+        timeInTitleLabel.textColor = buttonColor
+        timeOutTitleLabel.textColor = buttonColor
+        foodChoiceTitleLabel.textColor = buttonColor
+        guestInfoTitleLabel.textColor = buttonColor
+        guestNameTitleLabel.textColor = buttonColor
+        guestSchoolTitleLabel.textColor = buttonColor
+        guestParentPhoneTitleLabel.textColor = buttonColor
+        guestFoodChoiceTitleLabel.textColor = buttonColor
+        backgroundView.backgroundColor = backColor
     }
     
     @IBAction func toInfiniteCampus(_ sender: Any) {

@@ -143,7 +143,12 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
             let student = alphabeticalStudentArray[indexPath.row]
-            cell.backgroundColor = UIColor.darkGray.darker(by: 18)
+            if student.foodChoice == 0 {
+                cell.backgroundColor = UIColor(red: 1, green: 115.0/255.0, blue: 0, alpha: 1)
+            }
+            else {
+                cell.backgroundColor = UIColor.darkGray.darker(by: 18)
+            }
             cell.textLabel?.text = "                           " + "\(student.lastName), \(student.firstName)"
             cell.detailTextLabel?.text = "                                       " + student.guestName
             cell.detailTextLabel?.textColor = .lightGray
@@ -176,7 +181,12 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //If the prototype cannot be pulled (AKA this is the results controller), create a new cell and place the student that has been searched into the cell
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "newCell")
             let student = filteredArray[indexPath.row]
-            cell.backgroundColor = UIColor.darkGray.darker(by: 18)
+            if student.foodChoice == 0 {
+                cell.backgroundColor = UIColor(red: 1, green: 115.0/255.0, blue: 0, alpha: 1)
+            }
+            else {
+                cell.backgroundColor = UIColor.darkGray.darker(by: 18)
+            }
             cell.textLabel?.text = "                         " + "\(student.lastName), \(student.firstName)"
             cell.detailTextLabel?.text = "                                 " + student.guestName
             cell.detailTextLabel?.textColor = .lightGray

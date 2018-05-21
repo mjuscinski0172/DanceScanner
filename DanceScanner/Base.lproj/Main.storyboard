@@ -118,7 +118,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZjO-a3-ESm">
-                                <rect key="frame" x="0.0" y="64" width="768" height="912"/>
+                                <rect key="frame" x="0.0" y="20" width="768" height="956"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="Search Student" id="yuj-l5-Ra4">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="56"/>
@@ -424,22 +424,28 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backgroundView" destination="lVf-nk-TXt" id="27F-xx-J7y"/>
                         <outlet property="foodChoiceLabel" destination="ui9-rO-s24" id="oUm-Gc-hNr"/>
                         <outlet property="foodChoiceTitleLabel" destination="Dep-6y-Y6X" id="nC3-tb-t40"/>
                         <outlet property="guestFoodChoiceTitleLabel" destination="gvw-hm-yek" id="aMj-Q4-XeN"/>
                         <outlet property="guestFoodLabel" destination="8HD-z7-KTI" id="NiK-er-TL4"/>
-                        <outlet property="guestInfoTitleLabel" destination="jyD-ov-hLR" id="taY-uc-uVF"/>
+                        <outlet property="guestInfoTitleLabel" destination="jyD-ov-hLR" id="gQ8-VX-AWB"/>
                         <outlet property="guestNameLabel" destination="V2P-QW-3M6" id="7Ln-PY-zRY"/>
                         <outlet property="guestNameTitleLabel" destination="Pux-LC-aBq" id="3ev-yV-4Az"/>
                         <outlet property="guestParentPhoneLabel" destination="eTa-YN-WvW" id="fQv-SC-dnV"/>
                         <outlet property="guestParentPhoneTitleLabel" destination="Xwu-cB-P1b" id="9Eq-4w-Uea"/>
                         <outlet property="guestSchoolLabel" destination="bc2-v6-SSR" id="Zw9-bU-yiI"/>
                         <outlet property="guestSchoolTitleLabel" destination="BNE-y9-oRJ" id="1cm-zX-p0E"/>
+                        <outlet property="icButton" destination="bQb-DN-yJH" id="1eU-fD-tfe"/>
                         <outlet property="idLabel" destination="dRC-uN-EDX" id="AO5-Z7-XtE"/>
+                        <outlet property="idTitleLabel" destination="3YL-uk-E7b" id="rUn-pr-Yjg"/>
                         <outlet property="lineLabel" destination="cSc-sE-DbC" id="iwo-6L-oAX"/>
                         <outlet property="nameLabel" destination="L7c-UN-UqU" id="YBE-5D-2YU"/>
+                        <outlet property="nameTitleLabel" destination="9kr-9k-avD" id="RlB-Xt-WUU"/>
                         <outlet property="parentNameLabel" destination="CJ6-eU-fhc" id="ytf-Wc-ft5"/>
+                        <outlet property="parentNameTitleLabel" destination="ZkD-BZ-Nu2" id="dcZ-39-jiy"/>
                         <outlet property="parentPhoneNumberLabel" destination="c2s-bs-UYO" id="K9d-Dp-JV4"/>
+                        <outlet property="parentPhoneTitleLabel" destination="IpZ-bJ-WBV" id="NWm-nO-nRG"/>
                         <outlet property="revoveGuestButton" destination="Dkr-3f-wbB" id="TMW-fy-Eur"/>
                         <outlet property="statusLabel" destination="VjK-vK-WOh" id="XC5-NS-0Ax"/>
                         <outlet property="statusTitlesLabel" destination="IZ4-Mg-fhi" id="j0G-QX-5oZ"/>
@@ -638,9 +644,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="gg0-Qp-0tL"/>
+        <segue reference="Rtq-Dl-KTl"/>
         <segue reference="3hq-tM-0TK"/>
-        <segue reference="J6t-uk-wuW"/>
-        <segue reference="dOX-mN-0kF"/>
+        <segue reference="0uB-Yf-yGZ"/>
+        <segue reference="dxe-TW-tqf"/>
     </inferredMetricsTieBreakers>
 </document>
