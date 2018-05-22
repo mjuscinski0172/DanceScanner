@@ -22,12 +22,12 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var searchController = UISearchController()
     var resultsController = UITableViewController()
     
-    
+    var exportButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let exportButton = UIBarButtonItem(title: "Export", style: .plain, target: self, action: #selector(exportData))
+        exportButton = UIBarButtonItem(title: "Export", style: .plain, target: self, action: #selector(exportData))
         navigationItem.setRightBarButton(exportButton, animated: true)
         
         //Sets colors for UI items
@@ -88,6 +88,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             let vc = UIActivityViewController(activityItems: [path], applicationActivities: [])
             vc.popoverPresentationController?.sourceView = self.view
+            vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
             present(vc, animated: true, completion: nil)
             
         } catch {
