@@ -19,7 +19,13 @@
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+        if isProm {
+            self.navigationController?.navigationBar.barTintColor = .black
+        }
+        else {
+            self.navigationController?.navigationBar.barTintColor = UIColor(red: 92.0/255.0, green: 60.0/255.0, blue: 31.0/255.0, alpha: 1)
+        }
+//        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
         self.navigationController?.navigationBar.tintColor = .white
         
         //Sets up session that will scan barcode
@@ -64,7 +70,13 @@
         //Finish setting up tab bar
         let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
         tabBar.delegate = self
-        tabBar.barStyle = .black
+        if isProm == true {
+            tabBar.barTintColor = .black
+        }
+        else {
+            tabBar.barTintColor = UIColor(red: 92.0/255.0, green: 60.0/255.0, blue: 31.0/255.0, alpha: 1)
+        }
+//        tabBar.barStyle = .black
         let purchaseTabButton = UITabBarItem(title: "Purchase Tickets", image: nil, tag: 1)
         let listTabButton = UITabBarItem(title: "List", image: nil, tag: 3)
         tabBar.setItems([purchaseTabButton, listTabButton], animated: false)
