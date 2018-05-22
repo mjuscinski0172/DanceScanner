@@ -31,7 +31,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         navigationItem.setRightBarButton(exportButton, animated: true)
         
         //Sets colors for UI items
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+//        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
         self.navigationController?.navigationBar.tintColor = .white
 
         tableView.backgroundColor = .black
@@ -73,6 +73,15 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         //Makes Tab Bar visible
         view.addSubview(tabBar)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if isProm {
+            self.navigationController?.navigationBar.barTintColor = .black
+        }
+        else {
+            self.navigationController?.navigationBar.barTintColor = UIColor(red: 92.0/255.0, green: 60.0/255.0, blue: 31.0/255.0, alpha: 1)
+        }
     }
     
     @ objc func exportData() {
