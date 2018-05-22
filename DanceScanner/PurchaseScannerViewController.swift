@@ -21,7 +21,13 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+        if isProm {
+            self.navigationController?.navigationBar.barTintColor = .black
+        }
+        else {
+            self.navigationController?.navigationBar.barTintColor = UIColor(red: 92.0/255.0, green: 60.0/255.0, blue: 31.0/255.0, alpha: 1)
+        }
+//        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
         self.navigationController?.navigationBar.tintColor = .white
         
         //Set up the background for the scanner
@@ -66,7 +72,13 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
         //Creates the Tab Bar and displays it
         let tabBar = UITabBar(frame: CGRect(x: 0, y: 975, width: 770, height: 50))
         tabBar.delegate = self
-        tabBar.barStyle = .black
+        if isProm == true {
+            tabBar.barTintColor = .black
+        }
+        else {
+            tabBar.barTintColor = UIColor(red: 92.0/255.0, green: 60.0/255.0, blue: 31.0/255.0, alpha: 1)
+        }
+//        tabBar.barStyle = .black
         let checkTabButton = UITabBarItem(title: "Check In/Out", image: nil, tag: 2)
         let listTabButton = UITabBarItem(title: "List", image: nil, tag: 3)
         tabBar.setItems([checkTabButton, listTabButton], animated: false)

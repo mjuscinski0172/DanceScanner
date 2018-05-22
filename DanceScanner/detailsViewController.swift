@@ -147,6 +147,7 @@ class detailsViewController: UIViewController {
         guestParentPhoneTitleLabel.textColor = buttonColor
         guestFoodChoiceTitleLabel.textColor = buttonColor
         backgroundView.backgroundColor = backColor
+        navigationController?.navigationBar.barTintColor = backColor
     }
     
     @IBAction func toInfiniteCampus(_ sender: Any) {

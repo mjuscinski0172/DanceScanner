@@ -76,6 +76,7 @@ class ViewController: UIViewController {
         homecomingOrPromSC.backgroundColor = backColor
         homecomingOrPromSC.tintColor = buttonColor
         backgroundView.backgroundColor = backColor
+        self.navigationController?.navigationBar.barTintColor = backColor
     }
     
     func createConfirmationAlert (goodOrBad: Bool){
