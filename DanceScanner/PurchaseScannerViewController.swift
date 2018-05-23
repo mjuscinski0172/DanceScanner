@@ -131,7 +131,15 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             {
                 if let JSONObject = try? JSONSerialization.jsonObject(with: myData as Data, options: .allowFragments) as! NSDictionary {
                 //Takes JSON information and places them into local varialbes
-                self.studentDictionary = JSONObject.object(forKey: altID) as! NSDictionary
+                    guard let dictionary = JSONObject.object(forKey: altID) as? NSDictionary else {
+                        let alert = UIAlertController(title: "Error", message: "Student not Found", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { (action) in
+                            self.runSession()
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                        return
+                    }
+                self.studentDictionary = dictionary
                 let firstName = self.studentDictionary.object(forKey: "FIRST") as! NSString
                 let lastName = self.studentDictionary.object(forKey: "LAST") as! NSString
                 let ID = self.studentDictionary.object(forKey: "ID") as! NSInteger
@@ -283,6 +291,7 @@ class PurchaseScannerViewController: UIViewController, AVCaptureMetadataOutputOb
             if let readableCode = barcodeReadable{
                 self.altId = readableCode.stringValue!
                 getJSON(altID: altId)
+                
             }
         }
     }

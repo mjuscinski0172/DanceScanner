@@ -65,9 +65,9 @@ class addGuestViewController: UIViewController {
                 studentFoodChoice = studentFoodControl.selectedSegmentIndex + 1
                 guestFoodChoice = guestFoodControl.selectedSegmentIndex + 1
             }
-            var guestName = guestNameTextField.text
-            var guestSchool = guestSchoolTextField.text
-            var guestParentNumber = parentPhoneNumberTextField.text
+            let guestName = guestNameTextField.text
+            let guestSchool = guestSchoolTextField.text
+            let guestParentNumber = parentPhoneNumberTextField.text
             if selectedStudent == nil {
 //                let studentDictionary = self.selectedStudentArray.firstObject as! NSDictionary
                 let firstName = self.studentDictionary.object(forKey: "FIRST") as! NSString
@@ -89,9 +89,9 @@ class addGuestViewController: UIViewController {
                 place.setObject("Purchased" as CKRecordValue, forKey: "checkedInOrOut")
                 place.setObject("" as CKRecordValue, forKey: "checkInTime")
                 place.setObject("" as CKRecordValue, forKey: "checkOutTime")
-                place.setObject(guestName as! CKRecordValue, forKey: "guestName")
-                place.setObject(guestSchool as! CKRecordValue, forKey: "guestSchool")
-                place.setObject(guestParentNumber as! CKRecordValue, forKey: "guestParentPhone")
+                place.setObject(guestName! as CKRecordValue, forKey: "guestName")
+                place.setObject(guestSchool! as CKRecordValue, forKey: "guestSchool")
+                place.setObject(guestParentNumber! as CKRecordValue, forKey: "guestParentPhone")
                 place.setObject("Purchased" as CKRecordValue, forKey: "guestCheckIn")
                 place.setObject("\(studentFoodChoice)" as CKRecordValue, forKey: "foodChoice")
                 place.setObject("\(guestFoodChoice)" as CKRecordValue, forKey: "guestFoodChoice")
@@ -117,9 +117,9 @@ class addGuestViewController: UIViewController {
                     for student in records! {
                         let firstName = student.object(forKey: "firstName") as! String
                         if firstName == self.selectedStudent.firstName {
-                            student.setObject(guestName as! CKRecordValue, forKey: "guestName")
-                            student.setObject(guestSchool as! CKRecordValue, forKey: "guestSchool")
-                            student.setObject(guestParentNumber as! CKRecordValue, forKey: "guestParentPhone")
+                            student.setObject(guestName! as CKRecordValue, forKey: "guestName")
+                            student.setObject(guestSchool! as CKRecordValue, forKey: "guestSchool")
+                            student.setObject(guestParentNumber! as CKRecordValue, forKey: "guestParentPhone")
                             student.setObject("Purchased" as CKRecordValue, forKey: "guestCheckIn")
                             student.setObject("\(studentFoodChoice)" as CKRecordValue, forKey: "foodChoice")
                             student.setObject("\(guestFoodChoice)" as CKRecordValue, forKey: "guestFoodChoice")
