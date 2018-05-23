@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     var resetAllPassword = "57bw32Gc"
     var studentArray = [CKRecord]()
     var database = CKContainer.default().publicCloudDatabase
+    var timer = Timer()
 
     @IBOutlet var backgroundView: UIView!
     @IBOutlet weak var homecomingOrPromSC: UISegmentedControl!
@@ -32,6 +33,9 @@ class ViewController: UIViewController {
         chicken(buttonRed: 255, buttonGreen: 115, buttonBlue: 0, backRed: 92, backGreen: 60, backBlue: 31)
         self.internetTest()
         self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true, block: { (t) in
+            self.internetTest()
+        })
         
     }
 
