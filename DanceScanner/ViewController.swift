@@ -122,7 +122,7 @@ class ViewController: UIViewController {
         database.perform(query, inZoneWith: nil) { (records, error) in
             if records?.count == 0 {
                 //If we cannot pull the JSON URL from CloudKit, there is probably no internet so tell the user
-                let alert = UIAlertController(title: "Error: No Internet Connection", message: "Please connect to the Internet and try again", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Error: Can't Reach Database", message: "Make sure you are signed in to iCloud and are connected to the internet", preferredStyle: .alert)
                 let retryAction = UIAlertAction(title: "Retry", style: .default, handler: { (action) in
                     self.internetTest()
                 })
